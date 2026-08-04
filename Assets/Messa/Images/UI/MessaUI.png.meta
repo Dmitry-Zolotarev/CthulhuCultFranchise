@@ -1,0 +1,1302 @@
+fileFormatVersion: 2
+guid: da53296942a26cc479785d665a71fd14
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: MessaUI_0
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 1402
+        width: 1276
+        height: 386
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf4982d0355af464a94a01b442dec402
+      internalID: 476351441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_1
+      rect:
+        serializedVersion: 2
+        x: 1396
+        y: 1593
+        width: 384
+        height: 153
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e648473b5e0628d498e4b28172a6f950
+      internalID: -720724895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_2
+      rect:
+        serializedVersion: 2
+        x: 1792
+        y: 1600
+        width: 364
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 977c90a9894a6da41991935136918a7b
+      internalID: 1340903435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_3
+      rect:
+        serializedVersion: 2
+        x: 1396
+        y: 1405
+        width: 528
+        height: 165
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e62dc9b3c55987440a19918ce153a09f
+      internalID: 1564097636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_4
+      rect:
+        serializedVersion: 2
+        x: 1942
+        y: 1423
+        width: 148
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b110404660d11bd468e27a44b86dfdf4
+      internalID: -1130531028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_5
+      rect:
+        serializedVersion: 2
+        x: 2108
+        y: 1423
+        width: 146
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7861fcf7f4540b947b92152f502c535b
+      internalID: 1017651090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_6
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 1230
+        width: 520
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1eda975a94f78242b3591f392a5b0f2
+      internalID: 60074607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_7
+      rect:
+        serializedVersion: 2
+        x: 618
+        y: 1246
+        width: 488
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3c82b4762ff6d24692f4d8cdb03894b
+      internalID: 1359878374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_8
+      rect:
+        serializedVersion: 2
+        x: 1144
+        y: 666
+        width: 546
+        height: 721
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b407ac0dd4c5cb94cb48654b779ac0a1
+      internalID: -1631896295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_9
+      rect:
+        serializedVersion: 2
+        x: 1734
+        y: 1243
+        width: 528
+        height: 131
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d7be5e425bd46d48b473d1ec3043c77
+      internalID: -519215739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_10
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 1015
+        width: 202
+        height: 161
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 506890fe7eeee1148b63d2fc0dc016ff
+      internalID: 847201422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_11
+      rect:
+        serializedVersion: 2
+        x: 618
+        y: 1132
+        width: 488
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8285fbfe7592ebd49aa8730ea6a498a6
+      internalID: -163154472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_12
+      rect:
+        serializedVersion: 2
+        x: 1730
+        y: 1092
+        width: 540
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc2e280c8f7bd7e489fb81dc6eae56d5
+      internalID: 2095891665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_13
+      rect:
+        serializedVersion: 2
+        x: 618
+        y: 1016
+        width: 488
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ea72853de441bd4689dd79e5cc8462e
+      internalID: -811328628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_14
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 947
+        width: 542
+        height: 143
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7763d9c9f193cd941a17e1f78ea50d02
+      internalID: -287005559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_15
+      rect:
+        serializedVersion: 2
+        x: 2244
+        y: 1086
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72ddb728f82360f4a85a66f87c22b6fc
+      internalID: 344605649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_16
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 857
+        width: 520
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57e2884bac7ab3f46a1f60675434355c
+      internalID: 1390642496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_17
+      rect:
+        serializedVersion: 2
+        x: 618
+        y: 902
+        width: 488
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3dc417a1e56774044bd7aa07f48a6a20
+      internalID: 829809698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_18
+      rect:
+        serializedVersion: 2
+        x: 1734
+        y: 812
+        width: 532
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7705ca43d33ea741887d193d6139086
+      internalID: 1509379857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_19
+      rect:
+        serializedVersion: 2
+        x: 618
+        y: 786
+        width: 488
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0edebf635e12b0d4098b4d6e10ca32ef
+      internalID: -1802902756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_20
+      rect:
+        serializedVersion: 2
+        x: 1734
+        y: 667
+        width: 530
+        height: 129
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb2cb2ee59cc2d54c8eecce821fed12e
+      internalID: 2048859725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_21
+      rect:
+        serializedVersion: 2
+        x: 618
+        y: 672
+        width: 488
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d0ec6d1f6c6ac244ad4c63bde0b32e0
+      internalID: -457711058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_22
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 315
+        width: 790
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4b7065164c61c34ea111b3857480c21
+      internalID: 1175300135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_23
+      rect:
+        serializedVersion: 2
+        x: 819
+        y: 220
+        width: 665
+        height: 440
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90e349ac06fb5954b99fb9572abaccc4
+      internalID: -513006688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_24
+      rect:
+        serializedVersion: 2
+        x: 1512
+        y: 548
+        width: 380
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30012fb5fe42e754581753ce0fa80a2c
+      internalID: -865939143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_25
+      rect:
+        serializedVersion: 2
+        x: 1932
+        y: 402
+        width: 354
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb43a420f7cbd1d4ba15509568af0d04
+      internalID: 701472976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_26
+      rect:
+        serializedVersion: 2
+        x: 1512
+        y: 454
+        width: 380
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3d15160340694c4c9a106222a77a8b1
+      internalID: -86687596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_27
+      rect:
+        serializedVersion: 2
+        x: 1511
+        y: 361
+        width: 381
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b7a1d5b775d5264cb9bc930448cacbf
+      internalID: 1785164849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_28
+      rect:
+        serializedVersion: 2
+        x: 1928
+        y: 232
+        width: 367
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea19be5c2148c5b47ad1494c6a0d8f36
+      internalID: -612456431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_29
+      rect:
+        serializedVersion: 2
+        x: 1512
+        y: 264
+        width: 380
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 510cc44e4dfa60149b03b85431a3aeee
+      internalID: 1276205387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_30
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 164
+        width: 376
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e96749bfa4812dc4aa2cfcdb257fcb1a
+      internalID: 239948716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_31
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 164
+        width: 226
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f9a3af54bf6265499b8532a8b71740b
+      internalID: -737563904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_32
+      rect:
+        serializedVersion: 2
+        x: 726
+        y: 150
+        width: 110
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6cc065176ac62047a85879d62041e38
+      internalID: 473676552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_33
+      rect:
+        serializedVersion: 2
+        x: 884
+        y: 136
+        width: 66
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e051af895194ab49a0192d329818a58
+      internalID: -1007317853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_34
+      rect:
+        serializedVersion: 2
+        x: 992
+        y: 136
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7eb8ae10f4739d949bfc4e7b5fc741ac
+      internalID: 1449301708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_35
+      rect:
+        serializedVersion: 2
+        x: 1111
+        y: 124
+        width: 89
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8814001c3cfb1f140867d334b01e4b30
+      internalID: -1367790104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_36
+      rect:
+        serializedVersion: 2
+        x: 1245
+        y: 163
+        width: 84
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6201ef41e981d9046bcf4e42362f7aab
+      internalID: -498595283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_37
+      rect:
+        serializedVersion: 2
+        x: 1364
+        y: 160
+        width: 197
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 247542f1da71a62498be72d714e6fe48
+      internalID: 128850395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_38
+      rect:
+        serializedVersion: 2
+        x: 1597
+        y: 160
+        width: 223
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bdd74700631695439c6c5f2c6ca15a6
+      internalID: 2032305108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_39
+      rect:
+        serializedVersion: 2
+        x: 1862
+        y: 161
+        width: 88
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3e2a65f27c666248bd26bbc36ee3101
+      internalID: -1623947857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_40
+      rect:
+        serializedVersion: 2
+        x: 1968
+        y: 163
+        width: 26
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bab955492b710bc4287f0e65d6169822
+      internalID: 565674834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_41
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 162
+        width: 60
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8665b8a763553b544b0a53cc09dc2755
+      internalID: -159249606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_42
+      rect:
+        serializedVersion: 2
+        x: 2116
+        y: 70
+        width: 104
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 035749962a2b36540a8659adec864aea
+      internalID: 780620108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_43
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 9
+        width: 104
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d59324d28dcffe46a6fb35eef9dbb9e
+      internalID: 804990805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_44
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 9
+        width: 104
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0261cabf5bc5a448a2b51073c4c4adc
+      internalID: 741142426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_45
+      rect:
+        serializedVersion: 2
+        x: 423
+        y: 9
+        width: 101
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2df1bf677f55607498c2b34095e6f850
+      internalID: -1494069335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_46
+      rect:
+        serializedVersion: 2
+        x: 588
+        y: 9
+        width: 104
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1d9bc9956e10624c85089478b9a7218
+      internalID: -424655843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_47
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 9
+        width: 102
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebe28c5c8bddd0443b99aab12a5493c3
+      internalID: 1749543315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_48
+      rect:
+        serializedVersion: 2
+        x: 920
+        y: 9
+        width: 102
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20c56f53d9f054243b510daa69e68cdb
+      internalID: -1686923938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_49
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 9
+        width: 104
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 325642058c5b00249b662a94e1ff941e
+      internalID: -239286996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_50
+      rect:
+        serializedVersion: 2
+        x: 1228
+        y: 9
+        width: 102
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7a6a059dfb1495438fab0903f745e29
+      internalID: -1961722401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_51
+      rect:
+        serializedVersion: 2
+        x: 1384
+        y: 9
+        width: 100
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11f7b6538e702a94fa655547bebc92a9
+      internalID: -237878931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_52
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 9
+        width: 98
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: adcae6930cefc4f4a9bd89b9250eab12
+      internalID: -985677790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MessaUI_53
+      rect:
+        serializedVersion: 2
+        x: 1684
+        y: 9
+        width: 107
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5e942c88a13baa4f9fd022929beb151
+      internalID: 1736131431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      MessaUI_0: 476351441
+      MessaUI_1: -720724895
+      MessaUI_10: 847201422
+      MessaUI_11: -163154472
+      MessaUI_12: 2095891665
+      MessaUI_13: -811328628
+      MessaUI_14: -287005559
+      MessaUI_15: 344605649
+      MessaUI_16: 1390642496
+      MessaUI_17: 829809698
+      MessaUI_18: 1509379857
+      MessaUI_19: -1802902756
+      MessaUI_2: 1340903435
+      MessaUI_20: 2048859725
+      MessaUI_21: -457711058
+      MessaUI_22: 1175300135
+      MessaUI_23: -513006688
+      MessaUI_24: -865939143
+      MessaUI_25: 701472976
+      MessaUI_26: -86687596
+      MessaUI_27: 1785164849
+      MessaUI_28: -612456431
+      MessaUI_29: 1276205387
+      MessaUI_3: 1564097636
+      MessaUI_30: 239948716
+      MessaUI_31: -737563904
+      MessaUI_32: 473676552
+      MessaUI_33: -1007317853
+      MessaUI_34: 1449301708
+      MessaUI_35: -1367790104
+      MessaUI_36: -498595283
+      MessaUI_37: 128850395
+      MessaUI_38: 2032305108
+      MessaUI_39: -1623947857
+      MessaUI_4: -1130531028
+      MessaUI_40: 565674834
+      MessaUI_41: -159249606
+      MessaUI_42: 780620108
+      MessaUI_43: 804990805
+      MessaUI_44: 741142426
+      MessaUI_45: -1494069335
+      MessaUI_46: -424655843
+      MessaUI_47: 1749543315
+      MessaUI_48: -1686923938
+      MessaUI_49: -239286996
+      MessaUI_5: 1017651090
+      MessaUI_50: -1961722401
+      MessaUI_51: -237878931
+      MessaUI_52: -985677790
+      MessaUI_53: 1736131431
+      MessaUI_6: 60074607
+      MessaUI_7: 1359878374
+      MessaUI_8: -1631896295
+      MessaUI_9: -519215739
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
