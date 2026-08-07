@@ -9,6 +9,7 @@ public class OptionsMenu : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
+        gameObject.SetActive(false);
     }
     private void OnEnable()
     {

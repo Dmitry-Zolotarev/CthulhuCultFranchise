@@ -364,7 +364,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -406,7 +406,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4027770471939270553}
-  - {fileID: 1642046217}
+  - {fileID: 1642046216}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -496,9 +496,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b2c327a5f2619d488adc6c8fb09a9d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MusicPlayer
-  mainMusic: {fileID: 8300000, guid: 553bf77548363764d975595bffb12009, type: 3}
-  combatMusic: {fileID: 8300000, guid: a99d831564ee02c4f8f2cf003fde421c, type: 3}
-  startMusic: {fileID: 8300000, guid: a99d831564ee02c4f8f2cf003fde421c, type: 3}
+  startMusic: {fileID: 8300000, guid: 20b274dc362d2ee49a1cd98977553e95, type: 3}
+  mainMusic: {fileID: 8300000, guid: 20b274dc362d2ee49a1cd98977553e95, type: 3}
   AudioSource: {fileID: 0}
 --- !u!1001 &1642046215
 PrefabInstance:
@@ -516,11 +515,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2395772630578288225, guid: 2d6a46851f727924a931f9c948552b16, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 99ac99de32b86624dad73a4a1fef3601, type: 3}
-    - target: {fileID: 3831089226012358247, guid: 2d6a46851f727924a931f9c948552b16, type: 3}
+    - target: {fileID: 1075465579932098019, guid: 2d6a46851f727924a931f9c948552b16, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5067441860556717874, guid: 2d6a46851f727924a931f9c948552b16, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
@@ -558,23 +557,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7700537779441451647, guid: 2d6a46851f727924a931f9c948552b16, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 550
+      value: 640
       objectReference: {fileID: 0}
     - target: {fileID: 7700537779441451647, guid: 2d6a46851f727924a931f9c948552b16, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 400
+      value: 480
       objectReference: {fileID: 0}
     - target: {fileID: 7700537779441451647, guid: 2d6a46851f727924a931f9c948552b16, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.8000001
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 7700537779441451647, guid: 2d6a46851f727924a931f9c948552b16, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.8000001
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 7700537779441451647, guid: 2d6a46851f727924a931f9c948552b16, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.8000001
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 7700537779441451647, guid: 2d6a46851f727924a931f9c948552b16, type: 3}
       propertyPath: m_LocalPosition.x
@@ -610,7 +609,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7700537779441451647, guid: 2d6a46851f727924a931f9c948552b16, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -26.778656
+      value: -180
       objectReference: {fileID: 0}
     - target: {fileID: 7700537779441451647, guid: 2d6a46851f727924a931f9c948552b16, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -624,23 +623,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8594169026517642177, guid: 2d6a46851f727924a931f9c948552b16, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d6a46851f727924a931f9c948552b16, type: 3}
---- !u!1 &1642046216 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6283044942757587534, guid: 2d6a46851f727924a931f9c948552b16, type: 3}
-  m_PrefabInstance: {fileID: 1642046215}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &1642046217 stripped
+--- !u!224 &1642046216 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7700537779441451647, guid: 2d6a46851f727924a931f9c948552b16, type: 3}
+  m_PrefabInstance: {fileID: 1642046215}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1642046217 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6283044942757587534, guid: 2d6a46851f727924a931f9c948552b16, type: 3}
   m_PrefabInstance: {fileID: 1642046215}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1731889531
@@ -752,8 +747,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.8235294, g: 0.8235294, b: 0.8235294, a: 1}
+    m_PressedColor: {r: 0.7058824, g: 0.7058824, b: 0.7058824, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -774,7 +769,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1642046216}
+      - m_Target: {fileID: 1642046217}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -876,8 +871,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.8235294, g: 0.8235294, b: 0.8235294, a: 1}
+    m_PressedColor: {r: 0.7058824, g: 0.7058824, b: 0.7058824, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -953,8 +948,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.8235294, g: 0.8235294, b: 0.8235294, a: 1}
+    m_PressedColor: {r: 0.7058824, g: 0.7058824, b: 0.7058824, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1

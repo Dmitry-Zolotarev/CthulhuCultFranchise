@@ -2,10 +2,9 @@ using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 public class MusicPlayer : MonoBehaviour
-{  
-    [SerializeField] private AudioClip mainMusic;
-    [SerializeField] private AudioClip combatMusic;
+{     
     [SerializeField] private AudioClip startMusic;
+    [SerializeField] private AudioClip mainMusic;
     [HideInInspector] public static MusicPlayer Instance;
     [HideInInspector] public AudioSource AudioSource;
     private void Awake()
@@ -35,9 +34,5 @@ public class MusicPlayer : MonoBehaviour
     public void PlayMainMusic()
     {
         PlayMusic(mainMusic);
-    }
-    public void PlayCombatMusic()
-    {
-        PlayMusic(combatMusic);
     }
 }
