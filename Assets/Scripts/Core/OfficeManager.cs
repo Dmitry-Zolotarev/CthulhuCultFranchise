@@ -16,12 +16,21 @@ public class OfficeManager : MonoBehaviour
     private float shiftTimer;
     private bool shiftRunning;
     private int extraVisitors;
+    [SerializeField] private AudioClip officeMusic;
 
     private void Awake()
     {
         Instance = this;
+        
     }
-
+    private void OnEnable()
+    {
+        MusicPlayer.Instance.PlayMusic(officeMusic);
+    }
+    private void OnDisable()
+    {
+        MusicPlayer.Instance.PlayDefaultMusic();
+    }
     public void StartShift()
     {
         if (shiftRunning) return;

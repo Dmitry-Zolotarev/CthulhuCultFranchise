@@ -496,8 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b2c327a5f2619d488adc6c8fb09a9d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MusicPlayer
-  startMusic: {fileID: 8300000, guid: 20b274dc362d2ee49a1cd98977553e95, type: 3}
-  mainMusic: {fileID: 8300000, guid: 20b274dc362d2ee49a1cd98977553e95, type: 3}
+  defaultMusic: {fileID: 8300000, guid: 20b274dc362d2ee49a1cd98977553e95, type: 3}
   AudioSource: {fileID: 0}
 --- !u!1001 &1642046215
 PrefabInstance:

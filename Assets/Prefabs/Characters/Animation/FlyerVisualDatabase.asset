@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0e96768f0d1aec4586255cb9761630b, type: 3}
+  m_Name: FlyerVisualDatabase
+  m_EditorClassIdentifier: 
+  flyers:
+  - flyerId: worker2
+    flyerSprite: {fileID: 21300000, guid: 09914fedf82ec8c42bb83683771427e7, type: 3}
+    bubbleSprite: {fileID: 0}
+  - flyerId: student2
+    flyerSprite: {fileID: 21300000, guid: 09914fedf82ec8c42bb83683771427e7, type: 3}
+    bubbleSprite: {fileID: 0}
+  - flyerId: retiree2
+    flyerSprite: {fileID: 21300000, guid: 09914fedf82ec8c42bb83683771427e7, type: 3}
+    bubbleSprite: {fileID: 0}
+  - flyerId: blogger2
+    flyerSprite: {fileID: 21300000, guid: 09914fedf82ec8c42bb83683771427e7, type: 3}
+    bubbleSprite: {fileID: 0}
+  - flyerId: esoteric2
+    flyerSprite: {fileID: 21300000, guid: 09914fedf82ec8c42bb83683771427e7, type: 3}
+    bubbleSprite: {fileID: 0}

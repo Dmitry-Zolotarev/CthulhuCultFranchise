@@ -2,11 +2,11 @@ using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 public class MusicPlayer : MonoBehaviour
-{     
-    [SerializeField] private AudioClip startMusic;
-    [SerializeField] private AudioClip mainMusic;
-    [HideInInspector] public static MusicPlayer Instance;
+{  
+    [SerializeField] private AudioClip defaultMusic;
     [HideInInspector] public AudioSource AudioSource;
+
+    public static MusicPlayer Instance;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -16,23 +16,21 @@ public class MusicPlayer : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
         AudioSource = GetComponent<AudioSource>();
         AudioSource.loop = true;
-        PlayMainMusic();
+        PlayDefaultMusic();
     }
-    private void PlayMusic(AudioClip clip)
+    public void PlayMusic(AudioClip clip)
     {
-        if (clip == null) return;
-        if (AudioSource.clip == clip && AudioSource.isPlaying) return;
-        AudioSource.clip = clip;
-        AudioSource.Play();
+        if (clip != AudioSource.clip)
+        {
+            AudioSource.clip = clip;
+            AudioSource.Play();
+        } 
     }
-    public void PlayStartMusic()
+    public void PlayDefaultMusic()
     {
-        PlayMusic(startMusic);
-    }
-    public void PlayMainMusic()
-    {
-        PlayMusic(mainMusic);
+        PlayMusic(defaultMusic);
     }
 }

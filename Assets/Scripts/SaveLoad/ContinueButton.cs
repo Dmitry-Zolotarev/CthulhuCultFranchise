@@ -12,10 +12,6 @@ public class ContinueButton : MonoBehaviour
         continueButton = GetComponent<Button>();
         continueButton.interactable = SaveManager.SaveExists();
     }
-    private void Start()
-    {
-        MusicPlayer.Instance.PlayMainMusic();
-    }
     public void Continue()
     {
         SaveManager.NeedLoad = true;
