@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Image))]
 public class Room : MonoBehaviour, IDropHandler
@@ -13,8 +14,14 @@ public class Room : MonoBehaviour, IDropHandler
 
     [Header("Level")]
     public int Level = 1;
+
     [SerializeField] private int maxLevel = 3;
     [SerializeField] protected Sprite[] LevelSprites;
+
+    [Header("People Layout")]
+    [SerializeField] private float personSpacing = 100f;
+
+    [SerializeField] private float personOffsetY = 0f;
 
     private Image roomImage;
 
@@ -81,23 +88,13 @@ public class Room : MonoBehaviour, IDropHandler
         if (person == null)
             return false;
 
-        int currentCount = 0;
+        int currentCount = GetCurrentPersonCount();
 
-        for (int i = 0; i < transform.childCount; i++)
+        // Если человек уже находится в этой комнате,
+        // не считаем его второй раз.
+        if (person.transform.parent == transform)
         {
-            Person existingPerson =
-                transform
-                    .GetChild(i)
-                    .GetComponent<Person>();
-
-            if (existingPerson == null)
-                continue;
-
-            // Самого себя не считаем.
-            if (existingPerson == person)
-                continue;
-
-            currentCount++;
+            currentCount--;
         }
 
         return currentCount < capacity;
@@ -121,7 +118,7 @@ public class Room : MonoBehaviour, IDropHandler
         }
 
         // -----------------------------------------------------
-        // Убираем из приёмной / резерва.
+        // Убираем из резерва
         // -----------------------------------------------------
 
         GameManager.Instance.RemoveFromReserve(
@@ -129,7 +126,7 @@ public class Room : MonoBehaviour, IDropHandler
         );
 
         // -----------------------------------------------------
-        // Добавляем в активных работников.
+        // Добавляем в активных работников
         // -----------------------------------------------------
 
         if (!GameManager.Instance.activeWorkers.Contains(person))
@@ -140,14 +137,14 @@ public class Room : MonoBehaviour, IDropHandler
         }
 
         // -----------------------------------------------------
-        // Записываем текущую комнату.
+        // Записываем комнату
         // -----------------------------------------------------
 
         person.currentRoom =
             roomType;
 
         // -----------------------------------------------------
-        // Перемещаем Person внутрь комнаты.
+        // Перемещаем человека в комнату
         // -----------------------------------------------------
 
         person.transform.SetParent(
@@ -160,12 +157,6 @@ public class Room : MonoBehaviour, IDropHandler
 
         if (rect != null)
         {
-            rect.anchoredPosition =
-                Vector2.zero;
-
-            rect.localPosition =
-                Vector3.zero;
-
             rect.localRotation =
                 Quaternion.identity;
 
@@ -174,7 +165,13 @@ public class Room : MonoBehaviour, IDropHandler
         }
 
         // -----------------------------------------------------
-        // Сообщаем DragPerson, что Drop успешный.
+        // Выстраиваем всех людей в комнате
+        // -----------------------------------------------------
+
+        ArrangePeople();
+
+        // -----------------------------------------------------
+        // Сообщаем DragPerson об успешном Drop
         // -----------------------------------------------------
 
         dragPerson.SetDropped();
@@ -182,6 +179,78 @@ public class Room : MonoBehaviour, IDropHandler
         Debug.Log(
             $"{person.name} назначен в комнату {roomType}."
         );
+    }
+
+    // =========================================================
+    // ARRANGE PEOPLE
+    // =========================================================
+
+    private void ArrangePeople()
+    {
+        List<RectTransform> people =
+            new List<RectTransform>();
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Person person =
+                transform
+                    .GetChild(i)
+                    .GetComponent<Person>();
+
+            if (person == null)
+                continue;
+
+            RectTransform rect =
+                person.GetComponent<RectTransform>();
+
+            if (rect != null)
+            {
+                people.Add(rect);
+            }
+        }
+
+        int count = people.Count;
+
+        if (count == 0)
+            return;
+
+        // -----------------------------------------------------
+        // Вычисляем общую ширину ряда.
+        //
+        // Например:
+        // 1 человек → 0
+        // 2 человека → spacing
+        // 3 человека → spacing * 2
+        // -----------------------------------------------------
+
+        float totalWidth =
+            (count - 1) * personSpacing;
+
+        // Начинаем слева от центра.
+        float startX =
+            -totalWidth / 2f;
+
+        for (int i = 0; i < count; i++)
+        {
+            RectTransform person =
+                people[i];
+
+            float x =
+                startX +
+                i * personSpacing;
+
+            person.anchoredPosition =
+                new Vector2(
+                    x,
+                    personOffsetY
+                );
+
+            person.localRotation =
+                Quaternion.identity;
+
+            person.localScale =
+                Vector3.one;
+        }
     }
 
     // =========================================================
@@ -223,10 +292,6 @@ public class Room : MonoBehaviour, IDropHandler
             return;
         }
 
-        // Level 1 → индекс 0
-        // Level 2 → индекс 1
-        // Level 3 → индекс 2
-
         int spriteIndex =
             Mathf.Clamp(
                 Level - 1,
@@ -251,12 +316,8 @@ public class Room : MonoBehaviour, IDropHandler
 
         for (int i = 0; i < transform.childCount; i++)
         {
-            if (transform
-                    .GetChild(i)
-                    .GetComponent<Person>() != null)
-            {
-                count++;
-            }
+            Person person = transform.GetChild(i).GetComponent<Person>();
+            if (person != null) count++;
         }
 
         return count;

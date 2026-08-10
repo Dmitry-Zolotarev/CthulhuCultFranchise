@@ -51,10 +51,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomType: 2
-  capacity: 1
+  capacity: 2
   Level: 1
-  LevelSprites: []
   maxLevel: 3
+  LevelSprites: []
 --- !u!222 &5767205805739381037
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -147,8 +147,8 @@ MonoBehaviour:
   roomType: 0
   capacity: 3
   Level: 1
-  LevelSprites: []
   maxLevel: 3
+  LevelSprites: []
 --- !u!222 &3863906862480658405
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -315,8 +315,8 @@ MonoBehaviour:
   roomType: 4
   capacity: 1
   Level: 1
-  LevelSprites: []
   maxLevel: 3
+  LevelSprites: []
 --- !u!222 &3310000557412260264
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -408,8 +408,8 @@ MonoBehaviour:
   roomType: 3
   capacity: 1
   Level: 1
-  LevelSprites: []
   maxLevel: 3
+  LevelSprites: []
 --- !u!222 &6892997737765392470
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -673,10 +673,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomType: 1
-  capacity: 1
+  capacity: 2
   Level: 1
-  LevelSprites: []
   maxLevel: 3
+  LevelSprites: []
 --- !u!222 &1064021766557995094
 CanvasRenderer:
   m_ObjectHideFlags: 0
