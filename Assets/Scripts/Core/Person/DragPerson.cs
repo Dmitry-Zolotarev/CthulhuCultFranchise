@@ -3,160 +3,146 @@ using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(CanvasGroup))]
-public class DragPerson :
-    MonoBehaviour,
+public class DragPerson : MonoBehaviour,
     IBeginDragHandler,
     IDragHandler,
     IEndDragHandler
 {
     private RectTransform rectTransform;
-    private Canvas canvas;
     private CanvasGroup canvasGroup;
+    private Canvas canvas;
 
     private Transform originalParent;
     private Vector2 originalPosition;
 
+    private bool wasDropped;
+
     private void Awake()
     {
-        rectTransform =
-            GetComponent<RectTransform>();
+        rectTransform = GetComponent<RectTransform>();
+        canvasGroup = GetComponent<CanvasGroup>();
 
-        canvas =
-            GetComponentInParent<Canvas>();
+        canvas = GetComponentInParent<Canvas>();
 
-        canvasGroup =
-            GetComponent<CanvasGroup>();
+        if (canvas == null)
+        {
+            Debug.LogError(
+                $"DragPerson: Canvas не найден для {name}."
+            );
+        }
     }
 
-    public void OnBeginDrag(
-        PointerEventData eventData)
+    // =========================================================
+    // BEGIN DRAG
+    // =========================================================
+
+    public void OnBeginDrag(PointerEventData eventData)
     {
         if (canvas == null)
             return;
 
-        originalParent =
-            transform.parent;
+        wasDropped = false;
 
-        originalPosition =
-            rectTransform.anchoredPosition;
+        originalParent = transform.parent;
+        originalPosition = rectTransform.anchoredPosition;
 
-        // Перемещаем человека наверх Canvas,
-        // чтобы он не оказался под другими UI-элементами.
+        // Пока тащим человека, он не должен
+        // блокировать Room от получения Drop.
+        canvasGroup.blocksRaycasts = false;
+        canvasGroup.alpha = 0.75f;
+
+        // Поднимаем человека на верхний уровень Canvas.
         transform.SetParent(
             canvas.transform,
             true
         );
 
-        canvasGroup.blocksRaycasts = false;
+        Debug.Log(
+            $"Начато перемещение {name}."
+        );
     }
 
-    public void OnDrag(
-        PointerEventData eventData)
+    // =========================================================
+    // DRAG
+    // =========================================================
+
+    public void OnDrag(PointerEventData eventData)
     {
         if (canvas == null)
             return;
 
         RectTransform canvasRect =
-            canvas.GetComponent<RectTransform>();
+            canvas.transform as RectTransform;
 
-        Vector2 localPosition;
+        if (canvasRect == null)
+            return;
 
         Camera eventCamera =
-            eventData.pressEventCamera;
+            canvas.renderMode ==
+            RenderMode.ScreenSpaceOverlay
+                ? null
+                : canvas.worldCamera;
 
-        bool success =
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+        Vector2 localPoint;
+
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 canvasRect,
                 eventData.position,
                 eventCamera,
-                out localPosition
-            );
-
-        if (success)
+                out localPoint))
         {
             rectTransform.localPosition =
-                localPosition;
+                localPoint;
         }
     }
 
-    public void OnEndDrag(
-        PointerEventData eventData)
+    // =========================================================
+    // END DRAG
+    // =========================================================
+
+    public void OnEndDrag(PointerEventData eventData)
     {
         canvasGroup.blocksRaycasts = true;
+        canvasGroup.alpha = 1f;
 
-        Room room =
-            FindRoomUnderPointer(eventData);
+        // Room.OnDrop() устанавливает этот флаг,
+        // если человек успешно принят.
+        if (wasDropped)
+            return;
 
-        if (room != null)
-        {
-            PlaceIntoRoom(room);
-        }
-        else
-        {
-            ReturnToOriginalPosition();
-        }
+        ReturnToOriginalPosition();
     }
 
-    private void PlaceIntoRoom(Room room)
+    // =========================================================
+    // DROP RESULT
+    // =========================================================
+
+    public void SetDropped()
     {
-        Person person =
-            GetComponent<Person>();
+        wasDropped = true;
+    }
 
-        if (person == null)
-        {
-            Debug.LogError(
-                "На Person отсутствует Person.cs!"
-            );
+    // =========================================================
+    // RETURN
+    // =========================================================
 
-            ReturnToOriginalPosition();
+    private void ReturnToOriginalPosition()
+    {
+        if (originalParent == null)
             return;
-        }
 
-        // Передаём человека комнате.
-        room.Assign(person);
-
-        // После успешного назначения
-        // помещаем UI-объект внутрь комнаты.
         transform.SetParent(
-            room.transform,
+            originalParent,
             false
         );
 
         rectTransform.anchoredPosition =
-            Vector2.zero;
-    }
+            originalPosition;
 
-    private void ReturnToOriginalPosition()
-    {
-        transform.SetParent(originalParent, false);
-        rectTransform.anchoredPosition = originalPosition;
+        rectTransform.localRotation =
+            Quaternion.identity;
 
-    }
-
-    private Room FindRoomUnderPointer(
-        PointerEventData eventData)
-    {
-        if (EventSystem.current == null)
-            return null;
-
-        // Получаем все UI-элементы под мышью.
-        var results =
-            new System.Collections.Generic.List<RaycastResult>();
-
-        EventSystem.current.RaycastAll(
-            eventData,
-            results
-        );
-
-        foreach (RaycastResult result in results)
-        {
-            Room room =
-                result.gameObject.GetComponentInParent<Room>();
-
-            if (room != null)
-                return room;
-        }
-
-        return null;
+        rectTransform.localScale =
+            Vector3.one;
     }
 }

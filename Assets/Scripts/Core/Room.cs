@@ -1,132 +1,269 @@
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class Room : MonoBehaviour
+[RequireComponent(typeof(Image))]
+public class Room : MonoBehaviour, IDropHandler
 {
+    [Header("Room")]
     public RoomType roomType;
-    public int capacity = 2;
-    public bool unlocked = true;
-    public bool repaired = true;
 
-    private Person worker;
-    private float timer;
+    [Header("Capacity")]
+    public int capacity = 1;
 
-    public bool HasWorker => worker != null;
+    [Header("Level")]
+    public int Level = 1;
+    [SerializeField] private int maxLevel = 3;
+    [SerializeField] protected Sprite[] LevelSprites;
 
-    public void Assign(Person person)
+    private Image roomImage;
+
+    // =========================================================
+    // UNITY
+    // =========================================================
+
+    private void Awake()
     {
-        if (!unlocked || !repaired || person == null)
-            return;
+        roomImage = GetComponent<Image>();
 
-        worker = person;
-        person.currentRoom = roomType;
-        timer = GetCycleTime();
+        UpdateRoomSprite();
     }
 
-    public void RemoveWorker()
-    {
-        if (worker == null) return;
+    // =========================================================
+    // DROP
+    // =========================================================
 
-        worker = null;
-        timer = 0f;
-    }
-
-    private void Update()
+    public void OnDrop(PointerEventData eventData)
     {
-        if (GameManager.Instance == null ||
-            GameManager.Instance.phase != GamePhase.Office ||
-            worker == null)
+        if (eventData.pointerDrag == null)
             return;
 
-        timer -= Time.deltaTime;
+        DragPerson dragPerson =
+            eventData.pointerDrag.GetComponent<DragPerson>();
 
-        if (timer <= 0f)
+        if (dragPerson == null)
+            return;
+
+        Person person =
+            eventData.pointerDrag.GetComponent<Person>();
+
+        if (person == null)
         {
-            if (roomType == RoomType.Altar)
-                CompleteAltar();
-            else
+            Debug.LogWarning(
+                $"Room {roomType}: у перетаскиваемого объекта " +
+                $"нет компонента Person."
+            );
+
+            return;
+        }
+
+        if (!CanAcceptPerson(person))
+        {
+            Debug.Log(
+                $"Комната {roomType} заполнена."
+            );
+
+            return;
+        }
+
+        AssignPerson(
+            person,
+            dragPerson
+        );
+    }
+
+    // =========================================================
+    // CAPACITY
+    // =========================================================
+
+    private bool CanAcceptPerson(Person person)
+    {
+        if (person == null)
+            return false;
+
+        int currentCount = 0;
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Person existingPerson =
+                transform
+                    .GetChild(i)
+                    .GetComponent<Person>();
+
+            if (existingPerson == null)
+                continue;
+
+            // Самого себя не считаем.
+            if (existingPerson == person)
+                continue;
+
+            currentCount++;
+        }
+
+        return currentCount < capacity;
+    }
+
+    // =========================================================
+    // ASSIGN PERSON
+    // =========================================================
+
+    private void AssignPerson(
+        Person person,
+        DragPerson dragPerson)
+    {
+        if (GameManager.Instance == null)
+        {
+            Debug.LogError(
+                "Room: GameManager.Instance не найден."
+            );
+
+            return;
+        }
+
+        // -----------------------------------------------------
+        // Убираем из приёмной / резерва.
+        // -----------------------------------------------------
+
+        GameManager.Instance.RemoveFromReserve(
+            person
+        );
+
+        // -----------------------------------------------------
+        // Добавляем в активных работников.
+        // -----------------------------------------------------
+
+        if (!GameManager.Instance.activeWorkers.Contains(person))
+        {
+            GameManager.Instance.activeWorkers.Add(
+                person
+            );
+        }
+
+        // -----------------------------------------------------
+        // Записываем текущую комнату.
+        // -----------------------------------------------------
+
+        person.currentRoom =
+            roomType;
+
+        // -----------------------------------------------------
+        // Перемещаем Person внутрь комнаты.
+        // -----------------------------------------------------
+
+        person.transform.SetParent(
+            transform,
+            false
+        );
+
+        RectTransform rect =
+            person.GetComponent<RectTransform>();
+
+        if (rect != null)
+        {
+            rect.anchoredPosition =
+                Vector2.zero;
+
+            rect.localPosition =
+                Vector3.zero;
+
+            rect.localRotation =
+                Quaternion.identity;
+
+            rect.localScale =
+                Vector3.one;
+        }
+
+        // -----------------------------------------------------
+        // Сообщаем DragPerson, что Drop успешный.
+        // -----------------------------------------------------
+
+        dragPerson.SetDropped();
+
+        Debug.Log(
+            $"{person.name} назначен в комнату {roomType}."
+        );
+    }
+
+    // =========================================================
+    // LEVEL UP
+    // =========================================================
+
+    public void LevelUP()
+    {
+        if (Level >= maxLevel)
+        {
+            Debug.Log(
+                $"Комната {roomType} уже имеет максимальный уровень."
+            );
+
+            return;
+        }
+
+        Level++;
+
+        UpdateRoomSprite();
+
+        Debug.Log(
+            $"Комната {roomType} улучшена до уровня {Level}."
+        );
+    }
+
+    // =========================================================
+    // ROOM SPRITE
+    // =========================================================
+
+    private void UpdateRoomSprite()
+    {
+        if (roomImage == null)
+            return;
+
+        if (LevelSprites == null ||
+            LevelSprites.Length == 0)
+        {
+            return;
+        }
+
+        // Level 1 → индекс 0
+        // Level 2 → индекс 1
+        // Level 3 → индекс 2
+
+        int spriteIndex =
+            Mathf.Clamp(
+                Level - 1,
+                0,
+                LevelSprites.Length - 1
+            );
+
+        if (LevelSprites[spriteIndex] != null)
+        {
+            roomImage.sprite =
+                LevelSprites[spriteIndex];
+        }
+    }
+
+    // =========================================================
+    // INFO
+    // =========================================================
+
+    public int GetCurrentPersonCount()
+    {
+        int count = 0;
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform
+                    .GetChild(i)
+                    .GetComponent<Person>() != null)
             {
-                CompleteCycle();
-                timer = GetCycleTime();
+                count++;
             }
         }
+
+        return count;
     }
 
-    private float GetCycleTime()
+    public bool IsFull()
     {
-        switch (roomType)
-        {
-            case RoomType.Donations: return 6f;
-            case RoomType.Propaganda: return 8f;
-            case RoomType.Laundry: return 7f;
-            case RoomType.Altar: return 4f;
-            default: return 999f;
-        }
-    }
-
-    private void CompleteCycle()
-    {
-        if (worker == null) return;
-
-        switch (roomType)
-        {
-            case RoomType.Donations:
-                DoDonation();
-                break;
-            case RoomType.Propaganda:
-                DoPropaganda();
-                break;
-            case RoomType.Laundry:
-                DoLaundry();
-                break;
-        }
-    }
-
-    private void DoDonation()
-    {
-        int income = Mathf.RoundToInt(100 * worker.Efficiency);
-        GameManager.Instance.AddMoney(income);
-        worker.AddSuspicion(1);
-        Debug.Log($"{worker.name}: пожертвования +{income} денег.");
-    }
-
-    private void DoPropaganda()
-    {
-        if (worker.contacts <= 0) return;
-
-        worker.contacts--;
-
-        if (worker.IsStudent)
-            GameManager.Instance.universityProgress++;
-        else
-            GameManager.Instance.businessProgress++;
-
-        GameManager.Instance.RegisterContactConverted();
-        Debug.Log($"{worker.name}: контакт обращён.");
-    }
-
-    private void DoLaundry()
-    {
-        worker.RemoveSuspicion(1);
-        Debug.Log($"{worker.name}: подозрение -1.");
-
-        if (worker.escapeWarning)
-        {
-            worker.CancelEscape();
-            Time.timeScale = 1f;
-        }
-    }
-
-    private void CompleteAltar()
-    {
-        if (worker == null) return;
-
-        worker.Sacrifice();
-        worker = null;
-    }
-
-    public void StartAltar(Person person)
-    {
-        if (roomType != RoomType.Altar) return;
-        Assign(person);
+        return GetCurrentPersonCount() >= capacity;
     }
 }

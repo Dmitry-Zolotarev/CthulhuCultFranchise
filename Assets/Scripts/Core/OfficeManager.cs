@@ -5,137 +5,565 @@ public class OfficeManager : MonoBehaviour
 {
     public static OfficeManager Instance { get; private set; }
 
-    public Person personPrefab;
-    public Transform receptionPoint;
+    // =========================================================
+    // PERSON
+    // =========================================================
 
-    public float shiftDuration = 60f;
-    public int waves = 3;
-    public int visitorsPerWave = 2;
-    public float waveInterval = 15f;
+    [Header("Person")]
+    [SerializeField]
+    private Person personPrefab;
+
+    // =========================================================
+    // RECEPTION
+    // =========================================================
+
+    [Header("Reception")]
+    [SerializeField]
+    private RectTransform receptionPoint;
+
+    [SerializeField]
+    private Transform receptionContainer;
+
+    // =========================================================
+    // SHIFT
+    // =========================================================
+
+    [Header("Shift")]
+    [SerializeField]
+    private float shiftDuration = 60f;
+
+    [SerializeField]
+    private int waves = 3;
+
+    [SerializeField]
+    private int visitorsPerWave = 2;
+
+    [SerializeField]
+    private float waveInterval = 15f;
+
+    // =========================================================
+    // ROOMS
+    // =========================================================
+
+    [Header("Rooms")]
+    [SerializeField]
+    private Room[] rooms;
+
+    public Room[] Rooms => rooms;
+
+    // =========================================================
+    // AUDIO
+    // =========================================================
+
+    [Header("Audio")]
+    [SerializeField]
+    private AudioClip officeMusic;
+
+    // =========================================================
+    // INTERNAL STATE
+    // =========================================================
 
     private float shiftTimer;
+
     private bool shiftRunning;
+
     private int extraVisitors;
-    [SerializeField] private AudioClip officeMusic;
+
+    private Coroutine spawnCoroutine;
+
+    // =========================================================
+    // PROPERTIES
+    // =========================================================
+
+    public bool IsShiftRunning =>
+        shiftRunning;
+
+    public float RemainingTime =>
+        Mathf.Max(
+            0f,
+            shiftTimer
+        );
+
+    // =========================================================
+    // UNITY
+    // =========================================================
 
     private void Awake()
     {
+        if (Instance != null &&
+            Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
-        
+
+        FindRoomsIfNeeded();
     }
+
     private void OnEnable()
     {
-        MusicPlayer.Instance.PlayMusic(officeMusic);
+        if (MusicPlayer.Instance != null &&
+            officeMusic != null)
+        {
+            MusicPlayer.Instance.PlayMusic(
+                officeMusic
+            );
+        }
     }
+
     private void OnDisable()
     {
-        MusicPlayer.Instance.PlayDefaultMusic();
-    }
-    public void StartShift()
-    {
-        if (shiftRunning) return;
-
-        GameManager.Instance.phase = GamePhase.Office;
-        shiftTimer = shiftDuration;
-        shiftRunning = true;
-
-        StartCoroutine(SpawnWaves());
+        if (MusicPlayer.Instance != null)
+        {
+            MusicPlayer.Instance.PlayDefaultMusic();
+        }
     }
 
     private void Update()
     {
-        if (!shiftRunning) return;
+        if (!shiftRunning)
+            return;
 
-        shiftTimer -= Time.deltaTime;
+        // -----------------------------------------------------
+        // Таймер
+        // -----------------------------------------------------
 
-        GameManager.Instance.AddHunger(
-            Mathf.RoundToInt(Time.deltaTime)
-        );
+        shiftTimer -=
+            Time.deltaTime;
 
-        if (GameManager.Instance.hunger >= GameManager.Instance.maxHunger)
-            TriggerCthulhuEating();
+        // -----------------------------------------------------
+        // Голод
+        // -----------------------------------------------------
 
-        if (shiftTimer <= 0)
-            FinishShift();
-    }
-
-    private IEnumerator SpawnWaves()
-    {
-        for (int i = 0; i < waves; i++)
+        if (GameManager.Instance != null)
         {
-            SpawnWave();
-            yield return new WaitForSeconds(waveInterval);
+            GameManager.Instance.AddHunger(
+                Mathf.RoundToInt(
+                    Time.deltaTime
+                )
+            );
+
+            // -------------------------------------------------
+            // Ктулху
+            // -------------------------------------------------
+
+            if (GameManager.Instance.Hunger >=
+                GameManager.Instance.maxHunger)
+            {
+                TriggerCthulhuEating();
+            }
+        }
+
+        // -----------------------------------------------------
+        // Конец смены
+        // -----------------------------------------------------
+
+        if (shiftTimer <= 0f)
+        {
+            FinishShift();
         }
     }
 
-    private void SpawnWave()
+    // =========================================================
+    // ROOMS
+    // =========================================================
+
+    private void FindRoomsIfNeeded()
     {
-        int count = visitorsPerWave + extraVisitors;
+        if (rooms != null &&
+            rooms.Length > 0)
+        {
+            return;
+        }
 
-        for (int i = 0; i < count; i++)
-            SpawnVisitor();
-
-        extraVisitors = 0;
+        rooms =
+            FindObjectsOfType<Room>(
+                true
+            );
     }
+
+    // =========================================================
+    // START SHIFT
+    // =========================================================
+
+    public void StartShift()
+    {
+        if (shiftRunning)
+            return;
+
+        if (GameManager.Instance == null)
+        {
+            Debug.LogError(
+                "OfficeManager: GameManager не найден."
+            );
+
+            return;
+        }
+
+        if (personPrefab == null)
+        {
+            Debug.LogError(
+                "OfficeManager: Person Prefab не назначен."
+            );
+
+            return;
+        }
+
+        if (receptionPoint == null)
+        {
+            Debug.LogError(
+                "OfficeManager: Reception Point не назначен."
+            );
+
+            return;
+        }
+
+        // -----------------------------------------------------
+        // Переводим игру в офисную фазу
+        // -----------------------------------------------------
+
+        GameManager.Instance.phase =
+            GamePhase.Office;
+
+        // -----------------------------------------------------
+        // Запускаем смену
+        // -----------------------------------------------------
+
+        shiftTimer =
+            shiftDuration;
+
+        shiftRunning = true;
+
+        // На всякий случай сбрасываем
+        // бонус предыдущей смены.
+        extraVisitors = 0;
+
+        Debug.Log(
+            $"Офисная смена началась. " +
+            $"День: {GameManager.Instance.day}"
+        );
+
+        // -----------------------------------------------------
+        // Запускаем волны
+        // -----------------------------------------------------
+
+        if (spawnCoroutine != null)
+        {
+            StopCoroutine(
+                spawnCoroutine
+            );
+        }
+
+        spawnCoroutine =
+            StartCoroutine(
+                SpawnWaves()
+            );
+    }
+
+    // =========================================================
+    // SPAWN WAVES
+    // =========================================================
+
+    private IEnumerator SpawnWaves()
+    {
+        for (int wave = 0;
+             wave < waves;
+             wave++)
+        {
+            if (!shiftRunning)
+                yield break;
+
+            SpawnWave(
+                wave + 1
+            );
+
+            if (wave < waves - 1)
+            {
+                yield return new WaitForSeconds(
+                    waveInterval
+                );
+            }
+        }
+
+        spawnCoroutine = null;
+    }
+
+    // =========================================================
+    // SPAWN WAVE
+    // =========================================================
+
+    private void SpawnWave(
+        int waveNumber)
+    {
+        int count =
+            visitorsPerWave +
+            extraVisitors;
+
+        // Бонус применяется только
+        // к этой следующей волне.
+        extraVisitors = 0;
+
+        Debug.Log(
+            $"Волна {waveNumber}: " +
+            $"приходит {count} посетителей."
+        );
+
+        for (int i = 0;
+             i < count;
+             i++)
+        {
+            SpawnVisitor();
+        }
+    }
+
+    // =========================================================
+    // SPAWN VISITOR
+    // =========================================================
 
     private void SpawnVisitor()
     {
         if (personPrefab == null)
         {
-            Debug.LogError("Person Prefab не назначен.");
+            Debug.LogError(
+                "OfficeManager: Person Prefab не назначен."
+            );
+
             return;
         }
 
-        Person person = Instantiate(
-            personPrefab,
-            receptionPoint.position,
-            Quaternion.identity
+        if (receptionPoint == null)
+        {
+            Debug.LogError(
+                "OfficeManager: Reception Point не назначен."
+            );
+
+            return;
+        }
+
+        Person person;
+
+        // -----------------------------------------------------
+        // Создаём человека в Reception
+        // -----------------------------------------------------
+
+        if (receptionContainer != null)
+        {
+            person = Instantiate(
+                personPrefab,
+                receptionContainer
+            );
+        }
+        else
+        {
+            person = Instantiate(
+                personPrefab,
+                receptionPoint
+            );
+        }
+
+        if (person == null)
+            return;
+
+        // -----------------------------------------------------
+        // UI transform
+        // -----------------------------------------------------
+
+        RectTransform rect =
+            person.GetComponent<RectTransform>();
+
+        if (rect != null)
+        {
+            rect.anchoredPosition =
+                GetSpawnPosition();
+
+            rect.localRotation =
+                Quaternion.identity;
+
+            rect.localScale =
+                Vector3.one;
+        }
+
+        // -----------------------------------------------------
+        // Характеристики посетителя
+        // -----------------------------------------------------
+
+        person.type =
+            Random.value < 0.5f
+                ? PersonType.Student
+                : PersonType.OfficeWorker;
+
+        person.loyalty =
+            Random.Range(1, 3);
+
+        person.contacts =
+            Random.Range(1, 3);
+
+        person.Suspicion = 0;
+
+        person.currentRoom =
+            RoomType.Reception;
+
+        // -----------------------------------------------------
+        // Добавляем в резерв
+        // -----------------------------------------------------
+
+        GameManager.Instance.AddPersonToReserve(
+            person
         );
 
-        person.type = Random.value < 0.5f
-            ? PersonType.Student
-            : PersonType.OfficeWorker;
-
-        person.loyalty = Random.Range(1, 3);
-        person.contacts = Random.Range(1, 3);
+        Debug.Log(
+            $"Посетитель {person.name} " +
+            $"пришёл в приёмную."
+        );
     }
 
-    public void AddExtraVisitors(int amount) =>
+    // =========================================================
+    // SPAWN POSITION
+    // =========================================================
+
+    private Vector2 GetSpawnPosition()
+    {
+        if (receptionPoint == null)
+            return Vector2.zero;
+
+        Rect rect =
+            receptionPoint.rect;
+
+        float x =
+            Random.Range(
+                rect.xMin,
+                rect.xMax
+            );
+
+        float y =
+            Random.Range(
+                rect.yMin,
+                rect.yMax
+            );
+
+        return new Vector2(
+            x,
+            y
+        );
+    }
+
+    // =========================================================
+    // EXTRA VISITORS
+    // =========================================================
+
+    public void AddExtraVisitors(
+        int amount)
+    {
+        if (amount <= 0)
+            return;
+
         extraVisitors += amount;
 
-    public void SignVisitor(Person person)
+        Debug.Log(
+            $"К следующей волне добавлено " +
+            $"{amount} посетителей."
+        );
+    }
+
+    // =========================================================
+    // SIGN VISITOR
+    // =========================================================
+
+    public void SignVisitor(
+        Person person)
     {
-        if (person == null) return;
+        if (person == null)
+            return;
+
+        if (GameManager.Instance == null)
+            return;
 
         person.SignContract();
-        GameManager.Instance.AddPersonToReserve(person);
 
-        Debug.Log($"{person.name} подписал договор и стал культистом.");
+        GameManager.Instance.AddPersonToReserve(
+            person
+        );
+
+        GameManager.Instance.RegisterContactConverted();
+
+        Debug.Log(
+            $"{person.name} подписал договор " +
+            $"и стал культистом."
+        );
     }
 
-    private void FinishShift()
-    {
-        if (!shiftRunning) return;
-
-        shiftRunning = false;
-        StopAllCoroutines();
-
-        GameManager.Instance.EndDay();
-        Debug.Log("Смена закончена. Переход к отчёту.");
-    }
+    // =========================================================
+    // CTHULHU
+    // =========================================================
 
     private void TriggerCthulhuEating()
     {
-        Person[] people = FindObjectsOfType<Person>();
+        Person[] people =
+            FindObjectsOfType<Person>();
 
-        if (people.Length == 0) return;
+        if (people.Length == 0)
+            return;
 
-        Person victim = people[Random.Range(0, people.Length)];
+        Person victim =
+            people[
+                Random.Range(
+                    0,
+                    people.Length
+                )
+            ];
 
-        Debug.Log($"Ктулху пожирает {victim.name}.");
+        if (victim == null)
+            return;
+
+        Debug.Log(
+            $"Ктулху пожирает {victim.name}."
+        );
+
         victim.Eat();
     }
 
-    public float GetRemainingTime() =>
-        Mathf.Max(0, shiftTimer);
+    // =========================================================
+    // FINISH SHIFT
+    // =========================================================
+
+    private void FinishShift()
+    {
+        if (!shiftRunning)
+            return;
+
+        shiftRunning = false;
+
+        if (spawnCoroutine != null)
+        {
+            StopCoroutine(
+                spawnCoroutine
+            );
+
+            spawnCoroutine = null;
+        }
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.EndDay();
+        }
+
+        Debug.Log(
+            "Смена закончена. " +
+            "Переход к отчёту."
+        );
+    }
+
+    // =========================================================
+    // TIME
+    // =========================================================
+
+    public float GetRemainingTime()
+    {
+        return Mathf.Max(
+            0f,
+            shiftTimer
+        );
+    }
 }
