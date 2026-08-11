@@ -6,29 +6,20 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Image))]
 public class Room : MonoBehaviour, IDropHandler
 {
-    [Header("Room")]
-    public RoomType roomType;
-
-    [Header("Capacity")]
+    public RoomType roomType = RoomType.Reception;
     public int capacity = 1;
 
-    [Header("Level")]
     public int Level = 1;
 
     [SerializeField] private int maxLevel = 3;
     [SerializeField] protected Sprite[] LevelSprites;
 
-    [Header("People Layout")]
     [SerializeField] private float personSpacing = 100f;
 
     [SerializeField] private float personOffsetY = 0f;
 
     private Image roomImage;
-
-    // =========================================================
-    // UNITY
-    // =========================================================
-
+    
     private void Awake()
     {
         roomImage = GetComponent<Image>();
@@ -42,33 +33,18 @@ public class Room : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (eventData.pointerDrag == null)
-            return;
+        if (eventData.pointerDrag == null) return;
 
-        DragPerson dragPerson =
-            eventData.pointerDrag.GetComponent<DragPerson>();
 
-        if (dragPerson == null)
-            return;
+        DragPerson dragPerson = eventData.pointerDrag.GetComponent<DragPerson>();
+        if (dragPerson == null) return;
+        Person person = eventData.pointerDrag.GetComponent<Person>();
 
-        Person person =
-            eventData.pointerDrag.GetComponent<Person>();
 
-        if (person == null)
-        {
-            Debug.LogWarning(
-                $"Room {roomType}: у перетаскиваемого объекта " +
-                $"нет компонента Person."
-            );
-
-            return;
-        }
+        if (person == null) return;
 
         if (!CanAcceptPerson(person))
         {
-            Debug.Log(
-                $"Комната {roomType} заполнена."
-            );
 
             return;
         }
@@ -140,8 +116,8 @@ public class Room : MonoBehaviour, IDropHandler
         // Записываем комнату
         // -----------------------------------------------------
 
-        person.currentRoom =
-            roomType;
+        person.currentRoom = roomType;
+
 
         // -----------------------------------------------------
         // Перемещаем человека в комнату
@@ -175,10 +151,6 @@ public class Room : MonoBehaviour, IDropHandler
         // -----------------------------------------------------
 
         dragPerson.SetDropped();
-
-        Debug.Log(
-            $"{person.name} назначен в комнату {roomType}."
-        );
     }
 
     // =========================================================
@@ -192,64 +164,31 @@ public class Room : MonoBehaviour, IDropHandler
 
         for (int i = 0; i < transform.childCount; i++)
         {
-            Person person =
-                transform
-                    .GetChild(i)
-                    .GetComponent<Person>();
-
-            if (person == null)
-                continue;
-
-            RectTransform rect =
-                person.GetComponent<RectTransform>();
-
-            if (rect != null)
+            Person person = transform.GetChild(i).GetComponent<Person>();
+            if (person != null)
             {
-                people.Add(rect);
-            }
+                RectTransform rect = person.GetComponent<RectTransform>();
+                if (rect != null) people.Add(rect);
+            }            
         }
 
         int count = people.Count;
 
         if (count == 0)
             return;
-
-        // -----------------------------------------------------
-        // Вычисляем общую ширину ряда.
-        //
-        // Например:
-        // 1 человек → 0
-        // 2 человека → spacing
-        // 3 человека → spacing * 2
-        // -----------------------------------------------------
-
         float totalWidth =
             (count - 1) * personSpacing;
 
-        // Начинаем слева от центра.
-        float startX =
-            -totalWidth / 2f;
+        float startX = -totalWidth / 2f;
 
         for (int i = 0; i < count; i++)
         {
-            RectTransform person =
-                people[i];
+            RectTransform person = people[i];
+            float x = startX + i * personSpacing;
+            person.anchoredPosition = new Vector2(x, personOffsetY);
+            person.localRotation = Quaternion.identity;
+            person.localScale = Vector3.one;
 
-            float x =
-                startX +
-                i * personSpacing;
-
-            person.anchoredPosition =
-                new Vector2(
-                    x,
-                    personOffsetY
-                );
-
-            person.localRotation =
-                Quaternion.identity;
-
-            person.localScale =
-                Vector3.one;
         }
     }
 
@@ -259,38 +198,19 @@ public class Room : MonoBehaviour, IDropHandler
 
     public void LevelUP()
     {
-        if (Level >= maxLevel)
+        if (Level < maxLevel)
         {
-            Debug.Log(
-                $"Комната {roomType} уже имеет максимальный уровень."
-            );
-
-            return;
-        }
-
-        Level++;
-
-        UpdateRoomSprite();
-
-        Debug.Log(
-            $"Комната {roomType} улучшена до уровня {Level}."
-        );
+            Level++;
+            UpdateRoomSprite();
+        }             
     }
-
-    // =========================================================
-    // ROOM SPRITE
-    // =========================================================
 
     private void UpdateRoomSprite()
     {
-        if (roomImage == null)
-            return;
+        if (roomImage == null) return;
 
-        if (LevelSprites == null ||
-            LevelSprites.Length == 0)
-        {
-            return;
-        }
+
+        if (LevelSprites == null || LevelSprites.Length == 0) return;
 
         int spriteIndex =
             Mathf.Clamp(

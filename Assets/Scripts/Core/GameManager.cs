@@ -502,10 +502,6 @@ public class GameManager : MonoBehaviour
 
             return;
         }
-
-        person.currentRoom =
-            RoomType.Reception;
-
         reserve.Add(person);
 
         UpdateUI();

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4679681641206165045}
   - component: {fileID: 5767205805739381037}
   - component: {fileID: 7193641220478838304}
+  - component: {fileID: 6899714388285957818}
   m_Layer: 0
   m_Name: Propaganda
   m_TagString: Untagged
@@ -55,6 +56,8 @@ MonoBehaviour:
   Level: 1
   maxLevel: 3
   LevelSprites: []
+  personSpacing: 100
+  personOffsetY: 0
 --- !u!222 &5767205805739381037
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -93,6 +96,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6899714388285957818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429583060209881753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11cc3efb29c6ee94486e3d7df8baf4bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipText: "\u041A\u043E\u043C\u0430\u043D\u0442\u0430 \u0430\u0433\u0438\u0442\u0430\u0446\u0438\u0438"
+  offset: {x: -30, y: 0, z: 0}
+  fontSize: 16
 --- !u!1 &4015773590108984940
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,6 +123,7 @@ GameObject:
   - component: {fileID: 7365049625219899348}
   - component: {fileID: 3863906862480658405}
   - component: {fileID: 3037443450047539895}
+  - component: {fileID: 2811876000857439600}
   m_Layer: 0
   m_Name: Reception
   m_TagString: Untagged
@@ -149,6 +168,8 @@ MonoBehaviour:
   Level: 1
   maxLevel: 3
   LevelSprites: []
+  personSpacing: 100
+  personOffsetY: 0
 --- !u!222 &3863906862480658405
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -187,6 +208,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2811876000857439600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4015773590108984940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11cc3efb29c6ee94486e3d7df8baf4bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipText: "\u041F\u0440\u0438\u0435\u043C\u043D\u0430\u044F"
+  offset: {x: -30, y: 0, z: 0}
+  fontSize: 16
 --- !u!1 &4183808339894642696
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,6 +310,7 @@ GameObject:
   - component: {fileID: 8202147088940755534}
   - component: {fileID: 3310000557412260264}
   - component: {fileID: 7129291536134232298}
+  - component: {fileID: 6319405164515384869}
   m_Layer: 0
   m_Name: Altar
   m_TagString: Untagged
@@ -317,6 +354,8 @@ MonoBehaviour:
   Level: 1
   maxLevel: 3
   LevelSprites: []
+  personSpacing: 100
+  personOffsetY: 0
 --- !u!222 &3310000557412260264
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -355,6 +394,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6319405164515384869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4946601589280473567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11cc3efb29c6ee94486e3d7df8baf4bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipText: "\u0410\u043B\u0442\u0430\u0440\u044C"
+  offset: {x: -30, y: 0, z: 0}
+  fontSize: 16
 --- !u!1 &5988646123871816456
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,6 +421,7 @@ GameObject:
   - component: {fileID: 501357962411609012}
   - component: {fileID: 6892997737765392470}
   - component: {fileID: 1931231566220502905}
+  - component: {fileID: 8325678951394410595}
   m_Layer: 0
   m_Name: Laundry
   m_TagString: Untagged
@@ -410,6 +465,8 @@ MonoBehaviour:
   Level: 1
   maxLevel: 3
   LevelSprites: []
+  personSpacing: 100
+  personOffsetY: 0
 --- !u!222 &6892997737765392470
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -448,6 +505,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8325678951394410595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5988646123871816456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11cc3efb29c6ee94486e3d7df8baf4bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipText: "\u0418\u0434\u0435\u043E\u043B\u043E\u0433\u0438\u0447\u0435\u0441\u043A\u0430\u044F
+    \u043F\u0440\u0430\u0447\u0435\u0447\u043D\u0430\u044F"
+  offset: {x: -30, y: 0, z: 0}
+  fontSize: 16
 --- !u!1 &7586647264649498736
 GameObject:
   m_ObjectHideFlags: 0
@@ -631,9 +704,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1760763123888042997}
-  - component: {fileID: 8962734840949259488}
   - component: {fileID: 1064021766557995094}
   - component: {fileID: 7283671760824623936}
+  - component: {fileID: 5956330931437066655}
+  - component: {fileID: 2491154190332517712}
   m_Layer: 0
   m_Name: Donations
   m_TagString: Untagged
@@ -660,23 +734,6 @@ RectTransform:
   m_AnchoredPosition: {x: 799.9, y: 195.04146}
   m_SizeDelta: {x: 440.0132, y: 143.5171}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8962734840949259488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8175293736418376500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddb3850a57297784d9c30a44bef9c5aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomType: 1
-  capacity: 2
-  Level: 1
-  maxLevel: 3
-  LevelSprites: []
 --- !u!222 &1064021766557995094
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -715,6 +772,42 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5956330931437066655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8175293736418376500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81c2413abe767fd4ea569b71a7d78ff8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomType: 1
+  capacity: 1
+  Level: 1
+  maxLevel: 3
+  LevelSprites: []
+  personSpacing: 100
+  personOffsetY: 0
+  MoneyPerEmployee: 50
+  payCooldown: 6
+--- !u!114 &2491154190332517712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8175293736418376500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11cc3efb29c6ee94486e3d7df8baf4bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipText: "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u043F\u043E\u0436\u0435\u0440\u0442\u0432\u043E\u0432\u0430\u043D\u0438\u0439"
+  offset: {x: -30, y: 0, z: 0}
+  fontSize: 16
 --- !u!1 &8781267765272162945
 GameObject:
   m_ObjectHideFlags: 0
