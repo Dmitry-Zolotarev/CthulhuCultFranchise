@@ -21,21 +21,26 @@ public enum RoomType
 {
     Reception,
     Donations,
+    Agitation,
+    Laundry,
+    Altar
+}
+public enum CampaignType
+{
+    Reception,
+    Donations,
     Propaganda,
     Laundry,
     Altar
 }
-
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-
-    // =========================================================
-    // GAME STATE
-    // =========================================================
+    [HideInInspector] public District SelectedDistrict;
 
     [Header("Game")]
-    public int day = 1;
+    public int Day = 1;
+    [HideInInspector] public float Time;
     public GamePhase phase = GamePhase.Map;
 
     // =========================================================
@@ -52,7 +57,7 @@ public class GameManager : MonoBehaviour
     [Header("Limits")]
     public int maxInfluence = 4;
     public int maxHunger = 100;
-
+    
     // =========================================================
     // PEOPLE
     // =========================================================
@@ -96,28 +101,15 @@ public class GameManager : MonoBehaviour
     // =========================================================
 
     [Header("UI")]
-    [SerializeField]
-    private TextMeshProUGUI MoneyLabel;
+    [SerializeField] private TextMeshProUGUI MoneyLabel;
+    [SerializeField] private TextMeshProUGUI DayLabel;
+    [SerializeField] private TextMeshProUGUI TimeLabel;
+    [SerializeField] private TextMeshProUGUI districtNameLabel;
+    [SerializeField] private TextMeshProUGUI auditoryLabel;
+    [SerializeField] private TextMeshProUGUI descriptionLabel;
 
-    [SerializeField]
-    private TextMeshProUGUI GraceLabel;
-
-    [SerializeField]
-    private TextMeshProUGUI InfuenceLabel;
-
-    [SerializeField]
-    private TextMeshProUGUI AnxietyLabel;
-
-    [SerializeField]
-    private TextMeshProUGUI HungerLabel;
-
-    [SerializeField]
-    private TextMeshProUGUI CultistCountLabel;
-
-    // =========================================================
-    // UNITY
-    // =========================================================
-
+    public GameObject StartWorkPanel;
+    public GameObject TimeSpeedPanel;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -138,32 +130,37 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        UpdateUI();
+        UpdateLabels();
     }
-
-    // =========================================================
-    // UI
-    // =========================================================
-
-    private void UpdateUI()
+    public void UpdateDistrictLabels()
     {
-        MoneyLabel?.SetText($"{Money}");
-        GraceLabel?.SetText($"{Grace}");
-        InfuenceLabel?.SetText($"{Influence}");
-        AnxietyLabel?.SetText($"{Anxiety}");
-        HungerLabel?.SetText($"{Hunger}");
-        CultistCountLabel?.SetText($"{reserve.Count + activeWorkers.Count}");
+        if (SelectedDistrict != null)
+        {
+            districtNameLabel?.SetText(SelectedDistrict.Name);
+            auditoryLabel?.SetText($"Аудитория: {SelectedDistrict.Auditory.ToLower()}");
+            descriptionLabel?.SetText(SelectedDistrict.Description);
+        }
     }
 
-    // =========================================================
-    // NEW GAME
-    // =========================================================
+    public void UpdateLabels()
+    {
+        MoneyLabel?.SetText($"{Money}$");
+        DayLabel?.SetText($"День {Day}");
+        TimeSpeedPanel?.SetActive(phase == GamePhase.Office);
+
+        if (phase == GamePhase.Map)
+        {
+            TimeLabel?.SetText("Утро");
+        }
+        else TimeLabel?.SetText($"{(int)Time / 60:D2}:{(int)Time % 60:D2}");
+    }
 
     public void StartNewGame()
     {
-        day = 1;
-
+        Day = 1;
         phase = GamePhase.Map;
+        StartWorkPanel?.SetActive(false);
+
 
         Money = 600;
         Influence = 2;
@@ -171,17 +168,7 @@ public class GameManager : MonoBehaviour
         Anxiety = 0;
         Hunger = 0;
 
-        // -----------------------------------------------------
-        // Очищаем старых людей
-        // -----------------------------------------------------
-
         ClearPeople();
-
-        // -----------------------------------------------------
-        // Создаём стартовых культистов
-        // -----------------------------------------------------
-
-        SpawnStartingCultists();
 
         // -----------------------------------------------------
         // Город
@@ -198,7 +185,7 @@ public class GameManager : MonoBehaviour
         kpiMoney = 0;
         kpiContacts = 0;
 
-        UpdateUI();
+        UpdateLabels();
     }
 
     // =========================================================
@@ -236,117 +223,6 @@ public class GameManager : MonoBehaviour
         reserve.Clear();
         activeWorkers.Clear();
     }
-
-    // =========================================================
-    // STARTING CULTISTS
-    // =========================================================
-
-    private void SpawnStartingCultists()
-    {
-        if (personPrefab == null)
-        {
-            Debug.LogError(
-                "[GameManager] Person Prefab не назначен!"
-            );
-
-            return;
-        }
-
-        if (startingCultistsParent == null)
-        {
-            Debug.LogError(
-                "[GameManager] Starting Cultists Parent " +
-                "не назначен!"
-            );
-
-            return;
-        }
-
-        for (int i = 0; i < startingCultistsCount; i++)
-        {
-            Person person = Instantiate(
-                personPrefab,
-                startingCultistsParent,
-                false
-            );
-
-            if (person == null)
-            {
-                Debug.LogError(
-                    "[GameManager] Не удалось создать Person."
-                );
-
-                continue;
-            }
-
-            // -------------------------------------------------
-            // Основные данные
-            // -------------------------------------------------
-
-            person.currentRoom =
-                RoomType.Reception;
-
-            person.type =
-                i % 2 == 0
-                    ? PersonType.Student
-                    : PersonType.OfficeWorker;
-
-            person.loyalty = 1;
-            person.contacts = 1;
-            person.Suspicion = 0;
-
-            // -------------------------------------------------
-            // Позиция UI
-            // -------------------------------------------------
-
-            RectTransform rect =
-                person.GetComponent<RectTransform>();
-
-            if (rect != null)
-            {
-                rect.anchoredPosition =
-                    new Vector2(
-                        i * 100f,
-                        0f
-                    );
-
-                rect.localRotation =
-                    Quaternion.identity;
-
-                rect.localScale =
-                    Vector3.one;
-            }
-
-            // -------------------------------------------------
-            // Добавляем в резерв
-            // -------------------------------------------------
-
-            if (!reserve.Contains(person))
-            {
-                reserve.Add(person);
-            }
-
-            Debug.Log(
-                $"[GameManager] Создан культист " +
-                $"{i + 1}/{startingCultistsCount}. " +
-                $"Reserve = {reserve.Count}"
-            );
-        }
-
-        Debug.Log(
-            $"[GameManager] Стартовых культистов создано: " +
-            $"{reserve.Count}"
-        );
-    }
-
-    // =========================================================
-    // CULTIST COUNT
-    // =========================================================
-
-    // =========================================================
-    // MONEY
-    // =========================================================
-
     public bool SpendMoney(int amount)
     {
         if (amount < 0)
@@ -358,21 +234,6 @@ public class GameManager : MonoBehaviour
         Money -= amount;
 
         return true;
-    }
-
-    public void AddMoney(int amount)
-    {
-        Money += amount;
-
-        if (Money < 0)
-        {
-            Money = 0;
-        }
-
-        if (kpiStarted && amount > 0)
-        {
-            kpiMoney += amount;
-        }
     }
 
     // =========================================================
@@ -391,20 +252,6 @@ public class GameManager : MonoBehaviour
 
         return true;
     }
-
-    public void AddInfluence(int amount)
-    {
-        Influence = Mathf.Clamp(
-            Influence + amount,
-            0,
-            maxInfluence
-        );
-    }
-
-    // =========================================================
-    // GRACE
-    // =========================================================
-
     public void AddGrace(int amount)
     {
         Grace += amount;
@@ -447,39 +294,6 @@ public class GameManager : MonoBehaviour
             Hunger - amount
         );
     }
-
-    // =========================================================
-    // KPI
-    // =========================================================
-
-    public void StartKPI()
-    {
-        kpiStarted = true;
-
-        kpiMoney = 0;
-        kpiContacts = 0;
-    }
-
-    public void RegisterContactConverted()
-    {
-        if (!kpiStarted)
-            return;
-
-        kpiContacts++;
-    }
-
-    public bool IsKPIComplete()
-    {
-        return
-            kpiMoney >= 400 &&
-            kpiContacts >= 2 &&
-            Hunger < 75;
-    }
-
-    // =========================================================
-    // PEOPLE / RESERVE
-    // =========================================================
-
     public void AddPersonToReserve(Person person)
     {
         if (person == null)
@@ -504,7 +318,7 @@ public class GameManager : MonoBehaviour
         }
         reserve.Add(person);
 
-        UpdateUI();
+        UpdateLabels();
     }
 
     public void RemoveFromReserve(Person person)
@@ -514,53 +328,34 @@ public class GameManager : MonoBehaviour
 
         reserve.Remove(person);
 
-        UpdateUI();
+        UpdateLabels();
     }
-
-    // =========================================================
-    // DAY
-    // =========================================================
-
     public void EndDay()
     {
         phase = GamePhase.Report;
 
-        UpdateUI();
+        UpdateLabels();
     }
 
     public void NextDay()
     {
-        if (day >= 3)
+        if (Day >= 3)
         {
             phase = GamePhase.Final;
 
-            UpdateUI();
+            UpdateLabels();
 
             return;
         }
-
-        day++;
-
-        // +2 влияния в начале нового дня.
-        AddInfluence(2);
-
+        Day++;
         activeWorkers.Clear();
-
         // Снижаем подозрение культистов.
         foreach (Person person in reserve)
         {
-            if (person == null)
-                continue;
-
-            person.Suspicion =
-                Mathf.Max(
-                    0,
-                    person.Suspicion - 1
-                );
+            if (person == null) continue;
+            person.Suspicion = Mathf.Max(0, person.Suspicion - 1);
         }
-
         phase = GamePhase.Map;
-
-        UpdateUI();
+        ScreenManager.Instance.OpenMenu(0);
     }
 }

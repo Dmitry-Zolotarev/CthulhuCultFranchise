@@ -34,25 +34,12 @@ public class Room : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData)
     {
         if (eventData.pointerDrag == null) return;
-
-
-        DragPerson dragPerson = eventData.pointerDrag.GetComponent<DragPerson>();
-        if (dragPerson == null) return;
         Person person = eventData.pointerDrag.GetComponent<Person>();
-
-
         if (person == null) return;
+        if (!CanAcceptPerson(person)) return;
 
-        if (!CanAcceptPerson(person))
-        {
+        AssignPerson(person);
 
-            return;
-        }
-
-        AssignPerson(
-            person,
-            dragPerson
-        );
     }
 
     // =========================================================
@@ -80,9 +67,7 @@ public class Room : MonoBehaviour, IDropHandler
     // ASSIGN PERSON
     // =========================================================
 
-    private void AssignPerson(
-        Person person,
-        DragPerson dragPerson)
+    public void AssignPerson(Person person)
     {
         if (GameManager.Instance == null)
         {
@@ -149,8 +134,7 @@ public class Room : MonoBehaviour, IDropHandler
         // -----------------------------------------------------
         // Сообщаем DragPerson об успешном Drop
         // -----------------------------------------------------
-
-        dragPerson.SetDropped();
+        person?.GetComponent<DragPerson>()?.SetDropped();
     }
 
     // =========================================================

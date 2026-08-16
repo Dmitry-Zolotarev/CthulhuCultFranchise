@@ -33,7 +33,7 @@ public class Person : MonoBehaviour
             float value = 1f;
 
             if (IsStudent &&
-                currentRoom == RoomType.Propaganda)
+                currentRoom == RoomType.Agitation)
             {
                 value += 0.5f;
             }

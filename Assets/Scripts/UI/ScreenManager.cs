@@ -11,10 +11,10 @@ public class ScreenManager : MonoBehaviour
     public void OpenMenu(int menuID)
     {
         Time.timeScale = 1f;
-        for (int i = 0; i < Screens.Length; i++) Screens[i]?.SetActive(i == menuID);
-    }
-    public void CloseMenus()
-    {
-        foreach (var menu in Screens) menu?.SetActive(false);
+        for (int i = 0; i < Screens.Length; i++) 
+        {
+            Screens[i]?.SetActive(i == menuID);
+            Debug.Log($"{Screens[i].name} has opened");
+        }    
     }
 }
