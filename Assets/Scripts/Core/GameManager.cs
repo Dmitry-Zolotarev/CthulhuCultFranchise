@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
     public int Influence = 2;
     public int Grace = 0;
     public int Anxiety = 0;
-    public int Hunger = 0;
+    public float Hunger = 0;
 
     [Header("Limits")]
     public int maxInfluence = 4;
@@ -107,6 +107,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI districtNameLabel;
     [SerializeField] private TextMeshProUGUI auditoryLabel;
     [SerializeField] private TextMeshProUGUI descriptionLabel;
+    [SerializeField] private TextMeshProUGUI influenceLabel;
 
     public GameObject StartWorkPanel;
     public GameObject TimeSpeedPanel;
@@ -139,6 +140,7 @@ public class GameManager : MonoBehaviour
             districtNameLabel?.SetText(SelectedDistrict.Name);
             auditoryLabel?.SetText($"Аудитория: {SelectedDistrict.Auditory.ToLower()}");
             descriptionLabel?.SetText(SelectedDistrict.Description);
+            influenceLabel?.SetText($"Влияние: {SelectedDistrict.Influence}/5");
         }
     }
 
@@ -278,32 +280,20 @@ public class GameManager : MonoBehaviour
     // HUNGER
     // =========================================================
 
-    public void AddHunger(int amount)
+    public void AddHunger(float amount)
     {
-        Hunger = Mathf.Clamp(
-            Hunger + amount,
-            0,
-            maxHunger
-        );
+        Hunger = Mathf.Clamp(Hunger + amount, 0, maxHunger);
     }
 
     public void ReduceHunger(int amount)
     {
-        Hunger = Mathf.Max(
-            0,
-            Hunger - amount
-        );
+        Hunger = Mathf.Max(0, Hunger - amount);
     }
     public void AddPersonToReserve(Person person)
     {
-        if (person == null)
-            return;
-
-        // Если человек уже находится в резерве,
-        // ничего не делаем.
-        if (reserve.Contains(person))
-            return;
-
+        if (person == null) return;
+        // Если человек уже находится в резерве, ничего не делаем.
+        if (reserve.Contains(person)) return;
         // Максимум 8 человек.
         if (reserve.Count >= 8)
         {

@@ -66,25 +66,14 @@ public class OfficeManager : MonoBehaviour
         GameManager.Instance.Time += Time.deltaTime * timeSpeed * timeSpeedModificator;
         if (GameManager.Instance.Time >= endTime) FinishShift();
 
-        // Голод
+        // Голод Ктулху
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.AddHunger(
-                Mathf.RoundToInt(
-                    Time.deltaTime
-                )
-            );
-
-            // -------------------------------------------------
-            // Ктулху
-            // -------------------------------------------------
+            GameManager.Instance.AddHunger(Time.deltaTime);
             if (GameManager.Instance.Hunger >= GameManager.Instance.maxHunger) TriggerCthulhuEating();
         }
     }
-    // =========================================================
-    // START SHIFT
-    // =========================================================
-
+    
     public void StartShift()
     {
         if (ShiftRunning) return;
@@ -101,6 +90,10 @@ public class OfficeManager : MonoBehaviour
         if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
         
         spawnCoroutine = StartCoroutine(SpawnWaves());
+    }
+    public float GetTimeSpeed()
+    {
+        return timeSpeedModificator * timeSpeed;
     }
     public void SetTimeSpeed(int speedModificator)
     {

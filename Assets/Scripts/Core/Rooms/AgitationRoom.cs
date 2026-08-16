@@ -29,7 +29,7 @@ public class AgitationRoom : Room
             progressLabel.SetText("Агитация завершена");
             return;
         } 
-        agitationProgress += agitationSpeed * GetCurrentPersonCount() * Time.deltaTime;
+        agitationProgress += agitationSpeed * GetCurrentPersonCount() * Time.deltaTime * OfficeManager.Instance.GetTimeSpeed();
         if (agitationProgress == agitationTargetValue * district.Influence)
         {
             district.Influence++;
@@ -39,7 +39,7 @@ public class AgitationRoom : Room
     }
     private int GetProgressPercent()
     {
-        return (int)agitationProgress * 100 / agitationTargetValue;
+        return ((int)agitationProgress * 100 / agitationTargetValue / GameManager.Instance.SelectedDistrict.Influence) % 100;
     }
     private void UpdateLabels()
     {
