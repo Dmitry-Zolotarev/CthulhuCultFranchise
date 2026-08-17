@@ -154,9 +154,9 @@ MonoBehaviour:
   personPrefab: {fileID: 2701407485879646528, guid: 73d04e9d03f796044b41157c6a96529e, type: 3}
   receptionPoint: {fileID: 8892265832779191132}
   receptionContainer: {fileID: 1712561596}
-  waves: 3
+  waves: 4
   visitorsPerWave: 1
-  waveInterval: 30
+  waveInterval: 20
   startTime: 600
   endTime: 1080
   timeSpeed: 5
@@ -667,11 +667,11 @@ MonoBehaviour:
   Grace: 0
   Anxiety: 0
   Hunger: 0
+  HungerIncreaseSpeed: 0.2
   MaxInfluence: 4
   MaxHunger: 100
   reserve: []
   activeWorkers: []
-  personPrefab: {fileID: 2701407485879646528, guid: 73d04e9d03f796044b41157c6a96529e, type: 3}
   startingCultistsParent: {fileID: 8892265832779191132}
   startingCultistsCount: 3
   universityProgress: 0

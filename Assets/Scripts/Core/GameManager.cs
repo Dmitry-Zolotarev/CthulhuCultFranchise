@@ -279,7 +279,7 @@ public class GameManager : MonoBehaviour
 
         foreach(var person in activeWorkers)
         {
-            person.loyalty -= amount;
+            if(!(person.Room is Laundry)) person.loyalty -= amount;
         }
     }
     public void AddPersonToReserve(Person person)

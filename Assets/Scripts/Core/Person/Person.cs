@@ -23,7 +23,7 @@ public class Person : MonoBehaviour
         if(OfficeManager.Instance.ShiftRunning)
         {
             UpdateUI();
-            loyalty -= Time.deltaTime * OfficeManager.Instance.GetTimeSpeed();
+            if(!(Room is Laundry)) loyalty -= Time.deltaTime * OfficeManager.Instance.GetTimeSpeed();
         }
         if (loyalty <= 0) Escape();
     }

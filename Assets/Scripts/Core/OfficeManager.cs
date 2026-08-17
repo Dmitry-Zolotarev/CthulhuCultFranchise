@@ -94,7 +94,7 @@ public class OfficeManager : MonoBehaviour
 
             if (speed > 0 && wave < waves - 1) 
             {      
-                yield return new WaitForSeconds(waveInterval / speed);
+                yield return new WaitForSeconds((wave + 1) * waveInterval / speed);
                 SpawnWave(wave + 1);
             }         
         }

@@ -7,7 +7,7 @@ public class Laundry : Room
 
     public override void AssignPerson(Person person)
     {
-        if (person.loyalty > person.maxLoyalty / 3) return;
+        if (person.loyalty > person.maxLoyalty / 3f) return;
         base.AssignPerson(person);
         StartCoroutine(LaundryCoroutine(person));
     }
