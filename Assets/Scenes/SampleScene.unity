@@ -155,11 +155,11 @@ MonoBehaviour:
   receptionPoint: {fileID: 8892265832779191132}
   receptionContainer: {fileID: 1712561596}
   waves: 3
-  visitorsPerWave: 2
-  waveInterval: 15
+  visitorsPerWave: 1
+  waveInterval: 30
   startTime: 600
   endTime: 1080
-  timeSpeed: 4
+  timeSpeed: 10
   rooms:
   - {fileID: 1712561600}
   - {fileID: 985133704}
@@ -3598,7 +3598,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -304.8047, y: 56.528397}
+  m_AnchoredPosition: {x: -283, y: 50}
   m_SizeDelta: {x: 529.522, y: 374.2904}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5566648640458318802
@@ -3663,7 +3663,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 314.1953, y: -40.47165}
+  m_AnchoredPosition: {x: 285, y: -33}
   m_SizeDelta: {x: 510.7408, y: 406.4039}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5983421815062835819

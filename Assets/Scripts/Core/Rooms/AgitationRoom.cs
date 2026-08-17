@@ -6,7 +6,7 @@ public class AgitationRoom : Room
     [SerializeField] private float agitationSpeed = 1;
 
     private float agitationProgress = 0;
-    [HideInInspector] public int agitationTargetValue = 100;
+    private float agitationTargetValue;
 
     [SerializeField] private TextMeshProUGUI districtNameLabel;
     [SerializeField] private TextMeshProUGUI progressLabel;
@@ -14,6 +14,7 @@ public class AgitationRoom : Room
     void Awake()
     {
         roomType = RoomType.Agitation;
+        agitationTargetValue = 100;
     }
 
     // Update is called once per frame
@@ -30,20 +31,25 @@ public class AgitationRoom : Room
             return;
         } 
         agitationProgress += agitationSpeed * GetCurrentPersonCount() * Time.deltaTime * OfficeManager.Instance.GetTimeSpeed();
-        if (agitationProgress == agitationTargetValue * district.Influence)
+        if (agitationProgress >= agitationTargetValue)
         {
             district.Influence++;
+            agitationTargetValue = 100 * district.Influence;
+            Debug.Log($"{district.Name}: {district.Influence}/5");
             agitationProgress = 0;
         }
         
     }
     private int GetProgressPercent()
     {
-        return ((int)agitationProgress * 100 / agitationTargetValue / GameManager.Instance.SelectedDistrict.Influence) % 100;
+        float percent = agitationProgress * 100 / agitationTargetValue;
+        return (int)percent;
     }
     private void UpdateLabels()
     {
-        districtNameLabel.SetText($"{GameManager.Instance.SelectedDistrict.Name}");
+        var district = GameManager.Instance.SelectedDistrict;
+
+        districtNameLabel.SetText($"{district.Name}: {district.Influence}/5");
         progressLabel.SetText($"Прогресс: {GetProgressPercent()}%");
     }
 }

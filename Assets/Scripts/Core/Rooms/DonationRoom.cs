@@ -19,7 +19,7 @@ public class DonationRoom : Room
     {
         if (!OfficeManager.Instance.ShiftRunning) return;
 
-        if (Time.time >= lastPayTime + payCooldown) 
+        if (Time.time >= lastPayTime + payCooldown / OfficeManager.Instance.GetTimeSpeed()) 
         {
             GameManager.Instance.Money += MoneyPerEmployee * GetCurrentPersonCount();
             lastPayTime = Time.time;

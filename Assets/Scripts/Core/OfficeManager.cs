@@ -48,11 +48,12 @@ public class OfficeManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        waves++;
     }
 
     private void OnEnable()
     {
-        MusicPlayer.Instance.PlayMusic(officeMusic);
+        MusicPlayer.Instance?.PlayMusic(officeMusic);
     }
 
     private void OnDisable()
