@@ -12,7 +12,6 @@ public class DonationRoom : Room
 
     private void Start()
     {
-        roomType = RoomType.Donations;
         lastPayTime = Time.time;
     }
     void Update()

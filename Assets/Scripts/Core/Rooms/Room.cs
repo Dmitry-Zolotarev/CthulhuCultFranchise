@@ -6,7 +6,6 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Image))]
 public class Room : MonoBehaviour, IDropHandler
 {
-    public RoomType roomType = RoomType.Reception;
     public int capacity = 1;
 
     public int Level = 1;
@@ -67,28 +66,9 @@ public class Room : MonoBehaviour, IDropHandler
     // ASSIGN PERSON
     // =========================================================
 
-    public void AssignPerson(Person person)
+    public virtual void AssignPerson(Person person)
     {
-        if (GameManager.Instance == null)
-        {
-            Debug.LogError(
-                "Room: GameManager.Instance не найден."
-            );
-
-            return;
-        }
-
-        // -----------------------------------------------------
-        // Убираем из резерва
-        // -----------------------------------------------------
-
-        GameManager.Instance.RemoveFromReserve(
-            person
-        );
-
-        // -----------------------------------------------------
-        // Добавляем в активных работников
-        // -----------------------------------------------------
+        GameManager.Instance.RemoveFromReserve(person);
 
         if (!GameManager.Instance.activeWorkers.Contains(person))
         {
@@ -96,22 +76,11 @@ public class Room : MonoBehaviour, IDropHandler
                 person
             );
         }
-
-        // -----------------------------------------------------
-        // Записываем комнату
-        // -----------------------------------------------------
-
-        person.currentRoom = roomType;
+        person.Room = this;
+        person.transform.SetParent(transform, false);
 
 
-        // -----------------------------------------------------
-        // Перемещаем человека в комнату
-        // -----------------------------------------------------
 
-        person.transform.SetParent(
-            transform,
-            false
-        );
 
         RectTransform rect =
             person.GetComponent<RectTransform>();

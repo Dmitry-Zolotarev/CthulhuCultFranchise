@@ -1,5 +1,7 @@
 using System.Collections;
+using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
 
 public class OfficeManager : MonoBehaviour
 {
@@ -15,35 +17,16 @@ public class OfficeManager : MonoBehaviour
     [SerializeField] private float endTime = 1080f;
     [SerializeField] private float timeSpeed = 4f;
     private int timeSpeedModificator = 1;
-
-    // =========================================================
-    // ROOMS
-    // =========================================================
-
-    [Header("Rooms")]
-    [SerializeField]
-    private Room[] rooms;
-
-    public Room[] Rooms => rooms;
-
-    // =========================================================
-    // AUDIO
-    // =========================================================
-
+    public float hungerReduction = 50f;
+    [Header("")]
+    [SerializeField] private Room[] rooms;
+    [Header("UI")]
+    [SerializeField] private TextMeshProUGUI hungerPercentLabel;
+    [SerializeField] private Slider hungerBar;
     [Header("Audio")]
-    [SerializeField]
-    private AudioClip officeMusic;
-
-    // =========================================================
-    // INTERNAL STATE
-    // =========================================================
-
-    public bool ShiftRunning;
+    [SerializeField] private AudioClip officeMusic;
+    [HideInInspector] public bool ShiftRunning;
     private Coroutine spawnCoroutine;
-
-    // =========================================================
-    // PROPERTIES
-    // =========================================================
 
     private void Awake()
     {
@@ -70,11 +53,13 @@ public class OfficeManager : MonoBehaviour
         // Голод Ктулху
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.AddHunger(Time.deltaTime);
-            if (GameManager.Instance.Hunger >= GameManager.Instance.maxHunger) TriggerCthulhuEating();
+            float hungerPercent = GameManager.Instance.Hunger / GameManager.Instance.MaxHunger;
+            hungerBar.value = hungerPercent;
+            hungerPercentLabel?.SetText($"{(int)(hungerPercent * 100)}%");
+            GameManager.Instance.AddHunger(GetTimeSpeed() * Time.deltaTime);
+            if (GameManager.Instance.Hunger >= GameManager.Instance.MaxHunger) TriggerCthulhuEating();
         }
     }
-    
     public void StartShift()
     {
         if (ShiftRunning) return;
@@ -136,12 +121,7 @@ public class OfficeManager : MonoBehaviour
         // -----------------------------------------------------
         // Характеристики посетителя
         // -----------------------------------------------------
-        person.type = Random.value < 0.5f ? PersonType.Student : PersonType.OfficeWorker;
-        person.loyalty = Random.Range(1, 3);
-        person.contacts = Random.Range(1, 3);
-        person.Suspicion = 0;
-        person.currentRoom = RoomType.Reception;
-
+        person.Type = Random.value < 0.5f ? PersonType.Student : PersonType.OfficeWorker;
         GameManager.Instance.AddPersonToReserve(person);
     }
 
@@ -156,7 +136,7 @@ public class OfficeManager : MonoBehaviour
         var victim = people[Random.Range(0, people.Length)];
         if (victim == null) return;
         Debug.Log($"Ктулху пожирает {victim.name}.");
-        victim.Eat();
+        victim.Eat(hungerReduction);
     }
 
     // =========================================================

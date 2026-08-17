@@ -13,7 +13,6 @@ public class AgitationRoom : Room
     
     void Awake()
     {
-        roomType = RoomType.Agitation;
         agitationTargetValue = 100;
     }
 

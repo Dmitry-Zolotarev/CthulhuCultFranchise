@@ -16,15 +16,6 @@ public enum PersonType
     Student,
     OfficeWorker
 }
-
-public enum RoomType
-{
-    Reception,
-    Donations,
-    Agitation,
-    Laundry,
-    Altar
-}
 public enum CampaignType
 {
     Reception,
@@ -53,10 +44,12 @@ public class GameManager : MonoBehaviour
     public int Grace = 0;
     public int Anxiety = 0;
     public float Hunger = 0;
+    [SerializeField]
+    private float HungerIncreaseSpeed = 0.2f;
 
     [Header("Limits")]
-    public int maxInfluence = 4;
-    public int maxHunger = 100;
+    public int MaxInfluence = 4;
+    public float MaxHunger = 100;
     
     // =========================================================
     // PEOPLE
@@ -65,12 +58,7 @@ public class GameManager : MonoBehaviour
     [Header("Cultists")]
     public List<Person> reserve = new List<Person>();
 
-    public List<Person> activeWorkers =
-        new List<Person>();
-
-    [Header("Starting Cultists")]
-    [SerializeField]
-    private Person personPrefab;
+    public List<Person> activeWorkers = new List<Person>();
 
     [SerializeField]
     private Transform startingCultistsParent;
@@ -282,12 +270,17 @@ public class GameManager : MonoBehaviour
 
     public void AddHunger(float amount)
     {
-        Hunger = Mathf.Clamp(Hunger + amount, 0, maxHunger);
+        Hunger = Mathf.Clamp(Hunger + amount * HungerIncreaseSpeed, 0, MaxHunger);
     }
 
-    public void ReduceHunger(int amount)
+    public void ReduceHunger(float amount)
     {
         Hunger = Mathf.Max(0, Hunger - amount);
+
+        foreach(var person in activeWorkers)
+        {
+            person.loyalty -= amount;
+        }
     }
     public void AddPersonToReserve(Person person)
     {
@@ -339,12 +332,7 @@ public class GameManager : MonoBehaviour
         }
         Day++;
         activeWorkers.Clear();
-        // Снижаем подозрение культистов.
-        foreach (Person person in reserve)
-        {
-            if (person == null) continue;
-            person.Suspicion = Mathf.Max(0, person.Suspicion - 1);
-        }
+
         phase = GamePhase.Map;
         ScreenManager.Instance.OpenMenu(0);
     }
