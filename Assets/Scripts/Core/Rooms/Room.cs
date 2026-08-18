@@ -15,7 +15,7 @@ public class Room : MonoBehaviour, IDropHandler
 
     [SerializeField] private float personSpacing = 100f;
 
-    [SerializeField] private float personOffsetY = 0f;
+    [SerializeField] private float personOffsetY = -30f;
 
     private Image roomImage;
     

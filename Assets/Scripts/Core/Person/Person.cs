@@ -5,18 +5,18 @@ using TMPro;
 public class Person : MonoBehaviour
 {
     public PersonType Type;
-    
-    
-    public float loyalty;
-    [HideInInspector] public Room Room;
-    [HideInInspector] public float maxLoyalty = 500f;
+    [HideInInspector] public float loyalty;
+    [HideInInspector] public Room Room;    
+    [HideInInspector] public float maxLoyalty;
+    [SerializeField] private float baseMaxLoyalty = 500f;
     [SerializeField] private GameObject loyaltyPanel;
     [SerializeField] private TextMeshProUGUI loyaltyLabel;
     [SerializeField] private Slider loyaltyBar;
 
     private void Awake()
     {
-        loyalty = maxLoyalty;
+        maxLoyalty = baseMaxLoyalty;
+        loyalty = baseMaxLoyalty;
     }
     private void Update()
     {
@@ -29,7 +29,7 @@ public class Person : MonoBehaviour
     }
     private void UpdateUI()
     {
-        loyaltyLabel?.SetText($"ћракобесие: {(int)(loyalty / 5f)}");
+        loyaltyLabel?.SetText($"ћракобесие: {GetLoyaltyPercent()}");
         loyaltyBar.value = loyalty / maxLoyalty;
     }
     public void Escape()
@@ -53,5 +53,9 @@ public class Person : MonoBehaviour
             GameManager.Instance.activeWorkers.Remove(this);
         }
         Destroy(gameObject);
+    }
+    private int GetLoyaltyPercent()
+    {
+        return Mathf.RoundToInt(loyalty / baseMaxLoyalty * 100f);
     }
 }

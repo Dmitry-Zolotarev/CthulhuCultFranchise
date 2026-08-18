@@ -4,10 +4,10 @@ using UnityEngine;
 public class Laundry : Room
 {
     [SerializeField] private float launderingTime = 2f;
-
+    [SerializeField] private float maxLoyaltyReduction = 0.8f;
     public override void AssignPerson(Person person)
     {
-        if (person.loyalty > person.maxLoyalty / 3f) return;
+        if (person.loyalty >= person.maxLoyalty * maxLoyaltyReduction) return;
         base.AssignPerson(person);
         StartCoroutine(LaundryCoroutine(person));
     }
@@ -16,7 +16,7 @@ public class Laundry : Room
         if(OfficeManager.Instance.GetTimeSpeed() > 0)
         {
             yield return new WaitForSeconds(launderingTime / OfficeManager.Instance.GetTimeSpeed());
-            person.maxLoyalty /= 2;
+            person.maxLoyalty *= maxLoyaltyReduction;
             person.loyalty = person.maxLoyalty;
         }     
     }

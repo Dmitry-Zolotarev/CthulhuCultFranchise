@@ -311,7 +311,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.2, y: -13.8}
+  m_AnchoredPosition: {x: -1, y: -13.8}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8017789675969087436
@@ -342,7 +342,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041C\u0440\u0430\u043A\u043E\u0431\u0435\u0441\u0438\u0435: 100"
+  m_text: "\u041C\u0440\u0430\u043A\u043E\u0431\u0435\u0441\u0438\u0435: 99"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e600f0ea329114c449a8612878e93632, type: 2}
   m_sharedMaterial: {fileID: 3605028602388547657, guid: e600f0ea329114c449a8612878e93632, type: 2}
@@ -369,8 +369,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
-  m_fontSizeBase: 10
+  m_fontSize: 11
+  m_fontSizeBase: 11
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -405,7 +405,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 55.181763, y: 0, z: 55.181763, w: 24.771973}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -624,7 +624,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   loyalty: 1
+  Room: {fileID: 0}
   maxLoyalty: 500
+  baseMaxLoyalty: 500
   loyaltyPanel: {fileID: 4128041962895632501}
   loyaltyLabel: {fileID: 6229773478266058314}
   loyaltyBar: {fileID: 8755891145370679448}
