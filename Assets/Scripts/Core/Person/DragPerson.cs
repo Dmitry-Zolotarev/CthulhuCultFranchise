@@ -21,50 +21,24 @@ public class DragPerson : MonoBehaviour,
     {
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
-
         canvas = GetComponentInParent<Canvas>();
-
-        if (canvas == null)
-        {
-            Debug.LogError(
-                $"DragPerson: Canvas не найден дл€ {name}."
-            );
-        }
     }
-
-    // =========================================================
-    // BEGIN DRAG
-    // =========================================================
-
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (canvas == null)
-            return;
+        if (canvas == null) return;
 
         wasDropped = false;
-
         originalParent = transform.parent;
         originalPosition = rectTransform.anchoredPosition;
 
-        // ѕока тащим человека, он не должен
-        // блокировать Room от получени€ Drop.
         canvasGroup.blocksRaycasts = false;
         canvasGroup.alpha = 0.75f;
 
-        // ѕоднимаем человека на верхний уровень Canvas.
         transform.SetParent(
             canvas.transform,
             true
         );
-
-        Debug.Log(
-            $"Ќачато перемещение {name}."
-        );
     }
-
-    // =========================================================
-    // DRAG
-    // =========================================================
 
     public void OnDrag(PointerEventData eventData)
     {
@@ -95,38 +69,18 @@ public class DragPerson : MonoBehaviour,
                 localPoint;
         }
     }
-
-    // =========================================================
-    // END DRAG
-    // =========================================================
-
     public void OnEndDrag(PointerEventData eventData)
     {
         canvasGroup.blocksRaycasts = true;
         canvasGroup.alpha = 1f;
-
-        // Room.OnDrop() устанавливает этот флаг,
-        // если человек успешно прин€т.
-        if (wasDropped)
-            return;
-
+        if (wasDropped) return;
         ReturnToOriginalPosition();
     }
-
-    // =========================================================
-    // DROP RESULT
-    // =========================================================
-
     public void SetDropped()
     {
         wasDropped = true;
     }
-
-    // =========================================================
-    // RETURN
-    // =========================================================
-
-    private void ReturnToOriginalPosition()
+    public void ReturnToOriginalPosition()
     {
         if (originalParent == null)
             return;

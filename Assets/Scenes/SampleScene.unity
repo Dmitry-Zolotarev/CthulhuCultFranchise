@@ -663,9 +663,7 @@ MonoBehaviour:
   Day: 1
   Time: 0
   phase: 0
-  Money: 600
-  Influence: 2
-  Grace: 0
+  Money: 100
   Anxiety: 0
   Hunger: 0
   HungerIncreaseSpeed: 0.2

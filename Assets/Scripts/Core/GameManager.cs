@@ -37,11 +37,9 @@ public class GameManager : MonoBehaviour
     public GamePhase phase = GamePhase.Map;
 
     [Header("Resources")]
-    public int Money = 600;
-    public int Influence = 2;
-    public int Grace = 0;
-    public int Anxiety = 0;
-    public float Hunger = 0;
+    public int Money = 100;
+    [HideInInspector] public int Anxiety = 0;
+    [HideInInspector] public float Hunger = 0;
 
     [SerializeField] private float HungerIncreaseSpeed = 0.2f;
 
@@ -143,8 +141,7 @@ public class GameManager : MonoBehaviour
                     timeSpeedButtons[2].color = selectedButtonColor;
                     break;
             }
-        }
-        
+        }      
         MoneyLabel?.SetText($"{Money}$");
         DayLabel?.SetText($"День {Day}");
         TimeSpeedPanel?.SetActive(phase == GamePhase.Office);
@@ -155,103 +152,20 @@ public class GameManager : MonoBehaviour
         }
         else TimeLabel?.SetText($"{(int)Time / 60:D2}:{(int)Time % 60:D2}");
     }
-
-
-    // =========================================================
-    // CLEAR PEOPLE
-    // =========================================================
-
-    private void ClearPeople()
-    {
-        HashSet<Person> peopleToDestroy =
-            new HashSet<Person>();
-
-        // Люди в резерве.
-        foreach (Person person in reserve)
-        {
-            if (person != null)
-            {
-                peopleToDestroy.Add(person);
-            }
-        }
-
-        // Люди, назначенные в комнаты.
-        foreach (Person person in activeWorkers)
-        {
-            if (person != null)
-            {
-                peopleToDestroy.Add(person);
-            }
-        }
-
-        foreach (Person person in peopleToDestroy)
-        {
-            Destroy(person.gameObject);
-        }
-
-        reserve.Clear();
-        activeWorkers.Clear();
-    }
     public bool SpendMoney(int amount)
     {
-        if (amount < 0)
-            return false;
-
-        if (Money < amount)
-            return false;
-
+        if (amount < 0 || Money < amount) return false;
         Money -= amount;
-
         return true;
     }
-
-    // =========================================================
-    // INFLUENCE
-    // =========================================================
-
-    public bool SpendInfluence(int amount)
-    {
-        if (amount < 0)
-            return false;
-
-        if (Influence < amount)
-            return false;
-
-        Influence -= amount;
-
-        return true;
-    }
-    public void AddGrace(int amount)
-    {
-        Grace += amount;
-
-        if (Grace < 0)
-        {
-            Grace = 0;
-        }
-    }
-
-    // =========================================================
-    // ANXIETY
-    // =========================================================
-
     public void AddAnxiety(int amount)
     {
-        Anxiety = Mathf.Max(
-            0,
-            Anxiety + amount
-        );
+        Anxiety = Mathf.Max(0, Anxiety + amount);
     }
-
-    // =========================================================
-    // HUNGER
-    // =========================================================
-
     public void AddHunger(float amount)
     {
         Hunger = Mathf.Clamp(Hunger + amount * HungerIncreaseSpeed, 0, MaxHunger);
     }
-
     public void ReduceHunger(float amount)
     {
         Hunger = Mathf.Max(0, Hunger - amount);
@@ -269,34 +183,20 @@ public class GameManager : MonoBehaviour
         // Максимум 8 человек.
         if (reserve.Count >= 8)
         {
-            Debug.Log(
-                $"[GameManager] Резерв заполнен. " +
-                $"{person.name} удалён."
-            );
-
             Destroy(person.gameObject);
-
             return;
         }
         reserve.Add(person);
-
-        UpdateUI();
     }
 
     public void RemoveFromReserve(Person person)
     {
-        if (person == null)
-            return;
-
+        if (person == null) return;         
         reserve.Remove(person);
-
-        UpdateUI();
     }
     public void EndDay()
     {
         phase = GamePhase.Report;
-
-        UpdateUI();
     }
 
     public void NextDay()
@@ -304,14 +204,10 @@ public class GameManager : MonoBehaviour
         if (Day >= 3)
         {
             phase = GamePhase.Final;
-
-            UpdateUI();
-
             return;
         }
         Day++;
         activeWorkers.Clear();
-
         phase = GamePhase.Map;
         ScreenManager.Instance.OpenMenu(0);
     }

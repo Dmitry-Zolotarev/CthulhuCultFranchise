@@ -64,6 +64,9 @@ public class OfficeManager : MonoBehaviour
     {
         if (ShiftRunning) return;
 
+        var people = FindObjectsOfType<DragPerson>();
+        foreach (var person in people) person.ReturnToOriginalPosition();
+
         GameManager.Instance.Time = 600;
         GameManager.Instance.phase = GamePhase.Office;
         GameManager.Instance.StartWorkPanel?.SetActive(false);
@@ -86,23 +89,23 @@ public class OfficeManager : MonoBehaviour
     {
         for (int wave = 0; wave < waves; wave++)
         {
-            var speed = timeSpeed * timeSpeedModificator;
+            var speed = GetTimeSpeed();
 
-            if (speed > 0 && wave < waves - 1) 
-            {      
+            if (speed > 0 && wave < waves - 1)
+            {
                 yield return new WaitForSeconds((wave + 1) * waveInterval / speed);
-                SpawnWave(wave + 1);
-            }         
+                SpawnWave();
+            }
+            else {
+                wave--;
+                yield return null;
+            }       
         }
         spawnCoroutine = null;
     }
-
-    // =========================================================
-    // SPAWN WAVE
-    // =========================================================
-
-    private void SpawnWave(int waveNumber)
+    private void SpawnWave()
     {
+        if (GetTimeSpeed() == 0) return;
         for (int i = 0; i < visitorsPerWave; i++) SpawnVisitor();
     }
 
@@ -114,16 +117,9 @@ public class OfficeManager : MonoBehaviour
         var rect = person.GetComponent<RectTransform>();
         rect.localRotation = Quaternion.identity;
         rect.localScale = Vector3.one;
-        // -----------------------------------------------------
-        // Характеристики посетителя
-        // -----------------------------------------------------
         person.Type = Random.value < 0.5f ? PersonType.Student : PersonType.OfficeWorker;
         GameManager.Instance.AddPersonToReserve(person);
     }
-
-    // =========================================================
-    // CTHULHU
-    // =========================================================
 
     private void TriggerCthulhuEating()
     {
@@ -131,13 +127,8 @@ public class OfficeManager : MonoBehaviour
         if (people.Length == 0) return;
         var victim = people[Random.Range(0, people.Length)];
         if (victim == null) return;
-        Debug.Log($"Ктулху пожирает {victim.name}.");
         victim.Eat(hungerReduction);
     }
-
-    // =========================================================
-    // FINISH SHIFT
-    // =========================================================
 
     private void FinishShift()
     {
@@ -147,7 +138,7 @@ public class OfficeManager : MonoBehaviour
         {
             StopCoroutine(spawnCoroutine);
             spawnCoroutine = null;
-        }
+        }  
         GameManager.Instance?.NextDay();
     }
 }
