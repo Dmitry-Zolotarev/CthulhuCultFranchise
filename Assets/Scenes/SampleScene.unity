@@ -160,6 +160,7 @@ MonoBehaviour:
   startTime: 600
   endTime: 1080
   timeSpeed: 5
+  timeSpeedModificator: 1
   hungerReduction: 50
   rooms:
   - {fileID: 1712561600}
@@ -686,6 +687,11 @@ MonoBehaviour:
   auditoryLabel: {fileID: 1178363272}
   descriptionLabel: {fileID: 1021470872}
   influenceLabel: {fileID: 1091738925}
+  timeSpeedButtons:
+  - {fileID: 727478502}
+  - {fileID: 471906648}
+  - {fileID: 1528506850}
+  selectedButtonColor: {r: 0.5882353, g: 0.9411765, b: 0.39215687, a: 1}
   StartWorkPanel: {fileID: 1178169789}
   TimeSpeedPanel: {fileID: 841981644}
 --- !u!1 &471906645
@@ -1040,7 +1046,6 @@ GameObject:
   - component: {fileID: 529483598}
   - component: {fileID: 529483601}
   - component: {fileID: 529483600}
-  - component: {fileID: 529483599}
   m_Layer: 5
   m_Name: TimeLabel
   m_TagString: Untagged
@@ -1067,21 +1072,6 @@ RectTransform:
   m_AnchoredPosition: {x: 136.9, y: -9.1}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &529483599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 529483597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11cc3efb29c6ee94486e3d7df8baf4bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tooltipText: "\u0414\u0435\u043D\u044C\u0433\u0438"
-  offset: {x: -100, y: 0, z: 0}
-  fontSize: 16
 --- !u!114 &529483600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1658,7 +1648,6 @@ GameObject:
   - component: {fileID: 905907880}
   - component: {fileID: 905907882}
   - component: {fileID: 905907881}
-  - component: {fileID: 905907883}
   m_Layer: 5
   m_Name: MoneyLabel
   m_TagString: Untagged
@@ -1682,7 +1671,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 112.6, y: -13.5}
+  m_AnchoredPosition: {x: 112.6, y: -11.7}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &905907881
@@ -1714,8 +1703,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4284795030
+  m_fontColor: {r: 0.5882353, g: 0.78431374, b: 0.39215687, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1782,21 +1771,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 905907879}
   m_CullTransparentMesh: 1
---- !u!114 &905907883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 905907879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11cc3efb29c6ee94486e3d7df8baf4bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tooltipText: "\u0414\u0435\u043D\u044C\u0433\u0438"
-  offset: {x: -100, y: 0, z: 0}
-  fontSize: 16
 --- !u!1 &944121148
 GameObject:
   m_ObjectHideFlags: 0
@@ -2874,7 +2848,6 @@ GameObject:
   - component: {fileID: 1625980003}
   - component: {fileID: 1528506851}
   - component: {fileID: 1625980005}
-  - component: {fileID: 1625980004}
   m_Layer: 5
   m_Name: DayLabel
   m_TagString: Untagged
@@ -2901,21 +2874,6 @@ RectTransform:
   m_AnchoredPosition: {x: 3, y: -10.1}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1625980004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1625980002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11cc3efb29c6ee94486e3d7df8baf4bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tooltipText: "\u0414\u0435\u043D\u044C\u0433\u0438"
-  offset: {x: -100, y: 0, z: 0}
-  fontSize: 16
 --- !u!114 &1625980005
 MonoBehaviour:
   m_ObjectHideFlags: 0

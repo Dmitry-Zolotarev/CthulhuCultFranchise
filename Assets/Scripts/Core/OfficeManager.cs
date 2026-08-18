@@ -16,7 +16,7 @@ public class OfficeManager : MonoBehaviour
     [SerializeField] private float startTime = 600f;
     [SerializeField] private float endTime = 1080f;
     [SerializeField] private float timeSpeed = 4f;
-    private int timeSpeedModificator = 1;
+    [HideInInspector] public int timeSpeedModificator = 1;
     public float hungerReduction = 50f;
     [Header("")]
     [SerializeField] private Room[] rooms;
@@ -69,10 +69,6 @@ public class OfficeManager : MonoBehaviour
         GameManager.Instance.StartWorkPanel?.SetActive(false);
 
         ShiftRunning = true;
-        // -----------------------------------------------------
-        // Запускаем волны
-        // -----------------------------------------------------
-
         if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
         
         spawnCoroutine = StartCoroutine(SpawnWaves());

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 
@@ -28,15 +29,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     [HideInInspector] public District SelectedDistrict;
+    
 
     [Header("Game")]
     public int Day = 1;
     [HideInInspector] public float Time;
     public GamePhase phase = GamePhase.Map;
-
-    // =========================================================
-    // RESOURCES
-    // =========================================================
 
     [Header("Resources")]
     public int Money = 600;
@@ -44,8 +42,8 @@ public class GameManager : MonoBehaviour
     public int Grace = 0;
     public int Anxiety = 0;
     public float Hunger = 0;
-    [SerializeField]
-    private float HungerIncreaseSpeed = 0.2f;
+
+    [SerializeField] private float HungerIncreaseSpeed = 0.2f;
 
     [Header("Limits")]
     public int MaxInfluence = 4;
@@ -96,6 +94,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI auditoryLabel;
     [SerializeField] private TextMeshProUGUI descriptionLabel;
     [SerializeField] private TextMeshProUGUI influenceLabel;
+    [SerializeField] private Image[] timeSpeedButtons;
+    [SerializeField] private Color selectedButtonColor = new Color(150, 240, 100);
 
     public GameObject StartWorkPanel;
     public GameObject TimeSpeedPanel;
@@ -106,20 +106,13 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
 
         DontDestroyOnLoad(gameObject);
     }
-
-    private void Start()
-    {
-        StartNewGame();
-    }
-
     private void Update()
     {
-        UpdateLabels();
+        UpdateUI();
     }
     public void UpdateDistrictLabels()
     {
@@ -132,8 +125,26 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void UpdateLabels()
+    public void UpdateUI()
     {
+        if(timeSpeedButtons.Length == 3)
+        {
+            foreach (var button in timeSpeedButtons) button.color = Color.white;
+
+            switch(OfficeManager.Instance.timeSpeedModificator)
+            {
+                case 0:
+                    timeSpeedButtons[0].color = selectedButtonColor;
+                    break;
+                case 1:
+                    timeSpeedButtons[1].color = selectedButtonColor;
+                    break;
+                default:
+                    timeSpeedButtons[2].color = selectedButtonColor;
+                    break;
+            }
+        }
+        
         MoneyLabel?.SetText($"{Money}$");
         DayLabel?.SetText($"День {Day}");
         TimeSpeedPanel?.SetActive(phase == GamePhase.Office);
@@ -145,38 +156,6 @@ public class GameManager : MonoBehaviour
         else TimeLabel?.SetText($"{(int)Time / 60:D2}:{(int)Time % 60:D2}");
     }
 
-    public void StartNewGame()
-    {
-        Day = 1;
-        phase = GamePhase.Map;
-        StartWorkPanel?.SetActive(false);
-
-
-        Money = 600;
-        Influence = 2;
-        Grace = 0;
-        Anxiety = 0;
-        Hunger = 0;
-
-        ClearPeople();
-
-        // -----------------------------------------------------
-        // Город
-        // -----------------------------------------------------
-
-        universityProgress = 0;
-        businessProgress = 0;
-
-        // -----------------------------------------------------
-        // KPI
-        // -----------------------------------------------------
-
-        kpiStarted = false;
-        kpiMoney = 0;
-        kpiContacts = 0;
-
-        UpdateLabels();
-    }
 
     // =========================================================
     // CLEAR PEOPLE
@@ -301,7 +280,7 @@ public class GameManager : MonoBehaviour
         }
         reserve.Add(person);
 
-        UpdateLabels();
+        UpdateUI();
     }
 
     public void RemoveFromReserve(Person person)
@@ -311,13 +290,13 @@ public class GameManager : MonoBehaviour
 
         reserve.Remove(person);
 
-        UpdateLabels();
+        UpdateUI();
     }
     public void EndDay()
     {
         phase = GamePhase.Report;
 
-        UpdateLabels();
+        UpdateUI();
     }
 
     public void NextDay()
@@ -326,7 +305,7 @@ public class GameManager : MonoBehaviour
         {
             phase = GamePhase.Final;
 
-            UpdateLabels();
+            UpdateUI();
 
             return;
         }
