@@ -10,12 +10,11 @@ public class District : MonoBehaviour
     public string Name;
     public string Auditory;
     public string Description;
-
+    public PersonType ResidentType = PersonType.OfficeWorker;
     public void SetectDistrict()
     {
-        GameManager.Instance.SelectedDistrict = this;
+        GameManager.Instance.District = this;
         GameManager.Instance.StartWorkPanel?.SetActive(true);
         GameManager.Instance.UpdateDistrictLabels();
-        
     }
 }

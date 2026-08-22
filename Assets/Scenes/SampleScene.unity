@@ -595,15 +595,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Day: 1
-  SelectedDistrict: {fileID: 0}
   DayTime: 0
   phase: 0
   Money: 100
   Anxiety: 0
   Hunger: 0
-  HungerIncreaseSpeed: 0.2
-  MaxInfluence: 4
-  MaxHunger: 100
+  District: {fileID: 0}
   MoneyLabel: {fileID: 905907881}
   DayLabel: {fileID: 1625980005}
   TimeLabel: {fileID: 529483600}
@@ -620,14 +617,19 @@ MonoBehaviour:
   hungerBar: {fileID: 8892265832779191133}
   StartWorkPanel: {fileID: 1178169789}
   TimeSpeedPanel: {fileID: 841981644}
+  CultistSprite: {fileID: 21300000, guid: b15c088527b399943adcbc64d6310de6, type: 3}
+  PersonSprites:
+  - {fileID: 21300000, guid: ec6a38352d6cc904bbb06010367528a1, type: 3}
+  - {fileID: 21300000, guid: b3526f98254711f48b5a84bb8ee275d6, type: 3}
   personPrefab: {fileID: 2701407485879646528, guid: 73d04e9d03f796044b41157c6a96529e, type: 3}
   reception: {fileID: 1712561598}
-  waves: 6
-  visitorsPerWave: 1
-  waveInterval: 10
+  MaxHunger: 100
+  HungerIncreaseSpeed: 0.2
+  visitorsCount: 6
+  visitInterval: 20
   startTime: 600
   endTime: 1080
-  timeSpeed: 4
+  timeSpeed: 6
   hungerReduction: 50
   officeMusic: {fileID: 8300000, guid: e744c2d66ff25874e9e181c85d903d7c, type: 3}
 --- !u!1 &471906645
@@ -3539,6 +3541,7 @@ MonoBehaviour:
     \u0438\u0441\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u0442\u0435\u043B\u0438"
   Description: "\u041A\u0440\u0443\u043F\u043D\u0435\u0439\u0448\u0438\u0439 \u0443\u043D\u0438\u0432\u0435\u0440\u0441\u0438\u0442\u0435\u0442
     \u0433\u043E\u0440\u043E\u0434\u0430"
+  ResidentType: 1
 --- !u!222 &6822222397453425892
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3688,6 +3691,7 @@ MonoBehaviour:
     \u0438 \u043E\u0444\u0438\u0441\u043D\u044B\u0435 \u0440\u0430\u0431\u043E\u0442\u043D\u0438\u043A\u0438"
   Description: "\u0426\u0435\u043D\u0442\u0440 \u0433\u043E\u0440\u043E\u0434\u0430
     \u0441 \u043E\u0444\u0438\u0441\u043D\u044B\u043C\u0438 \u0437\u0434\u0430\u043D\u0438\u044F\u043C\u0438"
+  ResidentType: 1
 --- !u!1 &8417823357121052064 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7586647264649498736, guid: d8d2072277896d147b2edf1366e22035, type: 3}

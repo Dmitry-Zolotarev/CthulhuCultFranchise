@@ -13,11 +13,7 @@ public enum GamePhase
     Final
 }
 
-public enum PersonType
-{
-    Student,
-    OfficeWorker
-}
+
 public enum CampaignType
 {
     Reception,
@@ -30,7 +26,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance; 
     public int Day = 1;
-    [HideInInspector] public District SelectedDistrict;
+   
     [HideInInspector] public float DayTime;
     public GamePhase phase = GamePhase.Map;
 
@@ -38,13 +34,7 @@ public class GameManager : MonoBehaviour
     public int Money = 100;
     [HideInInspector] public int Anxiety = 0;
     [HideInInspector] public float Hunger = 0;
-
-    [SerializeField] private float HungerIncreaseSpeed = 0.2f;
-
-    [Header("Limits")]
-    public int MaxInfluence = 4;
-    public float MaxHunger = 100;
-
+    [HideInInspector] public District District;   
     [HideInInspector] public HashSet<Person> reserve = new HashSet<Person>();
     [HideInInspector] public HashSet<Person> activeWorkers = new HashSet<Person>();
 
@@ -60,19 +50,24 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Color selectedButtonColor = new Color(150, 240, 100);
     [SerializeField] private TextMeshProUGUI hungerPercentLabel;
     [SerializeField] private Slider hungerBar;
-
+    
     public GameObject StartWorkPanel;
     public GameObject TimeSpeedPanel;
+
+    [Header("Prefabs")]
+    public Sprite CultistSprite;
+    public Sprite[] PersonSprites;  
     [SerializeField] private Person personPrefab;
     [SerializeField] private Reception reception;
 
-    [Header("Balance settings")] 
-    [SerializeField] private int waves = 3;
-    [SerializeField] private int visitorsPerWave = 2;
-    [SerializeField] private float waveInterval = 15f;
+    [Header("Balance settings")]
+    public float MaxHunger = 100;
+    [SerializeField] private float HungerIncreaseSpeed = 0.2f;
+    [SerializeField] private int visitorsCount = 6;
+    [SerializeField] private float visitInterval = 15f;
     [SerializeField] private float startTime = 600f;
     [SerializeField] private float endTime = 1080f;
-    [SerializeField] private float timeSpeed = 4f;
+    [SerializeField] private float timeSpeed = 6f;
     public float hungerReduction = 50f;
     
     [Header("Audio")]
@@ -85,7 +80,7 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         StartWorkPanel.SetActive(false);
-        waves++;
+        visitorsCount++;
     }
     public void StartShift()
     {
@@ -98,7 +93,7 @@ public class GameManager : MonoBehaviour
         MusicPlayer.Instance.PlayMusic(officeMusic);
 
         if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
-        spawnCoroutine = StartCoroutine(SpawnWaves());
+        spawnCoroutine = StartCoroutine(SpawnVisitors());
     }
     private void Update()
     {
@@ -115,12 +110,12 @@ public class GameManager : MonoBehaviour
 
     public void UpdateDistrictLabels()
     {
-        if (SelectedDistrict != null)
+        if (District != null)
         {
-            districtNameLabel?.SetText(SelectedDistrict.Name);
-            auditoryLabel?.SetText($"Аудитория: {SelectedDistrict.Auditory.ToLower()}");
-            descriptionLabel?.SetText(SelectedDistrict.Description);
-            influenceLabel?.SetText($"Влияние: {SelectedDistrict.Influence}/5");
+            districtNameLabel?.SetText(District.Name);
+            auditoryLabel?.SetText($"Аудитория: {District.Auditory.ToLower()}");
+            descriptionLabel?.SetText(District.Description);
+            influenceLabel?.SetText($"Влияние: {District.Influence}/5");
         }
     }
     public void UpdateUI()
@@ -179,17 +174,16 @@ public class GameManager : MonoBehaviour
     {
         timeSpeedModificator = speedModificator;
     }
-
-    private IEnumerator SpawnWaves()
+    private IEnumerator SpawnVisitors()
     {
-        for (int wave = 0; wave < waves; wave++)
+        for (int wave = 0; wave < visitorsCount; wave++)
         {
             var speed = GetTimeSpeed();
 
-            if (speed > 0 && wave < waves - 1)
+            if (speed > 0 && wave < visitorsCount - 1)
             {
-                yield return new WaitForSeconds((wave + 1) * waveInterval / speed);
-                SpawnWave();
+                yield return new WaitForSeconds((wave + 1) * visitInterval / speed);
+                SpawnVisitor();
             }
             else
             {
@@ -199,24 +193,15 @@ public class GameManager : MonoBehaviour
         }
         spawnCoroutine = null;
     }
-
-    private void SpawnWave()
-    {
-        if (GetTimeSpeed() == 0) return;
-        for (int i = 0; i < visitorsPerWave; i++) SpawnVisitor();
-    }
     private void SpawnVisitor()
     {
         Person person = Instantiate(personPrefab, reception.transform);
         reception.AssignPerson(person);
-        var rect = person.GetComponent<RectTransform>();
-        rect.localRotation = Quaternion.identity;
-        rect.localScale = Vector3.one;
-        person.Type = Random.value < 0.5f ? PersonType.Student : PersonType.OfficeWorker;
-        reserve.Add(person);
-        Debug.Log(person.name);
-    }
 
+        person.Type = Random.value < 0.5f ? District.ResidentType : (PersonType)Random.Range(0, PersonSprites.Length);
+        person.personImage.sprite = PersonSprites[(int)person.Type];
+        reserve.Add(person);
+    }
     private void TriggerCthulhuEating()
     {
         var people = FindObjectsOfType<Person>();
@@ -238,8 +223,7 @@ public class GameManager : MonoBehaviour
         foreach (var person in reserve) 
         {
             if(!activeWorkers.Contains(person)) Destroy(person.gameObject);         
-        }
-        
+        }    
         reserve.Clear();
         phase = GamePhase.Map;
         MusicPlayer.Instance.PlayDefaultMusic();

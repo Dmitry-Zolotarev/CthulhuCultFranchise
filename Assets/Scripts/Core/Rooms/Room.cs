@@ -39,11 +39,7 @@ public class Room : MonoBehaviour, IDropHandler
     {
         if (!(this is Reception))
         {
-            if (!GameManager.Instance.activeWorkers.Contains(person))
-            {
-                GameManager.Instance.activeWorkers.Add(person);
-            }
-            GameManager.Instance.reserve.Remove(person);
+            person.BecomeCultist();        
         }
         else if(GetCurrentPersonCount() >= capacity)
         {
