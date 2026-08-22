@@ -53,8 +53,9 @@ public class GameManager : MonoBehaviour
     
     public GameObject StartWorkPanel;
     public GameObject TimeSpeedPanel;
-
+    
     [Header("Prefabs")]
+    public GameObject[] Canvases;
     public Sprite CultistSprite;
     public Sprite[] PersonSprites;  
     [SerializeField] private Person personPrefab;
@@ -89,7 +90,7 @@ public class GameManager : MonoBehaviour
         DayTime = startTime;
         phase = GamePhase.Office;
         StartWorkPanel.SetActive(false);
-        ScreenManager.Instance.OpenMenu(1);
+        OpenCanvas(1);
         MusicPlayer.Instance.PlayMusic(officeMusic);
 
         if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
@@ -227,6 +228,11 @@ public class GameManager : MonoBehaviour
         reserve.Clear();
         phase = GamePhase.Map;
         MusicPlayer.Instance.PlayDefaultMusic();
-        ScreenManager.Instance.OpenMenu(0);
+        OpenCanvas(0);
+    }
+    public void OpenCanvas(int canvasID)
+    {
+        Time.timeScale = 1f;
+        for (int i = 0; i < Canvases.Length; i++) Canvases[i]?.SetActive(i == canvasID);
     }
 }
