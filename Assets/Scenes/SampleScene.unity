@@ -629,7 +629,7 @@ MonoBehaviour:
   MaxHunger: 100
   HungerIncreaseSpeed: 0.2
   visitorsCount: 6
-  visitInterval: 16
+  visitInterval: 14
   startTime: 600
   endTime: 1080
   timeSpeed: 6
