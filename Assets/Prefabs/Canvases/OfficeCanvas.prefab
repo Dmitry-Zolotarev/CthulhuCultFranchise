@@ -760,7 +760,7 @@ GameObject:
   - component: {fileID: 21551159798606440}
   - component: {fileID: 3863906862480658405}
   - component: {fileID: 3037443450047539895}
-  - component: {fileID: 7365049625219899348}
+  - component: {fileID: 2405406772834459136}
   m_Layer: 0
   m_Name: Reception
   m_TagString: Untagged
@@ -827,7 +827,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7365049625219899348
+--- !u!114 &2405406772834459136
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -836,10 +836,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4015773590108984940}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddb3850a57297784d9c30a44bef9c5aa, type: 3}
+  m_Script: {fileID: 11500000, guid: cd9d2d0abaf22324482e76f09e048a6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  capacity: 3
+  capacity: 4
   Level: 1
   maxLevel: 3
   LevelSprites: []
@@ -1565,7 +1565,6 @@ MonoBehaviour:
   LevelSprites: []
   personSpacing: 100
   personOffsetY: -30
-  launderingTime: 2
   maxLoyaltyReduction: 0.8
 --- !u!1 &6413231258665062852
 GameObject:

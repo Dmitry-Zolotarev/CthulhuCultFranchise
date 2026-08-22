@@ -14,7 +14,6 @@ public class ScreenManager : MonoBehaviour
         for (int i = 0; i < Screens.Length; i++) 
         {
             Screens[i]?.SetActive(i == menuID);
-            Debug.Log($"{Screens[i].name} has opened");
         }    
     }
 }

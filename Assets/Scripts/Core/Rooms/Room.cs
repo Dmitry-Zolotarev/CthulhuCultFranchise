@@ -7,14 +7,10 @@ using System.Collections.Generic;
 public class Room : MonoBehaviour, IDropHandler
 {
     public int capacity = 1;
-
     public int Level = 1;
-
     [SerializeField] private int maxLevel = 3;
     [SerializeField] protected Sprite[] LevelSprites;
-
     [SerializeField] private float personSpacing = 100f;
-
     [SerializeField] private float personOffsetY = -30f;
 
     private Image roomImage;
@@ -22,69 +18,41 @@ public class Room : MonoBehaviour, IDropHandler
     private void Awake()
     {
         roomImage = GetComponent<Image>();
-
         UpdateRoomSprite();
     }
-
-    // =========================================================
-    // DROP
-    // =========================================================
-
     public void OnDrop(PointerEventData eventData)
     {
         if (eventData.pointerDrag == null) return;
         Person person = eventData.pointerDrag.GetComponent<Person>();
         if (person == null) return;
         if (!CanAcceptPerson(person)) return;
-
         AssignPerson(person);
-
     }
-
-    // =========================================================
-    // CAPACITY
-    // =========================================================
-
     private bool CanAcceptPerson(Person person)
     {
-        if (person == null)
-            return false;
-
+        if (person == null || this is Reception) return false;
         int currentCount = GetCurrentPersonCount();
-
-        // Если человек уже находится в этой комнате,
-        // не считаем его второй раз.
-        if (person.transform.parent == transform)
-        {
-            currentCount--;
-        }
-
+        if (person.transform.parent == transform) currentCount--;
         return currentCount < capacity;
     }
-
-    // =========================================================
-    // ASSIGN PERSON
-    // =========================================================
-
     public virtual void AssignPerson(Person person)
     {
-        GameManager.Instance.RemoveFromReserve(person);
-
-        if (!GameManager.Instance.activeWorkers.Contains(person))
+        if (!(this is Reception))
         {
-            GameManager.Instance.activeWorkers.Add(
-                person
-            );
+            if (!GameManager.Instance.activeWorkers.Contains(person))
+            {
+                GameManager.Instance.activeWorkers.Add(person);
+            }
+            GameManager.Instance.reserve.Remove(person);
+        }
+        else if(GetCurrentPersonCount() >= capacity)
+        {
+            Destroy(person.gameObject);
+            return;
         }
         person.Room = this;
         person.transform.SetParent(transform, false);
-
-
-
-
-        RectTransform rect =
-            person.GetComponent<RectTransform>();
-
+        RectTransform rect = person.GetComponent<RectTransform>();
         if (rect != null)
         {
             rect.localRotation =
@@ -93,27 +61,14 @@ public class Room : MonoBehaviour, IDropHandler
             rect.localScale =
                 Vector3.one;
         }
-
-        // -----------------------------------------------------
-        // Выстраиваем всех людей в комнате
-        // -----------------------------------------------------
-
         ArrangePeople();
-
-        // -----------------------------------------------------
-        // Сообщаем DragPerson об успешном Drop
-        // -----------------------------------------------------
         person?.GetComponent<DragPerson>()?.SetDropped();
     }
 
-    // =========================================================
-    // ARRANGE PEOPLE
-    // =========================================================
-
     private void ArrangePeople()
     {
-        List<RectTransform> people =
-            new List<RectTransform>();
+        List<RectTransform> people = new List<RectTransform>();
+
 
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -127,10 +82,9 @@ public class Room : MonoBehaviour, IDropHandler
 
         int count = people.Count;
 
-        if (count == 0)
-            return;
-        float totalWidth =
-            (count - 1) * personSpacing;
+        if (count == 0) return;
+
+        float totalWidth = (count - 1) * personSpacing;
 
         float startX = -totalWidth / 2f;
 
@@ -144,11 +98,6 @@ public class Room : MonoBehaviour, IDropHandler
 
         }
     }
-
-    // =========================================================
-    // LEVEL UP
-    // =========================================================
-
     public void LevelUP()
     {
         if (Level < maxLevel)
@@ -192,7 +141,6 @@ public class Room : MonoBehaviour, IDropHandler
             Person person = transform.GetChild(i).GetComponent<Person>();
             if (person != null) count++;
         }
-
         return count;
     }
 

@@ -122,71 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &60096441
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 60096443}
-  - component: {fileID: 60096442}
-  m_Layer: 0
-  m_Name: OfficeManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &60096442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 60096441}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49d97c854ee341a4184f5be652e58e45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  personPrefab: {fileID: 2701407485879646528, guid: 73d04e9d03f796044b41157c6a96529e, type: 3}
-  receptionPoint: {fileID: 8892265832779191132}
-  receptionContainer: {fileID: 1712561596}
-  waves: 4
-  visitorsPerWave: 1
-  waveInterval: 20
-  startTime: 600
-  endTime: 1080
-  timeSpeed: 5
-  timeSpeedModificator: 1
-  hungerReduction: 50
-  rooms:
-  - {fileID: 1712561600}
-  - {fileID: 985133704}
-  - {fileID: 1948310325}
-  - {fileID: 841981653}
-  - {fileID: 0}
-  hungerPercentLabel: {fileID: 8892265832779191134}
-  hungerBar: {fileID: 8892265832779191133}
-  officeMusic: {fileID: 8300000, guid: e744c2d66ff25874e9e181c85d903d7c, type: 3}
-  ShiftRunning: 0
---- !u!4 &60096443
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 60096441}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 970776231}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &82705930
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,9 +594,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff19eb023132e9a49b152390c858f05d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectedDistrict: {fileID: 0}
   Day: 1
-  Time: 0
+  SelectedDistrict: {fileID: 0}
+  DayTime: 0
   phase: 0
   Money: 100
   Anxiety: 0
@@ -669,15 +604,6 @@ MonoBehaviour:
   HungerIncreaseSpeed: 0.2
   MaxInfluence: 4
   MaxHunger: 100
-  reserve: []
-  activeWorkers: []
-  startingCultistsParent: {fileID: 8892265832779191132}
-  startingCultistsCount: 3
-  universityProgress: 0
-  businessProgress: 0
-  kpiStarted: 0
-  kpiMoney: 0
-  kpiContacts: 0
   MoneyLabel: {fileID: 905907881}
   DayLabel: {fileID: 1625980005}
   TimeLabel: {fileID: 529483600}
@@ -690,8 +616,20 @@ MonoBehaviour:
   - {fileID: 471906648}
   - {fileID: 1528506850}
   selectedButtonColor: {r: 0.5882353, g: 0.9411765, b: 0.39215687, a: 1}
+  hungerPercentLabel: {fileID: 8892265832779191134}
+  hungerBar: {fileID: 8892265832779191133}
   StartWorkPanel: {fileID: 1178169789}
   TimeSpeedPanel: {fileID: 841981644}
+  personPrefab: {fileID: 2701407485879646528, guid: 73d04e9d03f796044b41157c6a96529e, type: 3}
+  reception: {fileID: 1712561598}
+  waves: 6
+  visitorsPerWave: 1
+  waveInterval: 10
+  startTime: 600
+  endTime: 1080
+  timeSpeed: 4
+  hungerReduction: 50
+  officeMusic: {fileID: 8300000, guid: e744c2d66ff25874e9e181c85d903d7c, type: 3}
 --- !u!1 &471906645
 GameObject:
   m_ObjectHideFlags: 0
@@ -775,8 +713,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 60096442}
-        m_TargetAssemblyTypeName: OfficeManager, Assembly-CSharp
+      - m_Target: {fileID: 356909098}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: SetTimeSpeed
         m_Mode: 3
         m_Arguments:
@@ -1383,8 +1321,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 60096442}
-        m_TargetAssemblyTypeName: OfficeManager, Assembly-CSharp
+      - m_Target: {fileID: 356909098}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: SetTimeSpeed
         m_Mode: 3
         m_Arguments:
@@ -1624,17 +1562,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 841981644}
   m_CullTransparentMesh: 1
---- !u!114 &841981653 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2684588865633355071, guid: d8d2072277896d147b2edf1366e22035, type: 3}
-  m_PrefabInstance: {fileID: 8892265832779191131}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0471b471440f0a348b93eb12469d0fcb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &905907879
 GameObject:
   m_ObjectHideFlags: 0
@@ -1838,20 +1765,8 @@ Transform:
   - {fileID: 136182593}
   - {fileID: 356909097}
   - {fileID: 1054705960}
-  - {fileID: 60096443}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &985133704 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5956330931437066655, guid: d8d2072277896d147b2edf1366e22035, type: 3}
-  m_PrefabInstance: {fileID: 8892265832779191131}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81c2413abe767fd4ea569b71a7d78ff8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1021470871
 GameObject:
   m_ObjectHideFlags: 0
@@ -2777,8 +2692,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 60096442}
-        m_TargetAssemblyTypeName: OfficeManager, Assembly-CSharp
+      - m_Target: {fileID: 356909098}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: SetTimeSpeed
         m_Mode: 3
         m_Arguments:
@@ -2961,20 +2876,15 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!224 &1712561596 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 21551159798606440, guid: d8d2072277896d147b2edf1366e22035, type: 3}
-  m_PrefabInstance: {fileID: 8892265832779191131}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1712561600 stripped
+--- !u!114 &1712561598 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7365049625219899348, guid: d8d2072277896d147b2edf1366e22035, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2405406772834459136, guid: d8d2072277896d147b2edf1366e22035, type: 3}
   m_PrefabInstance: {fileID: 8892265832779191131}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddb3850a57297784d9c30a44bef9c5aa, type: 3}
+  m_Script: {fileID: 11500000, guid: cd9d2d0abaf22324482e76f09e048a6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1773476613
@@ -3095,17 +3005,6 @@ RectTransform:
   m_AnchoredPosition: {x: -74.19528, y: 86.47163}
   m_SizeDelta: {x: 1139.1313, y: 487.34717}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1948310325 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8213097897631035151, guid: d8d2072277896d147b2edf1366e22035, type: 3}
-  m_PrefabInstance: {fileID: 8892265832779191131}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c819ebde837e81479571cc231114db8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &272076343680141103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3312,7 +3211,6 @@ GameObject:
   - component: {fileID: 5053758599235003766}
   - component: {fileID: 7087749724050875815}
   - component: {fileID: 2483227565352608990}
-  - component: {fileID: 5983421815062835819}
   m_Layer: 5
   m_Name: CityMapCanvas
   m_TagString: Untagged
@@ -3481,26 +3379,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 60096442}
-        m_TargetAssemblyTypeName: OfficeManager, Assembly-CSharp
+      - m_Target: {fileID: 356909098}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: StartShift
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1054705959}
-        m_TargetAssemblyTypeName: ScreenManager, Assembly-CSharp
-        m_MethodName: OpenMenu
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3614,18 +3500,6 @@ RectTransform:
   m_AnchoredPosition: {x: 285, y: -33}
   m_SizeDelta: {x: 510.7408, y: 406.4039}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5983421815062835819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2643481620983938895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb1a1257e307e5e4abe053ba4c84652a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6412619393522066010
 GameObject:
   m_ObjectHideFlags: 0
@@ -3967,11 +3841,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8d2072277896d147b2edf1366e22035, type: 3}
---- !u!224 &8892265832779191132 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4375563072365986327, guid: d8d2072277896d147b2edf1366e22035, type: 3}
-  m_PrefabInstance: {fileID: 8892265832779191131}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8892265832779191133 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4834643227473627660, guid: d8d2072277896d147b2edf1366e22035, type: 3}

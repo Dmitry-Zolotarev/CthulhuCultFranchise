@@ -15,31 +15,30 @@ public class AgitationRoom : Room
 
     private void Update()
     {
-        if (!OfficeManager.Instance.ShiftRunning) return;
+        if (GameManager.Instance.phase != GamePhase.Office) return;
 
         if (district != null && GameManager.Instance.SelectedDistrict != district)  
         {
             agitationProgress = 0;
         }
         district = GameManager.Instance.SelectedDistrict;
-
         agitationTargetValue = 100 * district.Influence;
 
-        districtNameLabel.SetText($"{district.Name}: {district.Influence}/5");
-        progressLabel.SetText($"Прогресс: {GetProgressPercent()}%");
+        districtNameLabel?.SetText($"{district.Name}: {district.Influence}/5");
+        progressLabel?.SetText($"Прогресс: {GetProgressPercent()}%");
 
         if (district.Influence == 5) 
         {
-            progressLabel.SetText("Агитация завершена");
+            progressLabel?.SetText("Агитация завершена");
             return;
         } 
-        agitationProgress += agitationSpeed * GetCurrentPersonCount() * Time.deltaTime * OfficeManager.Instance.GetTimeSpeed();
+        agitationProgress += agitationSpeed * GetCurrentPersonCount() * Time.deltaTime * GameManager.Instance.GetTimeSpeed();
         if (agitationProgress >= agitationTargetValue)
         {
             district.Influence++;
-            Debug.Log($"{district.Name}: {district.Influence}/5");
             agitationProgress = 0;
-        }    
+        }
+        
     }
     private int GetProgressPercent()
     {

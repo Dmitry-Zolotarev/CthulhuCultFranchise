@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DonationRoom : Room
 {
-    // Start is called before the first frame update
-    
     [SerializeField] private int MoneyPerEmployee = 50;
     [SerializeField] private float payCooldown = 6;
     private float lastPayTime;
@@ -16,9 +12,9 @@ public class DonationRoom : Room
     }
     void Update()
     {
-        if (!OfficeManager.Instance.ShiftRunning) return;
+        if (GameManager.Instance.phase != GamePhase.Office) return;
 
-        if (Time.time >= lastPayTime + payCooldown / OfficeManager.Instance.GetTimeSpeed()) 
+        if (Time.time >= lastPayTime + payCooldown / GameManager.Instance.GetTimeSpeed()) 
         {
             GameManager.Instance.Money += MoneyPerEmployee * GetCurrentPersonCount();
             lastPayTime = Time.time;

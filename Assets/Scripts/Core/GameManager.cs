@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
@@ -27,13 +28,10 @@ public enum CampaignType
 }
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
-    [HideInInspector] public District SelectedDistrict;
-    
-
-    [Header("Game")]
+    public static GameManager Instance; 
     public int Day = 1;
-    [HideInInspector] public float Time;
+    [HideInInspector] public District SelectedDistrict;
+    [HideInInspector] public float DayTime;
     public GamePhase phase = GamePhase.Map;
 
     [Header("Resources")]
@@ -46,43 +44,9 @@ public class GameManager : MonoBehaviour
     [Header("Limits")]
     public int MaxInfluence = 4;
     public float MaxHunger = 100;
-    
-    // =========================================================
-    // PEOPLE
-    // =========================================================
 
-    [Header("Cultists")]
-    public List<Person> reserve = new List<Person>();
-
-    public List<Person> activeWorkers = new List<Person>();
-
-    [SerializeField]
-    private Transform startingCultistsParent;
-
-    [SerializeField]
-    private int startingCultistsCount = 3;
-
-    // =========================================================
-    // CITY
-    // =========================================================
-
-    [Header("City")]
-    public int universityProgress;
-    public int businessProgress;
-
-    // =========================================================
-    // KPI
-    // =========================================================
-
-    [Header("KPI")]
-    public bool kpiStarted;
-
-    public int kpiMoney;
-    public int kpiContacts;
-
-    // =========================================================
-    // UI
-    // =========================================================
+    [HideInInspector] public HashSet<Person> reserve = new HashSet<Person>();
+    [HideInInspector] public HashSet<Person> activeWorkers = new HashSet<Person>();
 
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI MoneyLabel;
@@ -94,24 +58,61 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI influenceLabel;
     [SerializeField] private Image[] timeSpeedButtons;
     [SerializeField] private Color selectedButtonColor = new Color(150, 240, 100);
+    [SerializeField] private TextMeshProUGUI hungerPercentLabel;
+    [SerializeField] private Slider hungerBar;
 
     public GameObject StartWorkPanel;
     public GameObject TimeSpeedPanel;
+    [SerializeField] private Person personPrefab;
+    [SerializeField] private Reception reception;
+
+    [Header("Balance settings")] 
+    [SerializeField] private int waves = 3;
+    [SerializeField] private int visitorsPerWave = 2;
+    [SerializeField] private float waveInterval = 15f;
+    [SerializeField] private float startTime = 600f;
+    [SerializeField] private float endTime = 1080f;
+    [SerializeField] private float timeSpeed = 4f;
+    public float hungerReduction = 50f;
+    
+    [Header("Audio")]
+    [SerializeField] private AudioClip officeMusic;
+
+    private int timeSpeedModificator = 1;
+    private Coroutine spawnCoroutine;
+
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
         Instance = this;
+        StartWorkPanel.SetActive(false);
+        waves++;
+    }
+    public void StartShift()
+    {
+        var people = FindObjectsOfType<DragPerson>();
+        foreach (var person in people) person.ReturnToOriginalPosition();
+        DayTime = startTime;
+        phase = GamePhase.Office;
+        StartWorkPanel.SetActive(false);
+        ScreenManager.Instance.OpenMenu(1);
+        MusicPlayer.Instance.PlayMusic(officeMusic);
 
-        DontDestroyOnLoad(gameObject);
+        if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
+        spawnCoroutine = StartCoroutine(SpawnWaves());
     }
     private void Update()
     {
+        if (phase == GamePhase.Office) 
+        {
+            DayTime += Time.deltaTime * timeSpeed * timeSpeedModificator;
+            if (DayTime >= endTime) FinishShift();
+
+            Hunger += GetTimeSpeed() * Time.deltaTime * HungerIncreaseSpeed;
+            if (Hunger > MaxHunger) TriggerCthulhuEating();        
+        }  
         UpdateUI();
     }
+
     public void UpdateDistrictLabels()
     {
         if (SelectedDistrict != null)
@@ -122,37 +123,35 @@ public class GameManager : MonoBehaviour
             influenceLabel?.SetText($"Влияние: {SelectedDistrict.Influence}/5");
         }
     }
-
     public void UpdateUI()
     {
-        if(timeSpeedButtons.Length == 3)
+        foreach (var button in timeSpeedButtons) button.color = Color.white;
+        switch (timeSpeedModificator)
         {
-            foreach (var button in timeSpeedButtons) button.color = Color.white;
-
-            switch(OfficeManager.Instance.timeSpeedModificator)
-            {
-                case 0:
-                    timeSpeedButtons[0].color = selectedButtonColor;
-                    break;
-                case 1:
-                    timeSpeedButtons[1].color = selectedButtonColor;
-                    break;
-                default:
-                    timeSpeedButtons[2].color = selectedButtonColor;
-                    break;
-            }
-        }      
+            case 0:
+                timeSpeedButtons[0].color = selectedButtonColor;
+                break;
+            case 1:
+                timeSpeedButtons[1].color = selectedButtonColor;
+                break;
+            default:
+                timeSpeedButtons[2].color = selectedButtonColor;
+                break;
+        }
         MoneyLabel?.SetText($"{Money}$");
         DayLabel?.SetText($"День {Day}");
         TimeSpeedPanel?.SetActive(phase == GamePhase.Office);
+
+        hungerBar.value = Hunger / MaxHunger;
+        hungerPercentLabel?.SetText($"{(int)(hungerBar.value * 100)}%");  
 
         if (phase == GamePhase.Map)
         {
             TimeLabel?.SetText("Утро");
         }
-        else TimeLabel?.SetText($"{(int)Time / 60:D2}:{(int)Time % 60:D2}");
+        else TimeLabel?.SetText($"{(int)DayTime / 60:D2}:{(int)DayTime % 60:D2}");
     }
-    public bool SpendMoney(int amount)
+    public bool TrySpendMoney(int amount)
     {
         if (amount < 0 || Money < amount) return false;
         Money -= amount;
@@ -161,10 +160,6 @@ public class GameManager : MonoBehaviour
     public void AddAnxiety(int amount)
     {
         Anxiety = Mathf.Max(0, Anxiety + amount);
-    }
-    public void AddHunger(float amount)
-    {
-        Hunger = Mathf.Clamp(Hunger + amount * HungerIncreaseSpeed, 0, MaxHunger);
     }
     public void ReduceHunger(float amount)
     {
@@ -175,40 +170,79 @@ public class GameManager : MonoBehaviour
             if(!(person.Room is Laundry)) person.loyalty -= amount;
         }
     }
-    public void AddPersonToReserve(Person person)
+    
+    public float GetTimeSpeed()
     {
-        if (person == null) return;
-        // Если человек уже находится в резерве, ничего не делаем.
-        if (reserve.Contains(person)) return;
-        // Максимум 8 человек.
-        if (reserve.Count >= 8)
+        return timeSpeedModificator * timeSpeed;
+    }
+    public void SetTimeSpeed(int speedModificator)
+    {
+        timeSpeedModificator = speedModificator;
+    }
+
+    private IEnumerator SpawnWaves()
+    {
+        for (int wave = 0; wave < waves; wave++)
         {
-            Destroy(person.gameObject);
-            return;
+            var speed = GetTimeSpeed();
+
+            if (speed > 0 && wave < waves - 1)
+            {
+                yield return new WaitForSeconds((wave + 1) * waveInterval / speed);
+                SpawnWave();
+            }
+            else
+            {
+                wave--;
+                yield return null;
+            }
         }
+        spawnCoroutine = null;
+    }
+
+    private void SpawnWave()
+    {
+        if (GetTimeSpeed() == 0) return;
+        for (int i = 0; i < visitorsPerWave; i++) SpawnVisitor();
+    }
+    private void SpawnVisitor()
+    {
+        Person person = Instantiate(personPrefab, reception.transform);
+        reception.AssignPerson(person);
+        var rect = person.GetComponent<RectTransform>();
+        rect.localRotation = Quaternion.identity;
+        rect.localScale = Vector3.one;
+        person.Type = Random.value < 0.5f ? PersonType.Student : PersonType.OfficeWorker;
         reserve.Add(person);
+        Debug.Log(person.name);
     }
 
-    public void RemoveFromReserve(Person person)
+    private void TriggerCthulhuEating()
     {
-        if (person == null) return;         
-        reserve.Remove(person);
+        var people = FindObjectsOfType<Person>();
+        if (people.Length == 0) return;
+        people[Random.Range(0, people.Length)]?.Eat(hungerReduction);
     }
-    public void EndDay()
+    private void FinishShift()
     {
-        phase = GamePhase.Report;
+        if (spawnCoroutine != null)
+        {
+            StopCoroutine(spawnCoroutine);
+            spawnCoroutine = null;
+        }
+        NextDay();
     }
-
     public void NextDay()
     {
-        if (Day >= 3)
-        {
-            phase = GamePhase.Final;
-            return;
-        }
         Day++;
-        activeWorkers.Clear();
+        foreach (var person in reserve) 
+        {
+            if(!activeWorkers.Contains(person)) Destroy(person.gameObject);         
+        }
+        
+        reserve.Clear();
         phase = GamePhase.Map;
+        MusicPlayer.Instance.PlayDefaultMusic();
         ScreenManager.Instance.OpenMenu(0);
     }
 }

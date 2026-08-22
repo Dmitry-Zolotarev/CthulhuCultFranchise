@@ -20,10 +20,14 @@ public class Person : MonoBehaviour
     }
     private void Update()
     {
-        if(OfficeManager.Instance.ShiftRunning)
+        if(GameManager.Instance.phase == GamePhase.Office)
         {
             UpdateUI();
-            if(!(Room is Laundry)) loyalty -= Time.deltaTime * OfficeManager.Instance.GetTimeSpeed();
+            if(Room is Laundry) 
+            {
+                if(loyalty < maxLoyalty) loyalty += Time.deltaTime * GameManager.Instance.GetTimeSpeed();
+            }
+            else loyalty -= Time.deltaTime * GameManager.Instance.GetTimeSpeed();
         }
         if (loyalty <= 0) Escape();
     }
