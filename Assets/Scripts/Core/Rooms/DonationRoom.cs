@@ -12,7 +12,7 @@ public class DonationRoom : Room
     }
     void Update()
     {
-        if (GameManager.Instance.phase != GamePhase.Office) return;
+        if (GameManager.Instance.Phase != GamePhase.Office) return;
 
         if (Time.time >= lastPayTime + payCooldown / GameManager.Instance.GetTimeSpeed()) 
         {

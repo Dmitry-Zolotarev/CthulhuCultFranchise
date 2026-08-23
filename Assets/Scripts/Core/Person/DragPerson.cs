@@ -8,14 +8,14 @@ public class DragPerson : MonoBehaviour,
     IDragHandler,
     IEndDragHandler
 {
-    private RectTransform rectTransform;
-    private CanvasGroup canvasGroup;
-    private Canvas canvas;
+    public RectTransform rectTransform;
+    public CanvasGroup canvasGroup;
+    public Canvas canvas;
 
-    private Transform originalParent;
-    private Vector2 originalPosition;
+    public Transform originalParent;
+    public Vector2 originalPosition;
 
-    private bool wasDropped;
+    public bool wasDropped;
 
     private void Awake()
     {

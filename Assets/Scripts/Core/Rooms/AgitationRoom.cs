@@ -15,13 +15,13 @@ public class AgitationRoom : Room
 
     private void Update()
     {
-        if (GameManager.Instance.phase != GamePhase.Office) return;
+        if (GameManager.Instance.Phase != GamePhase.Office) return;
 
-        if (district != null && GameManager.Instance.District != district)  
+        if (district != null && GameManager.Instance.SelectedDistrict != district)  
         {
             agitationProgress = 0;
         }
-        district = GameManager.Instance.District;
+        district = GameManager.Instance.SelectedDistrict;
         agitationTargetValue = 100 * district.Influence;
 
         districtNameLabel?.SetText($"{district.Name}: {district.Influence}/5");

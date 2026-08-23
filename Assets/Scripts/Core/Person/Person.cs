@@ -8,65 +8,76 @@ public enum PersonType
     Student,
     OfficeWorker
 }
+[System.Serializable]
 [RequireComponent(typeof(Image))]
+[RequireComponent(typeof(DragPerson))]
 public class Person : MonoBehaviour
 {
     [HideInInspector] public PersonType Type;
-    [HideInInspector] public float loyalty;
-    [HideInInspector] public Room Room;    
-    [HideInInspector] public float maxLoyalty;
+    [HideInInspector] public float Loyalty;
+    [HideInInspector] public Room Room;
+    [HideInInspector] public RoomType RoomType;
+    [HideInInspector] public float MaxLoyalty;
     [SerializeField] private float becomeCultistTime = 6f;
     [SerializeField] private float baseMaxLoyalty = 500f;
     [SerializeField] private GameObject loyaltyPanel;
     [SerializeField] private TextMeshProUGUI loyaltyLabel;
     [SerializeField] private Slider loyaltyBar;
-    [HideInInspector] public Image personImage;
-
+    [HideInInspector] public Image Image;
+    [HideInInspector] public bool IsCultist = false;
+    private DragPerson dragPerson;
     private void Awake()
     {
-        personImage = GetComponent<Image>();
-       
-        maxLoyalty = baseMaxLoyalty;
-        loyalty = baseMaxLoyalty;
+        dragPerson = GetComponent<DragPerson>();
+        Image = GetComponent<Image>();     
+        MaxLoyalty = baseMaxLoyalty;
+        Loyalty = baseMaxLoyalty;
     }
     private void Update()
     {
-        if(GameManager.Instance.phase == GamePhase.Office)
-        {
-            UpdateUI();
-            if(Room is Laundry) 
+        if (Room == null && dragPerson.wasDropped) FindRoom();
+        if (GameManager.Instance.Phase == GamePhase.Office)
+        {          
+            RoomType = Room.Type;
+            if(Room is Laundry || !IsCultist) 
             {
-                if(loyalty < maxLoyalty) loyalty += Time.deltaTime * GameManager.Instance.GetTimeSpeed();
+                if(Loyalty < MaxLoyalty) Loyalty += Time.deltaTime * GameManager.Instance.GetTimeSpeed();
             }
-            else loyalty -= Time.deltaTime * GameManager.Instance.GetTimeSpeed();
-        }
-        if (loyalty <= 0) Escape();
+            else Loyalty -= Time.deltaTime * GameManager.Instance.GetTimeSpeed();
+
+            UpdateUI();
+            if (Loyalty <= 0) Escape();
+
+        }  
+        
     }
     private void UpdateUI()
     {
+        loyaltyPanel?.SetActive(IsCultist);
         loyaltyLabel?.SetText($"ћракобесие: {GetLoyaltyPercent()}");
-        loyaltyBar.value = loyalty / maxLoyalty;
+        loyaltyBar.value = Loyalty / MaxLoyalty;       
     }
     public void Escape()
     {
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.reserve.Remove(this);
-            GameManager.Instance.activeWorkers.Remove(this);
+            GameManager.Instance.Reserve.Remove(this);
+            GameManager.Instance.ActiveWorkers.Remove(this);
             GameManager.Instance.AddAnxiety(1);
         }     
         Destroy(gameObject);
     }
     public void BecomeCultist()
     {
-        GameManager.Instance.activeWorkers.Add(this);
-        GameManager.Instance.reserve.Remove(this);
+        GameManager.Instance.ActiveWorkers.Add(this);
+        GameManager.Instance.Reserve.Remove(this);     
         StartCoroutine(StartRecruitment());
+        IsCultist = true;
     }
     private IEnumerator StartRecruitment()
     {
         yield return new WaitForSeconds(becomeCultistTime / GameManager.Instance.GetTimeSpeed());
-        personImage.sprite = GameManager.Instance.CultistSprite;
+        Image.sprite = GameManager.Instance.CultistSprite;
     }
     public void Eat(float hungerReduction)
     {
@@ -74,13 +85,35 @@ public class Person : MonoBehaviour
         {
             GameManager.Instance.AddAnxiety(1);
             GameManager.Instance.ReduceHunger(hungerReduction);
-            GameManager.Instance.reserve.Remove(this);
-            GameManager.Instance.activeWorkers.Remove(this);
+            GameManager.Instance.Reserve.Remove(this);
+            GameManager.Instance.ActiveWorkers.Remove(this);
         }
         Destroy(gameObject);
     }
     private int GetLoyaltyPercent()
     {
-        return Mathf.RoundToInt(loyalty / baseMaxLoyalty * 100f);
+        return Mathf.RoundToInt(Loyalty / baseMaxLoyalty * 100f);
+    }
+    public void FindRoom()
+    {
+        switch(RoomType)
+        {
+            case RoomType.Reception:
+                Room = FindAnyObjectByType<Reception>();
+                break;
+            case RoomType.Donations:
+                Room = FindAnyObjectByType<DonationRoom>();
+                break;
+            case RoomType.Agitation:
+                Room = FindAnyObjectByType<AgitationRoom>();
+                break;
+            case RoomType.Laundry:
+                Room = FindAnyObjectByType<Laundry>();
+                break;
+            case RoomType.Altar:
+                Room = FindAnyObjectByType<Altar>();
+                break;
+        }
+        Room?.AssignPerson(this);
     }
 }

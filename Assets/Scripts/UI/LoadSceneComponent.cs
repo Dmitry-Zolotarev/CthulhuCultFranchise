@@ -4,9 +4,10 @@ using UnityEngine.SceneManagement;
 public class LoadSceneComponent : MonoBehaviour
 {
     public void LoadScene(int sceneID)
-    {
+    {       
         Time.timeScale = 1f;
-        MusicPlayer.Instance.PlayDefaultMusic();
+        if (sceneID == 0) SaveManager.Save();
+        MusicPlayer.Instance?.PlayDefaultMusic();
         SceneManager.LoadScene(sceneID);
     }
 }

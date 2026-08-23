@@ -12,10 +12,8 @@ public static class SaveManager
     }
     public static void Save()
     {
-        SaveData data = new SaveData();
-
-        
-
+        var data = new SaveData();
+        data.Save();
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(Path, json);
         Debug.Log("Game Saved to " + Path);
@@ -28,8 +26,7 @@ public static class SaveManager
             Debug.LogWarning("Save file not found");
             return;
         }
-        string json = File.ReadAllText(Path);
-        SaveData data = JsonUtility.FromJson<SaveData>(json);
+        JsonUtility.FromJson<SaveData>(File.ReadAllText(Path))?.Load();
         NeedLoad = false;
     }
     public static void DeleteSave()

@@ -3,6 +3,14 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
+public enum RoomType
+{
+    Reception,
+    Donations,
+    Agitation,
+    Laundry,
+    Altar
+}
 [RequireComponent(typeof(Image))]
 public class Room : MonoBehaviour, IDropHandler
 {
@@ -12,11 +20,27 @@ public class Room : MonoBehaviour, IDropHandler
     [SerializeField] protected Sprite[] LevelSprites;
     [SerializeField] private float personSpacing = 100f;
     [SerializeField] private float personOffsetY = -30f;
-
+    [HideInInspector] public RoomType Type = RoomType.Reception;
     private Image roomImage;
     
     private void Awake()
     {
+        if (this is DonationRoom)
+        {
+            Type = RoomType.Donations;
+        } 
+        else if (this is AgitationRoom)
+        {
+            Type = RoomType.Agitation;
+        }
+        if (this is Laundry)
+        {
+            Type = RoomType.Laundry;
+        }
+        if (this is Altar)
+        {
+            Type = RoomType.Altar;
+        }
         roomImage = GetComponent<Image>();
         UpdateRoomSprite();
     }
@@ -37,6 +61,8 @@ public class Room : MonoBehaviour, IDropHandler
     }
     public virtual void AssignPerson(Person person)
     {
+        if (IsFull()) return;
+        
         if (!(this is Reception))
         {
             person.BecomeCultist();        
@@ -123,10 +149,6 @@ public class Room : MonoBehaviour, IDropHandler
                 LevelSprites[spriteIndex];
         }
     }
-
-    // =========================================================
-    // INFO
-    // =========================================================
 
     public int GetCurrentPersonCount()
     {

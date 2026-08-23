@@ -596,11 +596,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Day: 1
   DayTime: 0
-  phase: 0
+  Phase: 0
   Money: 100
   Anxiety: 0
   Hunger: 0
-  District: {fileID: 0}
+  SelectedDistrict: {fileID: 0}
   MoneyLabel: {fileID: 905907881}
   DayLabel: {fileID: 1625980005}
   TimeLabel: {fileID: 529483600}
@@ -615,8 +615,8 @@ MonoBehaviour:
   selectedButtonColor: {r: 0.5882353, g: 0.9411765, b: 0.39215687, a: 1}
   hungerPercentLabel: {fileID: 8892265832779191134}
   hungerBar: {fileID: 8892265832779191133}
-  StartWorkPanel: {fileID: 1178169789}
   TimeSpeedPanel: {fileID: 841981644}
+  StartWorkPanel: {fileID: 1178169789}
   Canvases:
   - {fileID: 2643481620983938895}
   - {fileID: 8417823357121052064}
@@ -628,13 +628,15 @@ MonoBehaviour:
   reception: {fileID: 1712561598}
   MaxHunger: 100
   HungerIncreaseSpeed: 0.2
-  visitorsCount: 6
-  visitInterval: 14
+  visitInterval: 30
   startTime: 600
   endTime: 1080
   timeSpeed: 6
+  visitorsCount: 6
   hungerReduction: 50
   officeMusic: {fileID: 8300000, guid: e744c2d66ff25874e9e181c85d903d7c, type: 3}
+  TimeSpeedModificator: 1
+  Districts: []
 --- !u!1 &471906645
 GameObject:
   m_ObjectHideFlags: 0
@@ -3489,9 +3491,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8675f1b260509ed4387c72cb8424559e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Influence: 1
-  PeopleFlow: 1
   Name: "\u0423\u043D\u0438\u0432\u0435\u0440\u0441\u0438\u0442\u0435\u0442"
+  Influence: 1
   Auditory: "\u0421\u0442\u0443\u0434\u0435\u043D\u0442\u044B. \u043F\u0440\u0435\u043F\u043E\u0434\u0430\u0432\u0430\u0442\u0435\u043B\u0438,
     \u0438\u0441\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u0442\u0435\u043B\u0438"
   Description: "\u041A\u0440\u0443\u043F\u043D\u0435\u0439\u0448\u0438\u0439 \u0443\u043D\u0438\u0432\u0435\u0440\u0441\u0438\u0442\u0435\u0442
@@ -3639,9 +3640,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8675f1b260509ed4387c72cb8424559e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Influence: 1
-  PeopleFlow: 1
   Name: "\u0411\u0438\u0437\u043D\u0435\u0441-\u0446\u0435\u043D\u0442\u0440"
+  Influence: 1
   Auditory: "\u041F\u0440\u0435\u0434\u043F\u0440\u0438\u043D\u0438\u043C\u0430\u0442\u0435\u043B\u0438
     \u0438 \u043E\u0444\u0438\u0441\u043D\u044B\u0435 \u0440\u0430\u0431\u043E\u0442\u043D\u0438\u043A\u0438"
   Description: "\u0426\u0435\u043D\u0442\u0440 \u0433\u043E\u0440\u043E\u0434\u0430

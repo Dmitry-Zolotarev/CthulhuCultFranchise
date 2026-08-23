@@ -32,6 +32,6 @@ public class PauseComponent : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) Pause();
+        if (Input.GetKeyDown(KeyCode.Escape)) Pause();    
     }
 }
