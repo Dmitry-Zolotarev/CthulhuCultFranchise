@@ -22,7 +22,6 @@ public class SaveData
         GameManager.Instance.Money = Money;
         GameManager.Instance.Anxiety = Anxiety;
         GameManager.Instance.Hunger = Hunger;
-        GameManager.Instance.TimeSpeedModificator = TimeSpeedModificator;
 
         foreach (var district in GameManager.Instance.Districts)
         {
@@ -59,7 +58,6 @@ public class SaveData
         Money = GameManager.Instance.Money;
         Anxiety = GameManager.Instance.Anxiety;
         Hunger = GameManager.Instance.Hunger;
-        TimeSpeedModificator = GameManager.Instance.TimeSpeedModificator;
 
         if(GameManager.Instance.SelectedDistrict != null)
         {

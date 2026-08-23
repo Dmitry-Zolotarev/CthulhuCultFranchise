@@ -18,7 +18,6 @@ public static class SaveManager
         File.WriteAllText(Path, json);
         Debug.Log("Game Saved to " + Path);
     }
-
     public static void Load()
     {
         if (!SaveExists())

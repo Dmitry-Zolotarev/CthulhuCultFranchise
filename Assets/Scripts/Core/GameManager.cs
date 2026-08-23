@@ -12,8 +12,6 @@ public enum GamePhase
     Report,
     Final
 }
-
-
 public enum CampaignType
 {
     Reception,
@@ -233,6 +231,7 @@ public class GameManager : MonoBehaviour
             if(!ActiveWorkers.Contains(person) && person != null) Destroy(person.gameObject);         
         }    
         Reserve.Clear();
+        SaveManager.Save();
         Phase = GamePhase.Map;
         MusicPlayer.Instance.PlayDefaultMusic();
         OpenCanvas(0);
