@@ -156,8 +156,11 @@ public class Room : MonoBehaviour, IDropHandler
 
         for (int i = 0; i < transform.childCount; i++)
         {
+            
             Person person = transform.GetChild(i).GetComponent<Person>();
+
             if (person != null) count++;
+            if (this is Reception && count > capacity) Destroy(person);
         }
         return count;
     }
