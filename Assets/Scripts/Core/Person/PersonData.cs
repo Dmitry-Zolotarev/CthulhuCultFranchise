@@ -29,6 +29,10 @@ public class PersonData
             GameManager.Instance.ActiveWorkers.Add(person);
             person.Image.sprite = GameManager.Instance.CultistSprite;
         }
+        else
+        {
+            person.Image.sprite = GameManager.Instance.PersonSprites[(int)person.Type];
+        }
         person.FindRoom();
     }
 }
