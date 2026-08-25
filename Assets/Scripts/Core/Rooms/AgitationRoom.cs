@@ -32,7 +32,7 @@ public class AgitationRoom : Room
             progressLabel?.SetText("Агитация завершена");
             return;
         } 
-        agitationProgress += agitationSpeed * GetCurrentPersonCount() * Time.deltaTime * GameManager.Instance.GetTimeSpeed();
+        agitationProgress += agitationSpeed * Level * GetCurrentPersonCount() * Time.deltaTime * GameManager.Instance.GetTimeSpeed();
         if (agitationProgress >= agitationTargetValue)
         {
             district.Influence++;

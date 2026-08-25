@@ -6,6 +6,6 @@ public class Reception : Room
 {
     private void Start()
     {
-        capacity--;
+        capacity += Level - 2;
     }
 }

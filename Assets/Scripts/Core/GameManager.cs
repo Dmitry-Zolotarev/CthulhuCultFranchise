@@ -54,9 +54,12 @@ public class GameManager : MonoBehaviour
     [Header("Prefabs")]
     public GameObject[] Canvases;
     public Sprite CultistSprite;
-    public Sprite[] PersonSprites;  
+    public Sprite[] PersonSprites;
+    public Room[] Rooms;
+
     [SerializeField] private Person personPrefab;
     [SerializeField] private Reception reception;
+    
 
     [Header("Balance settings")]
     public float MaxHunger = 100;

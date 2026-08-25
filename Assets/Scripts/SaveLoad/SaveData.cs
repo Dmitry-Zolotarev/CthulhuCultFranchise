@@ -14,6 +14,8 @@ public class SaveData
     public List<PersonData> Reserve = new List<PersonData>();
     public List<PersonData> ActiveWorkers = new List<PersonData>();
     public List<DistrictData> Districts = new List<DistrictData>();
+    public List<int> RoomLevels = new List<int>();
+
     public void Load()
     {
         GameManager.Instance.Day = Day;
@@ -35,7 +37,11 @@ public class SaveData
             }
             if (district.Name == SelectedDistrictName) GameManager.Instance.SelectedDistrict = district;
         }
-        
+        for (int i = 0; i < RoomLevels.Count; i++)
+        {
+            GameManager.Instance.Rooms[i].SetLevel(RoomLevels[i]);
+        }
+
         foreach (var personData in Reserve)
         {
             var person = GameManager.Instance.SpawnVisitor();
@@ -74,6 +80,10 @@ public class SaveData
         foreach (var worker in GameManager.Instance.ActiveWorkers)
         {
             ActiveWorkers.Add(new PersonData(worker));
+        }
+        foreach(var room in GameManager.Instance.Rooms)
+        {
+            RoomLevels.Add(room.Level);
         }
     }
 }

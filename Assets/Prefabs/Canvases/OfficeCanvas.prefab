@@ -224,12 +224,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c819ebde837e81479571cc231114db8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  capacity: 1
+  capacity: 2
   Level: 1
   maxLevel: 3
   LevelSprites: []
   personSpacing: 100
   personOffsetY: -30
+  Type: 0
   agitationSpeed: 1
   districtNameLabel: {fileID: 4707326228317316948}
   progressLabel: {fileID: 203678080793555985}
@@ -845,6 +846,7 @@ MonoBehaviour:
   LevelSprites: []
   personSpacing: 100
   personOffsetY: -30
+  Type: 0
 --- !u!1 &4020124764141315248
 GameObject:
   m_ObjectHideFlags: 0
@@ -1298,6 +1300,7 @@ MonoBehaviour:
   LevelSprites: []
   personSpacing: 100
   personOffsetY: -30
+  Type: 0
   eatingTime: 6
 --- !u!1 &4979999313477751357
 GameObject:
@@ -1565,6 +1568,7 @@ MonoBehaviour:
   LevelSprites: []
   personSpacing: 100
   personOffsetY: -30
+  Type: 0
   maxLoyaltyReduction: 0.8
 --- !u!1 &6413231258665062852
 GameObject:
@@ -2190,6 +2194,7 @@ MonoBehaviour:
   - {fileID: 0}
   personSpacing: 100
   personOffsetY: -30
+  Type: 0
   MoneyPerEmployee: 50
   payCooldown: 6
 --- !u!1 &8247089887442797013

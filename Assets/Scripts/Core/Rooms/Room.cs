@@ -120,34 +120,20 @@ public class Room : MonoBehaviour, IDropHandler
 
         }
     }
-    public void LevelUP()
+    public void SetLevel(int lvl)
     {
-        if (Level < maxLevel)
-        {
-            Level++;
-            UpdateRoomSprite();
-        }             
+        Level = lvl;
+        UpdateRoomSprite();
     }
 
     private void UpdateRoomSprite()
     {
-        if (roomImage == null) return;
+        if (roomImage == null || LevelSprites == null || LevelSprites.Length == 0) return;
 
+        int spriteIndex = Mathf.Clamp(Level - 1, 0, LevelSprites.Length - 1);
 
-        if (LevelSprites == null || LevelSprites.Length == 0) return;
+        if (LevelSprites[spriteIndex] != null) roomImage.sprite = LevelSprites[spriteIndex];
 
-        int spriteIndex =
-            Mathf.Clamp(
-                Level - 1,
-                0,
-                LevelSprites.Length - 1
-            );
-
-        if (LevelSprites[spriteIndex] != null)
-        {
-            roomImage.sprite =
-                LevelSprites[spriteIndex];
-        }
     }
 
     public int GetCurrentPersonCount()
@@ -155,8 +141,7 @@ public class Room : MonoBehaviour, IDropHandler
         int count = 0;
 
         for (int i = 0; i < transform.childCount; i++)
-        {
-            
+        {        
             Person person = transform.GetChild(i).GetComponent<Person>();
 
             if (person != null) count++;
