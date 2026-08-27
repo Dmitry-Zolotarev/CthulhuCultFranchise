@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioClip officeMusic;
 
+    [HideInInspector] public float AgitationProgress = 0;
     [HideInInspector] public int TimeSpeedModificator = 1;
     [HideInInspector] public District[] Districts;
     private Coroutine spawnCoroutine;

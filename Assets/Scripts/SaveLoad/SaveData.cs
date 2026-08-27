@@ -7,6 +7,7 @@ public class SaveData
     public int Money = 100;
     public int Anxiety = 0;
     public int TimeSpeedModificator;
+    public int AgitationProgress;
     public float Hunger = 0;
     public float Time;
     public string SelectedDistrictName = "";
@@ -24,6 +25,7 @@ public class SaveData
         GameManager.Instance.Money = Money;
         GameManager.Instance.Anxiety = Anxiety;
         GameManager.Instance.Hunger = Hunger;
+        GameManager.Instance.AgitationProgress = AgitationProgress;
 
         foreach (var district in GameManager.Instance.Districts)
         {
@@ -64,8 +66,9 @@ public class SaveData
         Money = GameManager.Instance.Money;
         Anxiety = GameManager.Instance.Anxiety;
         Hunger = GameManager.Instance.Hunger;
+        AgitationProgress = (int)GameManager.Instance.AgitationProgress;
 
-        if(GameManager.Instance.SelectedDistrict != null)
+        if (GameManager.Instance.SelectedDistrict != null)
         {
             SelectedDistrictName = GameManager.Instance.SelectedDistrict.Name;
         }

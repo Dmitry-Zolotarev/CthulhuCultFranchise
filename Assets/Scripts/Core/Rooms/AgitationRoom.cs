@@ -5,7 +5,7 @@ public class AgitationRoom : Room
 {
     [SerializeField] private float agitationSpeed = 1;
 
-    private float agitationProgress = 0;
+    
     private float agitationTargetValue = 100;
 
     [SerializeField] private TextMeshProUGUI districtNameLabel;
@@ -16,6 +16,8 @@ public class AgitationRoom : Room
     private void Update()
     {
         if (GameManager.Instance.Phase != GamePhase.Office) return;
+
+        var agitationProgress = GameManager.Instance.AgitationProgress;
 
         if (district != null && GameManager.Instance.SelectedDistrict != district)  
         {
@@ -38,11 +40,11 @@ public class AgitationRoom : Room
             district.Influence++;
             agitationProgress = 0;
         }
-        
+        GameManager.Instance.AgitationProgress = agitationProgress;
     }
     private int GetProgressPercent()
     {
-        float percent = agitationProgress * 100 / agitationTargetValue;
+        float percent = GameManager.Instance.AgitationProgress * 100 / agitationTargetValue;
         return (int)percent;
     }
 }

@@ -125,7 +125,10 @@ public class Room : MonoBehaviour, IDropHandler
         Level = lvl;
         UpdateRoomSprite();
     }
-
+    public void LevelUP()
+    {
+        SetLevel(Level + 1);
+    }
     private void UpdateRoomSprite()
     {
         if (roomImage == null || LevelSprites == null || LevelSprites.Length == 0) return;
