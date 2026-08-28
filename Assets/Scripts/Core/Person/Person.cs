@@ -64,7 +64,7 @@ public class Person : MonoBehaviour
 
     private void UpdateUI()
     {
-        loyaltyPanel?.SetActive(IsCultist);
+        loyaltyPanel?.SetActive(IsCultist && !(Room is Reception) && !(Room is Altar));
         loyaltyLabel?.SetText($"ћракобесие: {GetLoyaltyPercent()}");
         loyaltyBar.value = Loyalty / MaxLoyalty;
     }
