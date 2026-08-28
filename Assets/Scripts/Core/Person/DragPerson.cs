@@ -42,21 +42,8 @@ public class DragPerson : MonoBehaviour,
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (canvas == null)
-            return;
-
-        RectTransform canvasRect =
-            canvas.transform as RectTransform;
-
-        if (canvasRect == null)
-            return;
-
-        Camera eventCamera =
-            canvas.renderMode ==
-            RenderMode.ScreenSpaceOverlay
-                ? null
-                : canvas.worldCamera;
-
+        RectTransform canvasRect = canvas.transform as RectTransform;
+        Camera eventCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
         Vector2 localPoint;
 
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -82,21 +69,18 @@ public class DragPerson : MonoBehaviour,
     }
     public void ReturnToOriginalPosition()
     {
-        if (originalParent == null)
-            return;
+        canvasGroup.blocksRaycasts = true;
+        canvasGroup.alpha = 1f;
 
-        transform.SetParent(
-            originalParent,
-            false
-        );
+        if (originalParent == null) return;
 
-        rectTransform.anchoredPosition =
-            originalPosition;
+        transform.SetParent(originalParent, false);
 
-        rectTransform.localRotation =
-            Quaternion.identity;
+        rectTransform.anchoredPosition = originalPosition;
 
-        rectTransform.localScale =
-            Vector3.one;
+        rectTransform.localRotation = Quaternion.identity;
+   
+        rectTransform.localScale = Vector3.one;
+
     }
 }

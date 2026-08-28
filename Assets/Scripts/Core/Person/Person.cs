@@ -108,7 +108,7 @@ public class Person : MonoBehaviour
 
     private int GetLoyaltyPercent()
     {
-        return Mathf.RoundToInt(Loyalty / MaxLoyalty * 100f);
+        return Mathf.RoundToInt(Loyalty / baseMaxLoyalty * 100f);
     }
 
     public void FindRoom()

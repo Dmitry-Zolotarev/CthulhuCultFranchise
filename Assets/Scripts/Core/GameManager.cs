@@ -232,7 +232,9 @@ public class GameManager : MonoBehaviour
         Day++;
         foreach (var person in Reserve) 
         {
-            if(!ActiveWorkers.Contains(person) && person != null) Destroy(person.gameObject);         
+            if(!ActiveWorkers.Contains(person) && person != null) Destroy(person.gameObject);
+            var dragPerson = person.GetComponent<DragPerson>();
+            dragPerson.ReturnToOriginalPosition();
         }    
         Reserve.Clear();
         SaveManager.Save();

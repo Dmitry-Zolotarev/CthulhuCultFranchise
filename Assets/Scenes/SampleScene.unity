@@ -633,7 +633,7 @@ MonoBehaviour:
   personPrefab: {fileID: 2701407485879646528, guid: 73d04e9d03f796044b41157c6a96529e, type: 3}
   reception: {fileID: 1712561598}
   MaxHunger: 100
-  HungerIncreaseSpeed: 0.2
+  HungerIncreaseSpeed: 0.1
   visitInterval: 30
   startTime: 600
   endTime: 1080
@@ -641,6 +641,7 @@ MonoBehaviour:
   visitorsCount: 6
   hungerReduction: 50
   officeMusic: {fileID: 8300000, guid: e744c2d66ff25874e9e181c85d903d7c, type: 3}
+  AgitationProgress: 0
   TimeSpeedModificator: 1
   Districts: []
 --- !u!1 &471906645
