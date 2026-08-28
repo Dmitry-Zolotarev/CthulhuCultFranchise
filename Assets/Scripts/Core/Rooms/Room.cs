@@ -63,7 +63,7 @@ public class Room : MonoBehaviour, IDropHandler
     {
         if (IsFull()) return;
         
-        if (!(this is Reception))
+        if (!(this is Reception) && !(this is Altar))
         {
             person.BecomeCultist();        
         }
