@@ -8,4 +8,13 @@ public class Reception : Room
     {
         capacity += Level - 1;
     }
+    public override void AssignPerson(Person person)
+    {
+        if(person.IsCultist)
+        {
+            person.Quit();
+            return;
+        }
+        base.AssignPerson(person);
+    }
 }

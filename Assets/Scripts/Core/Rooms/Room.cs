@@ -54,7 +54,7 @@ public class Room : MonoBehaviour, IDropHandler
     }
     private bool CanAcceptPerson(Person person)
     {
-        if (person == null || this is Reception) return false;
+        if (person == null ||(!person.IsCultist && this is Reception)) return false;
         int currentCount = GetCurrentPersonCount();
         if (person.transform.parent == transform) currentCount--;
         return currentCount < capacity;

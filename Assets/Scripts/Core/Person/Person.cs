@@ -76,7 +76,15 @@ public class Person : MonoBehaviour
         }
         Destroy(gameObject);
     }
-
+    public void Quit()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.Reserve.Remove(this);
+            GameManager.Instance.ActiveWorkers.Remove(this);
+        }
+        Destroy(gameObject);
+    }
     public void BecomeCultist()
     {
         GameManager.Instance.ActiveWorkers.Add(this);
