@@ -6,6 +6,10 @@ public class Laundry : Room
     public override void AssignPerson(Person person)
     {
         base.AssignPerson(person);
-        if (person.Loyalty < person.MaxLoyalty * maxLoyaltyReduction) person.MaxLoyalty *= maxLoyaltyReduction;
+        if (person.MaxLaunderings > 0 && person.Loyalty < person.MaxLoyalty * maxLoyaltyReduction)
+        {
+            person.MaxLoyalty *= maxLoyaltyReduction;
+            person.MaxLaunderings--;
+        }      
     }
 }

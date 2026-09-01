@@ -65,7 +65,7 @@ public class Room : MonoBehaviour, IDropHandler
         
         if (!(this is Reception) && !(this is Altar))
         {
-            person.BecomeCultist();        
+            if (!person.IsCultist) return;       
         }
         else if(GetCurrentPersonCount() >= capacity)
         {

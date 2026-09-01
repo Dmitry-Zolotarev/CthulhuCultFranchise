@@ -11,6 +11,7 @@ public enum PersonType
 [System.Serializable]
 [RequireComponent(typeof(Image))]
 [RequireComponent(typeof(DragPerson))]
+[RequireComponent(typeof(Button))]
 public class Person : MonoBehaviour
 {
     [HideInInspector] public PersonType Type;
@@ -23,11 +24,13 @@ public class Person : MonoBehaviour
     [SerializeField] private GameObject loyaltyPanel;
     [SerializeField] private TextMeshProUGUI loyaltyLabel;
     [SerializeField] private Slider loyaltyBar;
-    [HideInInspector] public Image Image;
     [HideInInspector] public bool IsCultist = false;
-
+    [HideInInspector] public Image Image;
+    public int MaxLaunderings = 3;
+    private DragPerson dragPerson;
     private void Awake()
     {
+        dragPerson = GetComponent<DragPerson>();
         Image = GetComponent<Image>();
         MaxLoyalty = baseMaxLoyalty;
         Loyalty = baseMaxLoyalty;
@@ -36,19 +39,13 @@ public class Person : MonoBehaviour
     {
         if (GameManager.Instance.Phase == GamePhase.Office)
         {
+            dragPerson.enabled = IsCultist;
+            
             if (Room != null)
             {
                 RoomType = Room.Type;
             }
             else FindRoom();
-
-            if(Image.sprite == GameManager.Instance.CultistSprite && (Room is Reception))
-            {
-                GameManager.Instance.ActiveWorkers.Remove(this);
-                GameManager.Instance.Reserve.Remove(this);
-                Destroy(gameObject);
-                return;
-            }
 
             if (Room is Laundry || !IsCultist)
             {
