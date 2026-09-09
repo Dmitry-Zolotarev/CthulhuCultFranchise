@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI MoneyLabel;
+    [SerializeField] private TextMeshProUGUI AnxietyLabel;
     [SerializeField] private TextMeshProUGUI DayLabel;
     [SerializeField] private TextMeshProUGUI TimeLabel;
     [SerializeField] private TextMeshProUGUI districtNameLabel;
@@ -49,12 +50,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI hungerPercentLabel;
     [SerializeField] private Slider hungerBar;
     [SerializeField] private GameObject TimeSpeedPanel;
+    
     public GameObject StartWorkPanel;
 
     [Header("Prefabs")]
     public GameObject[] Canvases;
     public Sprite CultistSprite;
     public Sprite[] PersonSprites;
+    public Transform OfficeCanvas;
     public Room[] Rooms;
 
     [SerializeField] private Person personPrefab;
@@ -70,11 +73,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float endTime = 1080f;
     [SerializeField] private float timeSpeed = 6f;
     [SerializeField] private int visitorsCount = 6;
+    [SerializeField] private int anxietyIncrease = 2;
     public float hungerReduction = 50f;
-    
     [Header("Audio")]
     [SerializeField] private AudioClip officeMusic;
-
     [HideInInspector] public float AgitationProgress = 0;
     [HideInInspector] public int TimeSpeedModificator = 1;
     [HideInInspector] public District[] Districts;
@@ -140,6 +142,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
         MoneyLabel?.SetText($"{Money}$");
+        AnxietyLabel?.SetText($"{Anxiety}");
         DayLabel?.SetText($"Δενό {Day}");
         TimeSpeedPanel?.SetActive(Phase == GamePhase.Office);
 
@@ -158,9 +161,9 @@ public class GameManager : MonoBehaviour
         Money -= amount;
         return true;
     }
-    public void AddAnxiety(int amount)
+    public void AddAnxiety()
     {
-        Anxiety = Mathf.Max(0, Anxiety + amount);
+        Anxiety += anxietyIncrease;
     }
     public void ReduceHunger(float amount)
     {
@@ -230,16 +233,24 @@ public class GameManager : MonoBehaviour
     public void NextDay()
     {
         Day++;
-        foreach (var person in Reserve) 
+        var people = FindObjectsOfType<Person>();
+
+        foreach (var person in people) 
         {
-            if(!ActiveWorkers.Contains(person) && person != null) Destroy(person.gameObject);
+            if (!ActiveWorkers.Contains(person) || person.IsEscaping)
+            {
+                ActiveWorkers.Remove(person);
+                Reserve.Remove(person);
+                Destroy(person.gameObject);
+            }      
             var dragPerson = person.GetComponent<DragPerson>();
             dragPerson.ReturnToOriginalPosition();
         }    
+
         Reserve.Clear();
         SaveManager.Save();
         Phase = GamePhase.Map;
-        MusicPlayer.Instance.PlayDefaultMusic();
+        MusicPlayer.Instance?.PlayDefaultMusic();
         OpenCanvas(0);
     }
     public void OpenCanvas(int canvasID)

@@ -11,6 +11,7 @@ public enum PersonType
 [System.Serializable]
 [RequireComponent(typeof(Image))]
 [RequireComponent(typeof(DragPerson))]
+[RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(Button))]
 public class Person : MonoBehaviour
 {
@@ -21,25 +22,30 @@ public class Person : MonoBehaviour
     [HideInInspector] public float MaxLoyalty;
     [SerializeField] private float becomeCultistTime = 6f;
     [SerializeField] private float baseMaxLoyalty = 500f;
+    [SerializeField] private float escapeSpeed = 1f;
     [SerializeField] private GameObject loyaltyPanel;
     [SerializeField] private TextMeshProUGUI loyaltyLabel;
     [SerializeField] private Slider loyaltyBar;
     [HideInInspector] public bool IsCultist = false;
+    [HideInInspector] public bool IsEscaping = false;
+    [HideInInspector] public bool HasElevated = false;
     [HideInInspector] public Image Image;
     public int MaxLaunderings = 3;
     private DragPerson dragPerson;
+    private Transform elevator;
     private void Awake()
     {
         dragPerson = GetComponent<DragPerson>();
         Image = GetComponent<Image>();
         MaxLoyalty = baseMaxLoyalty;
         Loyalty = baseMaxLoyalty;
+        elevator = FindFirstObjectByType<Elevator>().transform;
     }
     private void Update()
     {
         if (GameManager.Instance.Phase == GamePhase.Office)
         {
-            dragPerson.enabled = IsCultist;
+            dragPerson.enabled = IsCultist && !IsEscaping;
             
             if (Room != null)
             {
@@ -55,26 +61,30 @@ public class Person : MonoBehaviour
 
             UpdateUI();
 
-            if (Loyalty <= 0) Escape();
+            if (Loyalty <= 0 && !IsEscaping) Escape();
         }
+        if (IsEscaping) 
+        {         
+            float direction = elevator.position.x - transform.position.x >= 0 ? 1 : -1;
+            if (Room is Reception || HasElevated) direction = -1;
+            transform.localScale = new Vector2(direction, 1);
+            transform.position += Vector3.right * direction * escapeSpeed * Time.deltaTime * GameManager.Instance.GetTimeSpeed();
+        }       
     }
-
     private void UpdateUI()
     {
-        loyaltyPanel?.SetActive(IsCultist && !(Room is Reception) && !(Room is Altar));
+        loyaltyPanel?.SetActive(!IsEscaping && IsCultist && !(Room is Reception) && !(Room is Altar));
         loyaltyLabel?.SetText($"ћракобесие: {GetLoyaltyPercent()}");
         loyaltyBar.value = Loyalty / MaxLoyalty;
     }
-
     public void Escape()
     {
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.Reserve.Remove(this);
-            GameManager.Instance.ActiveWorkers.Remove(this);
-            GameManager.Instance.AddAnxiety(1);
+            transform.SetParent(GameManager.Instance.OfficeCanvas);
+            GameManager.Instance.AddAnxiety();
         }
-        Destroy(gameObject);
+        IsEscaping = true;
     }
     public void Quit()
     {
@@ -103,7 +113,7 @@ public class Person : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.AddAnxiety(1);
+            GameManager.Instance.AddAnxiety();
             GameManager.Instance.ReduceHunger(hungerReduction);
             GameManager.Instance.Reserve.Remove(this);
             GameManager.Instance.ActiveWorkers.Remove(this);
@@ -115,7 +125,6 @@ public class Person : MonoBehaviour
     {
         return Mathf.RoundToInt(Loyalty / baseMaxLoyalty * 100f);
     }
-
     public void FindRoom()
     {
         switch (RoomType)

@@ -38,6 +38,7 @@ public class AgitationRoom : Room
         if (agitationProgress >= agitationTargetValue)
         {
             district.Influence++;
+            GameManager.Instance.AddAnxiety();
             agitationProgress = 0;
         }
         GameManager.Instance.AgitationProgress = agitationProgress;
