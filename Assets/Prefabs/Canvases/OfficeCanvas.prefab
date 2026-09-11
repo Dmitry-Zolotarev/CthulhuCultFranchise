@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ExitPoint: {fileID: 5845547359310458147}
-  ElevateTime: 10
+  ElevateTime: 16
 --- !u!1 &1429583060209881753
 GameObject:
   m_ObjectHideFlags: 0

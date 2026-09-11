@@ -64,16 +64,22 @@ public class Person : MonoBehaviour
             if (Loyalty <= 0 && !IsEscaping) Escape();
         }
         if (IsEscaping) 
-        {         
-            float direction = elevator.position.x - transform.position.x >= 0 ? 1 : -1;
+        {
+            float direction;
             if (Room is Reception || HasElevated) direction = -1;
+            else
+            {
+                direction = elevator.position.x - transform.position.x >= 0 ? 1 : -1;
+            }  
             transform.localScale = new Vector2(direction, 1);
             transform.position += Vector3.right * direction * escapeSpeed * Time.deltaTime * GameManager.Instance.GetTimeSpeed();
         }       
     }
     private void UpdateUI()
     {
-        loyaltyPanel?.SetActive(!IsEscaping && IsCultist && !(Room is Reception) && !(Room is Altar));
+        
+
+        loyaltyPanel?.SetActive(!IsEscaping && IsCultist);
         loyaltyLabel?.SetText($"ћракобесие: {GetLoyaltyPercent()}");
         loyaltyBar.value = Loyalty / MaxLoyalty;
     }
@@ -82,7 +88,7 @@ public class Person : MonoBehaviour
         if (GameManager.Instance != null)
         {
             transform.SetParent(GameManager.Instance.OfficeCanvas);
-            GameManager.Instance.AddAnxiety();
+            GameManager.Instance.EvidencesCount++;
         }
         IsEscaping = true;
     }
@@ -113,7 +119,7 @@ public class Person : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.AddAnxiety();
+            GameManager.Instance.EvidencesCount++;
             GameManager.Instance.ReduceHunger(hungerReduction);
             GameManager.Instance.Reserve.Remove(this);
             GameManager.Instance.ActiveWorkers.Remove(this);

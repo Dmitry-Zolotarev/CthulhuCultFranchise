@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(CanvasGroup))]
+[RequireComponent(typeof(Person))]
 public class DragPerson : MonoBehaviour,
     IBeginDragHandler,
     IDragHandler,
@@ -11,8 +12,6 @@ public class DragPerson : MonoBehaviour,
     public RectTransform rectTransform;
     public CanvasGroup canvasGroup;
     public Canvas canvas;
-
-    public Transform originalParent;
     public Vector2 originalPosition;
 
     public bool wasDropped;
@@ -28,7 +27,6 @@ public class DragPerson : MonoBehaviour,
         if (canvas == null) return;
 
         wasDropped = false;
-        originalParent = transform.parent;
         originalPosition = rectTransform.anchoredPosition;
 
         canvasGroup.blocksRaycasts = false;
@@ -72,15 +70,14 @@ public class DragPerson : MonoBehaviour,
         canvasGroup.blocksRaycasts = true;
         canvasGroup.alpha = 1f;
 
-        if (originalParent == null) return;
+        var room = GetComponent<Person>().Room.transform;
 
-        transform.SetParent(originalParent, false);
+        transform.SetParent(room, false);
 
         rectTransform.anchoredPosition = originalPosition;
 
         rectTransform.localRotation = Quaternion.identity;
    
         rectTransform.localScale = Vector3.one;
-
     }
 }

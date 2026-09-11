@@ -5,7 +5,9 @@ public class SaveData
 {
     public int Day = 1;
     public int Money = 100;
-    public int Anxiety = 0;
+    public int TodayEarned = 100;
+    public int TodayTax = 100;
+    public int EvidencesCount = 0;
     public int TimeSpeedModificator;
     public int AgitationProgress;
     public float Hunger = 0;
@@ -20,10 +22,12 @@ public class SaveData
     public void Load()
     {
         GameManager.Instance.Day = Day;
+        GameManager.Instance.TodayEarned = TodayEarned;
+        TaxManager.Instance.TodayTax = TodayTax;
         GameManager.Instance.DayTime = Time;
         GameManager.Instance.Phase = Phase;
         GameManager.Instance.Money = Money;
-        GameManager.Instance.Anxiety = Anxiety;
+        GameManager.Instance.EvidencesCount = EvidencesCount;
         GameManager.Instance.Hunger = Hunger;
         GameManager.Instance.AgitationProgress = AgitationProgress;
 
@@ -64,7 +68,9 @@ public class SaveData
         Time = GameManager.Instance.DayTime;
         Phase = GameManager.Instance.Phase;
         Money = GameManager.Instance.Money;
-        Anxiety = GameManager.Instance.Anxiety;
+        TodayEarned = GameManager.Instance.TodayEarned;
+        TodayTax = TaxManager.Instance.TodayTax;
+        EvidencesCount = GameManager.Instance.EvidencesCount;
         Hunger = GameManager.Instance.Hunger;
         AgitationProgress = (int)GameManager.Instance.AgitationProgress;
 

@@ -16,7 +16,7 @@ public class DonationRoom : Room
 
         if (Time.time >= lastPayTime + payCooldown / GameManager.Instance.GetTimeSpeed()) 
         {
-            GameManager.Instance.Money += MoneyPerEmployee * Level * GetCurrentPersonCount();
+            GameManager.Instance.AddMoney(MoneyPerEmployee * Level * GetCurrentPersonCount());
             lastPayTime = Time.time;
         }
     }
