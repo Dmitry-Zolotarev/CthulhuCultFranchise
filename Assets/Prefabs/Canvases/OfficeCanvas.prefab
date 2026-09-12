@@ -285,6 +285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   capacity: 2
   Level: 1
+  floor: 2
   maxLevel: 3
   LevelSprites: []
   personSpacing: 100
@@ -901,6 +902,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   capacity: 4
   Level: 1
+  floor: 1
   maxLevel: 3
   LevelSprites: []
   personSpacing: 100
@@ -1390,6 +1392,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   capacity: 1
   Level: 1
+  floor: 3
   maxLevel: 3
   LevelSprites: []
   personSpacing: 100
@@ -1658,6 +1661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   capacity: 6
   Level: 1
+  floor: 1
   maxLevel: 3
   LevelSprites: []
   personSpacing: 100
@@ -2283,6 +2287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   capacity: 2
   Level: 1
+  floor: 2
   maxLevel: 3
   LevelSprites:
   - {fileID: 0}

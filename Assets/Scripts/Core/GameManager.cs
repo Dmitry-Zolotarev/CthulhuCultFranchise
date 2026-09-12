@@ -32,8 +32,7 @@ public class GameManager : MonoBehaviour
     public int Money = 100;
     public int TodayEarned = 0;
     public int TotalEarned = 0;
-    
-
+     
     [HideInInspector] public int EvidencesCount = 0;
     [HideInInspector] public float Hunger = 0;
     [HideInInspector] public District SelectedDistrict;   
@@ -55,9 +54,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image[] timeSpeedButtons;
     [SerializeField] private Color selectedButtonColor = new Color(150, 240, 100);
     [SerializeField] private TextMeshProUGUI hungerPercentLabel;
-    [SerializeField] private Slider hungerBar;
     [SerializeField] private GameObject TimeSpeedPanel;
-    
+    [SerializeField] private Slider hungerBar;
+    [SerializeField] private Slider anxietyBar;
     public GameObject StartWorkPanel;
 
     [Header("Prefabs")]
@@ -75,7 +74,7 @@ public class GameManager : MonoBehaviour
     public float MaxHunger = 100;
     
     [SerializeField] private float HungerIncreaseSpeed = 0.2f;
-    
+    [SerializeField] private float MaxAnxiety = 20;
     [SerializeField] private float visitInterval = 15f;
     [SerializeField] private float startTime = 600f;
     [SerializeField] private float endTime = 1080f;
@@ -101,10 +100,10 @@ public class GameManager : MonoBehaviour
         DayTime = startTime;
         Phase = GamePhase.Office;
         StartWorkPanel.SetActive(false);
-        SpawnVisitorInReception();
 
         if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
         spawnCoroutine = StartCoroutine(SpawnVisitors());
+        
     }
     
     private void Update()
@@ -156,6 +155,7 @@ public class GameManager : MonoBehaviour
         TimeSpeedPanel?.SetActive(Phase == GamePhase.Office);
 
         hungerBar.value = Hunger / MaxHunger;
+        anxietyBar.value = EvidencesCount / MaxAnxiety;
         hungerPercentLabel?.SetText($"{(int)(hungerBar.value * 100)}%");  
 
         if (Phase == GamePhase.Map)

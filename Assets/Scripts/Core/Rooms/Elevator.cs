@@ -13,11 +13,13 @@ public class Elevator : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();
     }
     private void Update()
-    {
-        
+    {     
         foreach(var person in GameManager.Instance.ActiveWorkers)
         {
-            if (Overlaps(person.GetComponent<RectTransform>()) && person.IsEscaping) StartCoroutine(ElevatorCoroutine(person));
+            if (Overlaps(person.GetComponent<RectTransform>()) && person.IsEscaping) 
+            {
+                StartCoroutine(ElevatorCoroutine(person));
+            }        
         }
     }
     bool Overlaps(RectTransform b)

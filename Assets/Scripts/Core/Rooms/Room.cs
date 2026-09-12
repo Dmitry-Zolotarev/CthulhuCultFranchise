@@ -14,8 +14,10 @@ public enum RoomType
 [RequireComponent(typeof(Image))]
 public class Room : MonoBehaviour, IDropHandler
 {
+    
     public int capacity = 1;
-    public int Level = 1;
+    [Range(1, 3)] public int Level = 1;
+    [Range(1, 3)] public int Floor = 1;
     [SerializeField] private int maxLevel = 3;
     [SerializeField] protected Sprite[] LevelSprites;
     [SerializeField] private float personSpacing = 100f;
