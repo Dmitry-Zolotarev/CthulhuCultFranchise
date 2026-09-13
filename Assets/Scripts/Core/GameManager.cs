@@ -30,9 +30,12 @@ public class GameManager : MonoBehaviour
 
     [Header("Resources")]
     public int Money = 100;
-    public int TodayEarned = 0;
-    public int TotalEarned = 0;
-     
+    [HideInInspector] public int TotalEarned = 0;
+    [HideInInspector] public int TodayEarned = 0;
+    [HideInInspector] public int TodayInfluence = 0;
+    [HideInInspector] public int TodayEvidences = 0;
+
+
     [HideInInspector] public int EvidencesCount = 0;
     [HideInInspector] public float Hunger = 0;
     [HideInInspector] public District SelectedDistrict;   
@@ -88,7 +91,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public District[] Districts;
     private Coroutine spawnCoroutine;
     private void Awake()
-    {     
+    {
+        OpenCanvas(0);
         Instance = this;
         StartWorkPanel.SetActive(false);
         Districts = FindObjectsOfType<District>();
@@ -174,6 +178,20 @@ public class GameManager : MonoBehaviour
             TaxManager.Instance.AddTax(amount);
         }         
     }
+    public void AddEvidence(int amount)
+    {
+        if(amount > 0)
+        {
+            EvidencesCount += amount;
+            TodayEvidences += amount;
+        }        
+    }
+    public void AddInfluence(int amount)
+    {
+        SelectedDistrict.Influence++;
+        TodayInfluence++;
+        AddEvidence(amount);
+    }
     public bool TrySpendMoney(int amount)
     {
         if (amount < 0 || Money < amount) return false;
@@ -250,17 +268,19 @@ public class GameManager : MonoBehaviour
             if (!ActiveWorkers.Contains(person))
             {
                 ActiveWorkers.Remove(person);
-                Reserve.Remove(person);
                 Destroy(person.gameObject);
             }
         }
-        NextDay();
+        Phase = GamePhase.Report;
+        SaveManager.Save();
+        Reserve.Clear();
+        OpenCanvas(2);
     }
     public void NextDay()
     {
-        Day++;        
-        Reserve.Clear();
-        SaveManager.Save();
+        Day++;
+        TodayEvidences = 0;
+        TodayInfluence = 0;        
         Phase = GamePhase.Map;
         MusicPlayer.Instance?.PlayDefaultMusic();
         OpenCanvas(0);

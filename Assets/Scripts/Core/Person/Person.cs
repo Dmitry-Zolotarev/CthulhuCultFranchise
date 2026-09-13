@@ -88,7 +88,7 @@ public class Person : MonoBehaviour
         if (GameManager.Instance != null)
         {
             transform.SetParent(GameManager.Instance.OfficeCanvas);
-            GameManager.Instance.EvidencesCount++;
+            GameManager.Instance.AddEvidence(1);
         }
         IsEscaping = true;
     }
@@ -119,7 +119,7 @@ public class Person : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.EvidencesCount++;
+            GameManager.Instance.AddEvidence(1);
             GameManager.Instance.ReduceHunger(hungerReduction);
             GameManager.Instance.Reserve.Remove(this);
             GameManager.Instance.ActiveWorkers.Remove(this);

@@ -37,8 +37,7 @@ public class AgitationRoom : Room
         agitationProgress += agitationSpeed * Level * GetCurrentPersonCount() * Time.deltaTime * GameManager.Instance.GetTimeSpeed();
         if (agitationProgress >= agitationTargetValue)
         {
-            district.Influence++;
-            GameManager.Instance.EvidencesCount++;
+            GameManager.Instance.AddInfluence(1);
             agitationProgress = 0;
         }
         GameManager.Instance.AgitationProgress = agitationProgress;
