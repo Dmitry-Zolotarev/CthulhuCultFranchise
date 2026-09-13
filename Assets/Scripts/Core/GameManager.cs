@@ -9,7 +9,6 @@ public enum GamePhase
     Map,
     Preparation,
     Office,
-    Report,
     Final
 }
 public enum CampaignType
@@ -59,7 +58,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI hungerPercentLabel;
     [SerializeField] private GameObject TimeSpeedPanel;
     [SerializeField] private Slider hungerBar;
-    [SerializeField] private Slider anxietyBar;
+    [SerializeField] private Slider suspicionBar;
     public GameObject StartWorkPanel;
 
     [Header("Prefabs")]
@@ -72,18 +71,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Person personPrefab;
     [SerializeField] private Reception reception;
     
-
     [Header("Balance settings")]
     public float MaxHunger = 100;
     
-    [SerializeField] private float HungerIncreaseSpeed = 0.2f;
-    [SerializeField] private float MaxAnxiety = 20;
+    [SerializeField] private float HungerIncreaseSpeed = 0.2f; 
     [SerializeField] private float visitInterval = 15f;
     [SerializeField] private float startTime = 600f;
     [SerializeField] private float endTime = 1080f;
     [SerializeField] private float timeSpeed = 6f;
-    [SerializeField] private int visitorsCount = 6;
+    [SerializeField] private int visitorsCount = 6;   
     public float hungerReduction = 50f;
+    public float MaxSuspicion = 20f;
+
     [Header("Audio")]
     [SerializeField] private AudioClip officeMusic;
     [HideInInspector] public float AgitationProgress = 0;
@@ -101,13 +100,13 @@ public class GameManager : MonoBehaviour
     public void StartShift()
     {
         TodayEarned = 0;
+        TodayEvidences = 0;
+        TodayInfluence = 0;
         DayTime = startTime;
         Phase = GamePhase.Office;
         StartWorkPanel.SetActive(false);
-
         if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
-        spawnCoroutine = StartCoroutine(SpawnVisitors());
-        
+        spawnCoroutine = StartCoroutine(SpawnVisitors());    
     }
     
     private void Update()
@@ -159,7 +158,7 @@ public class GameManager : MonoBehaviour
         TimeSpeedPanel?.SetActive(Phase == GamePhase.Office);
 
         hungerBar.value = Hunger / MaxHunger;
-        anxietyBar.value = EvidencesCount / MaxAnxiety;
+        suspicionBar.value = EvidencesCount / MaxSuspicion;
         hungerPercentLabel?.SetText($"{(int)(hungerBar.value * 100)}%");  
 
         if (Phase == GamePhase.Map)
@@ -271,17 +270,15 @@ public class GameManager : MonoBehaviour
                 Destroy(person.gameObject);
             }
         }
-        Phase = GamePhase.Report;
+        Day++;
+        Phase = GamePhase.Map;
         SaveManager.Save();
         Reserve.Clear();
         OpenCanvas(2);
+        
     }
     public void NextDay()
-    {
-        Day++;
-        TodayEvidences = 0;
-        TodayInfluence = 0;        
-        Phase = GamePhase.Map;
+    {  
         MusicPlayer.Instance?.PlayDefaultMusic();
         OpenCanvas(0);
     }

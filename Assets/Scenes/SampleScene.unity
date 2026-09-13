@@ -705,7 +705,7 @@ GameObject:
   - component: {fileID: 289329350}
   - component: {fileID: 289329351}
   m_Layer: 5
-  m_Name: AnxietyBar
+  m_Name: SuspicionBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1207,7 +1207,7 @@ MonoBehaviour:
   hungerPercentLabel: {fileID: 8892265832779191134}
   TimeSpeedPanel: {fileID: 841981644}
   hungerBar: {fileID: 8892265832779191133}
-  anxietyBar: {fileID: 289329351}
+  suspicionBar: {fileID: 289329351}
   StartWorkPanel: {fileID: 1178169789}
   Canvases:
   - {fileID: 2643481620983938895}
@@ -1228,13 +1228,13 @@ MonoBehaviour:
   reception: {fileID: 1712561598}
   MaxHunger: 100
   HungerIncreaseSpeed: 0.1
-  MaxAnxiety: 20
   visitInterval: 30
   startTime: 540
   endTime: 1090
   timeSpeed: 6
   visitorsCount: 6
   hungerReduction: 50
+  MaxSuspicion: 20
   officeMusic: {fileID: 8300000, guid: e744c2d66ff25874e9e181c85d903d7c, type: 3}
   AgitationProgress: 0
   TimeSpeedModificator: 1
@@ -2047,6 +2047,10 @@ PrefabInstance:
     - target: {fileID: 6223595301272356246, guid: bf205ff9cc236e84abb476cec855e952, type: 3}
       propertyPath: m_Name
       value: ResultCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223595301272356246, guid: bf205ff9cc236e84abb476cec855e952, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3002,7 +3006,6 @@ Transform:
   m_Children:
   - {fileID: 136182593}
   - {fileID: 356909097}
-  - {fileID: 1018392367}
   - {fileID: 1948310324}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3140,37 +3143,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 985133701}
   m_CullTransparentMesh: 1
---- !u!1 &1018392366
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1018392367}
-  m_Layer: 0
-  m_Name: PoliceManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1018392367
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1018392366}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 970776231}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1021470871
 GameObject:
   m_ObjectHideFlags: 0

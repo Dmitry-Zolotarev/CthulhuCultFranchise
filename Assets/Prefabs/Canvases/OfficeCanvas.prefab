@@ -285,7 +285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   capacity: 2
   Level: 1
-  floor: 2
+  Floor: 1
   maxLevel: 3
   LevelSprites: []
   personSpacing: 100
@@ -499,7 +499,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -424, y: 223}
+  m_AnchoredPosition: {x: -424, y: 235.4}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7246191900080075549
@@ -847,8 +847,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 21.892, y: -88.38391}
-  m_SizeDelta: {x: 578.5981, y: 199.9309}
+  m_AnchoredPosition: {x: 8.3146, y: -88.38391}
+  m_SizeDelta: {x: 605.7527, y: 199.9309}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3863906862480658405
 CanvasRenderer:
@@ -902,7 +902,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   capacity: 4
   Level: 1
-  floor: 1
+  Floor: 1
   maxLevel: 3
   LevelSprites: []
   personSpacing: 100
@@ -1392,7 +1392,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   capacity: 1
   Level: 1
-  floor: 3
+  Floor: 1
   maxLevel: 3
   LevelSprites: []
   personSpacing: 100
@@ -1661,7 +1661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   capacity: 6
   Level: 1
-  floor: 1
+  Floor: 1
   maxLevel: 3
   LevelSprites: []
   personSpacing: 100
@@ -2232,8 +2232,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 91.721954, y: 155.91817}
-  m_SizeDelta: {x: 660.541, y: 191.1837}
+  m_AnchoredPosition: {x: 60.455605, y: 155.91817}
+  m_SizeDelta: {x: 637.5027, y: 191.1837}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1064021766557995094
 CanvasRenderer:
@@ -2287,7 +2287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   capacity: 2
   Level: 1
-  floor: 2
+  Floor: 1
   maxLevel: 3
   LevelSprites:
   - {fileID: 0}

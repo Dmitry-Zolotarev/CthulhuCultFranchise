@@ -4,18 +4,20 @@ using TMPro;
 
 public class ResultScreen : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI Header;
-    [SerializeField] private TextMeshProUGUI MoneyLabel;
-    [SerializeField] private TextMeshProUGUI DistrictLabel;
-    [SerializeField] private TextMeshProUGUI InfluenceLabel;
-    [SerializeField] private TextMeshProUGUI EvidenceLabel;
-
+    [SerializeField] private TextMeshProUGUI header;
+    [SerializeField] private TextMeshProUGUI moneyLabel;
+    [SerializeField] private TextMeshProUGUI districtLabel;
+    [SerializeField] private TextMeshProUGUI influenceLabel;
+    [SerializeField] private TextMeshProUGUI evidenceLabel;
+    [SerializeField] private Slider suspicionBar;
     void OnEnable()
     {
-        Header?.SetText($"День {GameManager.Instance.Day} окончен");
-        MoneyLabel?.SetText($"+{GameManager.Instance.TodayEarned}$");
-        DistrictLabel?.SetText(GameManager.Instance.SelectedDistrict.Name);
-        InfluenceLabel?.SetText($"+{GameManager.Instance.TodayInfluence} влияния");
-        EvidenceLabel?.SetText($"+{GameManager.Instance.TodayEvidences} улик{PluralEnding.GetEnding(GameManager.Instance.TodayEvidences)}");
+        var game = GameManager.Instance;
+        header?.SetText($"День {game.Day} окончен");
+        moneyLabel?.SetText($"+{game.TodayEarned}$");
+        districtLabel?.SetText(game.SelectedDistrict.Name);
+        influenceLabel?.SetText($"Влияние: {game.SelectedDistrict.Influence} / 5\n(+{game.TodayInfluence})");     
+        evidenceLabel?.SetText($"Найдено улик:\n{game.TodayEvidences}");
+        suspicionBar.value = game.EvidencesCount / game.MaxSuspicion;
     }
 }
