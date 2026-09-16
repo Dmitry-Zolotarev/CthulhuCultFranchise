@@ -34,7 +34,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public int TodayEarned = 0;
     [HideInInspector] public int TodayInfluence = 0;
     [HideInInspector] public int TodayEvidences = 0;
-
+    [HideInInspector] public int TodayEscaped = 0;
+    [HideInInspector] public int TodayEaten = 0;
 
     [HideInInspector] public int EvidencesCount = 0;
     [HideInInspector] public float Hunger = 0;
@@ -104,6 +105,8 @@ public class GameManager : MonoBehaviour
         TodayEarned = 0;
         TodayEvidences = 0;
         TodayInfluence = 0;
+        TodayEscaped = 0;
+        TodayEaten = 0;
 
         DayTime = startTime;
         Phase = GamePhase.Office;
