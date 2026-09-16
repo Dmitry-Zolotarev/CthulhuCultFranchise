@@ -69,15 +69,19 @@ public class DragPerson : MonoBehaviour,
     {
         canvasGroup.blocksRaycasts = true;
         canvasGroup.alpha = 1f;
-
-        var room = GetComponent<Person>().Room.transform;
-
-        transform.SetParent(room, false);
+        var person = GetComponent<Person>();
+        
+        if(person.IsCultist && person.Room is Reception)
+        {
+            foreach(var room in GameManager.Instance.Rooms)
+            {
+                if (room is Laundry && !room.IsFull()) person.Room = room;
+            }
+        }
+        transform.SetParent(person.Room.transform, false);
 
         rectTransform.anchoredPosition = originalPosition;
-
-        rectTransform.localRotation = Quaternion.identity;
-   
+        rectTransform.localRotation = Quaternion.identity; 
         rectTransform.localScale = Vector3.one;
     }
 }
