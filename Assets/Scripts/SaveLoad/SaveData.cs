@@ -23,7 +23,7 @@ public class SaveData
     {
         GameManager.Instance.Day = Day;
         GameManager.Instance.TodayEarned = TodayEarned;
-        TaxManager.Instance.TodayTax = TodayTax;
+        TaxManager.Instance.TaxAmount = TodayTax;
         GameManager.Instance.DayTime = Time;
         GameManager.Instance.Phase = Phase;
         GameManager.Instance.Money = Money;
@@ -50,17 +50,18 @@ public class SaveData
 
         foreach (var personData in Reserve)
         {
-            var person = GameManager.Instance.SpawnVisitor();
+            var person = GameManager.Instance.InstantiatePerson();
             personData.Load(person);
 
             GameManager.Instance.Reserve.Add(person);
         }
         foreach (var personData in ActiveWorkers)
         {
-            var worker = GameManager.Instance.SpawnVisitor();
+            var worker = GameManager.Instance.InstantiatePerson();
             personData.Load(worker);
             GameManager.Instance.ActiveWorkers.Add(worker);
         }
+
     }
     public void Save()
     {
@@ -69,10 +70,15 @@ public class SaveData
         Phase = GameManager.Instance.Phase;
         Money = GameManager.Instance.Money;
         TodayEarned = GameManager.Instance.TodayEarned;
-        TodayTax = TaxManager.Instance.TodayTax;
+        TodayTax = TaxManager.Instance.TaxAmount;
         EvidencesCount = GameManager.Instance.EvidencesCount;
         Hunger = GameManager.Instance.Hunger;
         AgitationProgress = (int)GameManager.Instance.AgitationProgress;
+
+        RoomLevels.Clear();
+        Districts.Clear();
+        ActiveWorkers.Clear();
+        Reserve.Clear();
 
         if (GameManager.Instance.SelectedDistrict != null)
         {

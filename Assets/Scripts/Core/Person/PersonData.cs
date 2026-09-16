@@ -19,21 +19,25 @@ public class PersonData
     }
     public void Load(Person person)
     {
-        person.Type = Type;
-        person.Loyalty = Loyalty;
-        person.RoomType = RoomType;
-        person.MaxLoyalty = MaxLoyalty;
-        person.MaxLaunderings = Launderings;
-        person.IsCultist = IsCultist;
-        if (person.IsCultist) 
+        try
         {
-            GameManager.Instance.ActiveWorkers.Add(person);
-            person.Image.sprite = GameManager.Instance.CultistSprite;
-        }
-        else
-        {
-            person.Image.sprite = GameManager.Instance.PersonSprites[(int)person.Type];
-        }
-        person.FindRoom();
+            person.Type = Type;
+            person.Loyalty = Loyalty;
+            person.RoomType = RoomType;
+            person.MaxLoyalty = MaxLoyalty;
+            person.MaxLaunderings = Launderings;
+            person.IsCultist = IsCultist;
+            if (person.IsCultist)
+            {
+                GameManager.Instance.ActiveWorkers.Add(person);
+                person.Image.sprite = GameManager.Instance.CultistSprite;
+            }
+            else
+            {
+                person.Image.sprite = GameManager.Instance.PersonSprites[(int)person.Type];
+            }
+            person.FindRoom();
+        }     
+        catch { }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections;
+using System.Linq;
 using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
@@ -73,13 +74,14 @@ public class GameManager : MonoBehaviour
     
     [Header("Balance settings")]
     public float MaxHunger = 100;
-    
-    [SerializeField] private float HungerIncreaseSpeed = 0.2f; 
+        
+    [SerializeField] private int visitorsCount = 6;
     [SerializeField] private float visitInterval = 15f;
+    [SerializeField] private float HungerIncreaseSpeed = 0.2f;
     [SerializeField] private float startTime = 600f;
     [SerializeField] private float endTime = 1080f;
     [SerializeField] private float timeSpeed = 6f;
-    [SerializeField] private int visitorsCount = 6;   
+    
     public float hungerReduction = 50f;
     public float MaxSuspicion = 20f;
 
@@ -102,11 +104,19 @@ public class GameManager : MonoBehaviour
         TodayEarned = 0;
         TodayEvidences = 0;
         TodayInfluence = 0;
+
         DayTime = startTime;
         Phase = GamePhase.Office;
         StartWorkPanel.SetActive(false);
+
+        if (TaxManager.Instance.TaxAmount > 99) AddEvidence(1);
         if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
-        spawnCoroutine = StartCoroutine(SpawnVisitors());    
+        spawnCoroutine = StartCoroutine(SpawnVisitors());
+        
+        foreach (var person in ActiveWorkers)
+        {
+            if (person.Loyalty < person.MaxLoyalty * 0.2f) person.Loyalty += person.MaxLoyalty * 0.2f;
+        }
     }
     
     private void Update()
@@ -153,7 +163,7 @@ public class GameManager : MonoBehaviour
         moneyLabel?.SetText($"{Money}$");
         evidencesCountLabel?.SetText($"Найдено улик: {EvidencesCount}");
         todayEarnLabel?.SetText($"Доход за прошлую смену: {TodayEarned}$");
-        todayTaxLabel?.SetText($"{TaxManager.Instance.TodayTax}$");
+        todayTaxLabel?.SetText($"{TaxManager.Instance.TaxAmount}$");
         dayLabel?.SetText($"День {Day}");
         TimeSpeedPanel?.SetActive(Phase == GamePhase.Office);
 
@@ -233,18 +243,17 @@ public class GameManager : MonoBehaviour
         }
         spawnCoroutine = null;
     }
-    public Person SpawnVisitor()
+
+    public Person InstantiatePerson()
     {
-        Person person = Instantiate(personPrefab, Canvases[1].transform);    
-        person.Type = Random.value < 0.5f ? SelectedDistrict.ResidentType : (PersonType)Random.Range(0, PersonSprites.Length);
-        person.Image.sprite = PersonSprites[(int)person.Type];
-        return person;
+        return Instantiate(personPrefab, Canvases[1].transform);
     }
     private void SpawnVisitorInReception()
     {
         if (reception.IsFull()) return;
-        var visitor = SpawnVisitor();
-        
+        var visitor = InstantiatePerson();
+        visitor.Type = Random.value < 0.5f ? SelectedDistrict.ResidentType : (PersonType)Random.Range(0, PersonSprites.Length);
+        visitor.Image.sprite = PersonSprites[(int)visitor.Type];
         reception.AssignPerson(visitor);
         Reserve.Add(visitor);
     }
@@ -261,18 +270,9 @@ public class GameManager : MonoBehaviour
             StopCoroutine(spawnCoroutine);
             spawnCoroutine = null;
         }
-        var people = FindObjectsOfType<Person>();
-        foreach (var person in people)
-        {
-            if (!ActiveWorkers.Contains(person))
-            {
-                ActiveWorkers.Remove(person);
-                Destroy(person.gameObject);
-            }
-        }
+        
         Day++;
-        Phase = GamePhase.Map;
-        SaveManager.Save();
+        Phase = GamePhase.Map;     
         Reserve.Clear();
         OpenCanvas(2);
         
@@ -280,6 +280,7 @@ public class GameManager : MonoBehaviour
     public void NextDay()
     {  
         MusicPlayer.Instance?.PlayDefaultMusic();
+        SaveManager.Save();
         OpenCanvas(0);
     }
     public void OpenCanvas(int canvasID)

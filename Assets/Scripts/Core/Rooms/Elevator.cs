@@ -16,7 +16,7 @@ public class Elevator : MonoBehaviour
     {     
         foreach(var person in GameManager.Instance.ActiveWorkers)
         {
-            if (Overlaps(person.GetComponent<RectTransform>()) && person.IsEscaping) 
+            if (person != null && Overlaps(person.GetComponent<RectTransform>()) && person.IsEscaping) 
             {
                 StartCoroutine(ElevatorCoroutine(person));
             }        

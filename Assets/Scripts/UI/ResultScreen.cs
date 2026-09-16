@@ -6,6 +6,7 @@ public class ResultScreen : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI header;
     [SerializeField] private TextMeshProUGUI moneyLabel;
+    [SerializeField] private TextMeshProUGUI taxLabel;
     [SerializeField] private TextMeshProUGUI districtLabel;
     [SerializeField] private TextMeshProUGUI influenceLabel;
     [SerializeField] private TextMeshProUGUI evidenceLabel;
@@ -15,6 +16,7 @@ public class ResultScreen : MonoBehaviour
         var game = GameManager.Instance;
         header?.SetText($"День {game.Day} окончен");
         moneyLabel?.SetText($"+{game.TodayEarned}$");
+        taxLabel?.SetText($"Налог: {TaxManager.Instance.TaxAmount}$");
         districtLabel?.SetText(game.SelectedDistrict.Name);
         influenceLabel?.SetText($"Влияние: {game.SelectedDistrict.Influence} / 5\n(+{game.TodayInfluence})");     
         evidenceLabel?.SetText($"Найдено улик:\n{game.TodayEvidences}");
