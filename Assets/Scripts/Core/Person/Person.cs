@@ -86,18 +86,11 @@ public class Person : MonoBehaviour
     public void Escape()
     {
         transform.SetParent(GameManager.Instance.OfficeCanvas);
+        GameManager.Instance.ActiveWorkers.Remove(this);
+        GameManager.Instance.Reserve.Remove(this);
         GameManager.Instance.TodayEscaped++;
         GameManager.Instance.AddEvidence(1);      
         IsEscaping = true;
-    }
-    public void Quit()
-    {
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.Reserve.Remove(this);
-            GameManager.Instance.ActiveWorkers.Remove(this);
-        }
-        Destroy(gameObject);
     }
     public void BecomeCultist()
     {
@@ -106,7 +99,6 @@ public class Person : MonoBehaviour
         StartCoroutine(StartRecruitment());
         IsCultist = true;
     }
-
     private IEnumerator StartRecruitment()
     {
         yield return new WaitForSeconds(becomeCultistTime / GameManager.Instance.GetTimeSpeed());

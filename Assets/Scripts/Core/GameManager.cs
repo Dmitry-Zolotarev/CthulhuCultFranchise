@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public int TodayEarned = 0;
     [HideInInspector] public int TodayInfluence = 0;
     [HideInInspector] public int TodayEvidences = 0;
+    [HideInInspector] public int TodayReleased = 0;
     [HideInInspector] public int TodayEscaped = 0;
     [HideInInspector] public int TodayEaten = 0;
 
@@ -105,6 +106,7 @@ public class GameManager : MonoBehaviour
         TodayEarned = 0;
         TodayEvidences = 0;
         TodayInfluence = 0;
+        TodayReleased = 0;
         TodayEscaped = 0;
         TodayEaten = 0;
 
@@ -272,10 +274,15 @@ public class GameManager : MonoBehaviour
         {
             StopCoroutine(spawnCoroutine);
             spawnCoroutine = null;
-        }
-        
+        }    
         Day++;
-        Phase = GamePhase.Map;     
+        Phase = GamePhase.Map;
+
+        var people = FindObjectsOfType<Person>();
+        foreach(var person in people)
+        {
+            if (person.IsEscaping) Destroy(person.gameObject);
+        }
         Reserve.Clear();
         OpenCanvas(2);
         
