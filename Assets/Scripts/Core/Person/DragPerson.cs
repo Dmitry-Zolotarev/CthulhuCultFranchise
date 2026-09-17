@@ -75,7 +75,7 @@ public class DragPerson : MonoBehaviour,
         {
             foreach(var room in GameManager.Instance.Rooms)
             {
-                if (room is Laundry && !room.IsFull()) person.Room = room;
+                if (room is Laundry) room.AssignPerson(person);
             }
         }
         transform.SetParent(person.Room.transform, false);

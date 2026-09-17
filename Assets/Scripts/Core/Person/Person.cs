@@ -87,7 +87,7 @@ public class Person : MonoBehaviour
     {
         transform.SetParent(GameManager.Instance.OfficeCanvas);
         GameManager.Instance.ActiveWorkers.Remove(this);
-        GameManager.Instance.Reserve.Remove(this);
+        GameManager.Instance.Escaping.Add(this);
         GameManager.Instance.TodayEscaped++;
         GameManager.Instance.AddEvidence(1);      
         IsEscaping = true;

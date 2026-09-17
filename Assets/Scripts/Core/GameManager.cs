@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public District SelectedDistrict;   
     [HideInInspector] public HashSet<Person> Reserve = new HashSet<Person>();
     [HideInInspector] public HashSet<Person> ActiveWorkers = new HashSet<Person>();
+    [HideInInspector] public HashSet<Person> Escaping = new HashSet<Person>();
 
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI moneyLabel;
@@ -278,11 +279,8 @@ public class GameManager : MonoBehaviour
         Day++;
         Phase = GamePhase.Map;
 
-        var people = FindObjectsOfType<Person>();
-        foreach(var person in people)
-        {
-            if (person.IsEscaping) Destroy(person.gameObject);
-        }
+        foreach(var person in Escaping) Destroy(person.gameObject);
+        Escaping.Clear();
         Reserve.Clear();
         OpenCanvas(2);
         

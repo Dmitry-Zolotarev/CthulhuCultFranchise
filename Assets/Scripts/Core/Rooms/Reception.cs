@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class Reception : Room
 {
@@ -15,13 +12,12 @@ public class Reception : Room
             if (person.Loyalty / person.MaxLoyalty > 0.3f)
             {
                 GameManager.Instance.TodayReleased++;
+                GameManager.Instance.ActiveWorkers.Remove(person);
             }
             else
             {
                 GameManager.Instance.TodayEscaped++;
-            }
-            GameManager.Instance.Reserve.Remove(person);
-            GameManager.Instance.ActiveWorkers.Remove(person);
+            }        
             Destroy(person.gameObject);
             return;
         }
