@@ -63,7 +63,7 @@ public class Person : MonoBehaviour
 
             if (Loyalty <= 0 && !IsEscaping) Escape();
         }
-        if (IsEscaping) 
+        if (IsEscaping && dragPerson.wasDropped && !(Room is Altar)) 
         {
             float direction;
             if (Room is Reception || HasElevated) direction = -1;

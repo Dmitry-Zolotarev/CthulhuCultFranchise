@@ -279,7 +279,14 @@ public class GameManager : MonoBehaviour
         Day++;
         Phase = GamePhase.Map;
 
-        foreach(var person in Escaping) Destroy(person.gameObject);
+        foreach (var person in FindObjectsOfType<DragPerson>()) 
+        {
+            person.ReturnToOriginalPosition();
+        }
+        foreach (var person in Escaping) 
+        {
+            Destroy(person.gameObject);
+        } 
         Escaping.Clear();
         Reserve.Clear();
         OpenCanvas(2);
