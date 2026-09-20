@@ -20,6 +20,7 @@ public class Person : MonoBehaviour
     [HideInInspector] public Room Room;
     [HideInInspector] public RoomType RoomType;
     [HideInInspector] public float MaxLoyalty;
+    
     [SerializeField] private float becomeCultistTime = 6f;
     [SerializeField] private float baseMaxLoyalty = 500f;
     [SerializeField] private float escapeSpeed = 1f;
@@ -30,7 +31,10 @@ public class Person : MonoBehaviour
     [HideInInspector] public bool IsEscaping = false;
     [HideInInspector] public bool HasElevated = false;
     [HideInInspector] public Image Image;
-    public int MaxLaunderings = 3;
+
+    [SerializeField] private int MaxLaunderings = 3;
+    [HideInInspector] public int LaunderingsCount = 0;
+
     private DragPerson dragPerson;
     private Transform elevator;
     private void Awake()
@@ -91,6 +95,14 @@ public class Person : MonoBehaviour
         GameManager.Instance.TodayEscaped++;
         GameManager.Instance.AddEvidence(1);      
         IsEscaping = true;
+    }
+    public void TryLaunder(float maxLoyaltyReduction)
+    {
+        if (LaunderingsCount < MaxLaunderings && Loyalty < MaxLoyalty * maxLoyaltyReduction)
+        {
+            MaxLoyalty *= maxLoyaltyReduction;
+            LaunderingsCount++;
+        }
     }
     public void BecomeCultist()
     {

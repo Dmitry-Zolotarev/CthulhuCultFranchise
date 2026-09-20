@@ -1209,6 +1209,9 @@ MonoBehaviour:
   TodayEarned: 0
   TodayInfluence: 0
   TodayEvidences: 0
+  TodayReleased: 0
+  TodayEscaped: 0
+  TodayEaten: 0
   EvidencesCount: 0
   Hunger: 0
   SelectedDistrict: {fileID: 0}
@@ -1251,7 +1254,7 @@ MonoBehaviour:
   reception: {fileID: 1712561598}
   MaxHunger: 100
   visitorsCount: 8
-  visitInterval: 28
+  visitInterval: 26
   HungerIncreaseSpeed: 0.1
   startTime: 540
   endTime: 1090
