@@ -89,7 +89,9 @@ public class GameManager : MonoBehaviour
     public float MaxSuspicion = 20f;
 
     [Header("Audio")]
+    [SerializeField] private AudioClip abyssMusic;
     [SerializeField] private AudioClip officeMusic;
+    
     [HideInInspector] public float AgitationProgress = 0;
     [HideInInspector] public int TimeSpeedModificator = 1;
     [HideInInspector] public District[] Districts;
@@ -100,7 +102,16 @@ public class GameManager : MonoBehaviour
         Instance = this;
         StartWorkPanel.SetActive(false);
         Districts = FindObjectsOfType<District>();
-        if (SaveManager.NeedLoad) SaveManager.Load();
+
+        if (SaveManager.NeedLoad)
+        {
+            SaveManager.Load();
+        }
+        else 
+        {
+            OpenCanvas(3);
+            MusicPlayer.Instance.PlayMusic(abyssMusic);
+        } 
     }
     public void StartShift()
     {
@@ -300,6 +311,7 @@ public class GameManager : MonoBehaviour
     }
     public void OpenCanvas(int canvasID)
     {
+        if(canvasID == 0) MusicPlayer.Instance?.PlayDefaultMusic();
         for (int i = 0; i < Canvases.Length; i++) Canvases[i]?.SetActive(i == canvasID);
     }
 }

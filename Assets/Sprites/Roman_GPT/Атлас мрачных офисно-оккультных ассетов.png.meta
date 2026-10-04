@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -95,7 +95,99 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: "\u0410\u0442\u043B\u0430\u0441 \u043C\u0440\u0430\u0447\u043D\u044B\u0445
+        \u043E\u0444\u0438\u0441\u043D\u043E-\u043E\u043A\u043A\u0443\u043B\u044C\u0442\u043D\u044B\u0445
+        \u0430\u0441\u0441\u0435\u0442\u043E\u0432_0"
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 12
+        width: 1442
+        height: 541
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb46fcbd5e7138c40842de8e33de96fd
+      internalID: 714890466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u0410\u0442\u043B\u0430\u0441 \u043C\u0440\u0430\u0447\u043D\u044B\u0445
+        \u043E\u0444\u0438\u0441\u043D\u043E-\u043E\u043A\u043A\u0443\u043B\u044C\u0442\u043D\u044B\u0445
+        \u0430\u0441\u0441\u0435\u0442\u043E\u0432_1"
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 482
+        width: 1131
+        height: 588
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76a9376d1a0307845ad81f84faeeafbb
+      internalID: -1626834524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u0410\u0442\u043B\u0430\u0441 \u043C\u0440\u0430\u0447\u043D\u044B\u0445
+        \u043E\u0444\u0438\u0441\u043D\u043E-\u043E\u043A\u043A\u0443\u043B\u044C\u0442\u043D\u044B\u0445
+        \u0430\u0441\u0441\u0435\u0442\u043E\u0432_2"
+      rect:
+        serializedVersion: 2
+        x: 412
+        y: 314
+        width: 1036
+        height: 772
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45e3ccdb2a5800c4bb975742bd38e16c
+      internalID: -1678842038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u0410\u0442\u043B\u0430\u0441 \u043C\u0440\u0430\u0447\u043D\u044B\u0445
+        \u043E\u0444\u0438\u0441\u043D\u043E-\u043E\u043A\u043A\u0443\u043B\u044C\u0442\u043D\u044B\u0445
+        \u0430\u0441\u0441\u0435\u0442\u043E\u0432_3"
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 249
+        width: 6
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eeeb7efb35c49d04fa2ab7abbda4635d
+      internalID: 1640324877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -106,7 +198,11 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      "\u0410\u0442\u043B\u0430\u0441 \u043C\u0440\u0430\u0447\u043D\u044B\u0445 \u043E\u0444\u0438\u0441\u043D\u043E-\u043E\u043A\u043A\u0443\u043B\u044C\u0442\u043D\u044B\u0445 \u0430\u0441\u0441\u0435\u0442\u043E\u0432_0": 714890466
+      "\u0410\u0442\u043B\u0430\u0441 \u043C\u0440\u0430\u0447\u043D\u044B\u0445 \u043E\u0444\u0438\u0441\u043D\u043E-\u043E\u043A\u043A\u0443\u043B\u044C\u0442\u043D\u044B\u0445 \u0430\u0441\u0441\u0435\u0442\u043E\u0432_1": -1626834524
+      "\u0410\u0442\u043B\u0430\u0441 \u043C\u0440\u0430\u0447\u043D\u044B\u0445 \u043E\u0444\u0438\u0441\u043D\u043E-\u043E\u043A\u043A\u0443\u043B\u044C\u0442\u043D\u044B\u0445 \u0430\u0441\u0441\u0435\u0442\u043E\u0432_2": -1678842038
+      "\u0410\u0442\u043B\u0430\u0441 \u043C\u0440\u0430\u0447\u043D\u044B\u0445 \u043E\u0444\u0438\u0441\u043D\u043E-\u043E\u043A\u043A\u0443\u043B\u044C\u0442\u043D\u044B\u0445 \u0430\u0441\u0441\u0435\u0442\u043E\u0432_3": 1640324877
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
