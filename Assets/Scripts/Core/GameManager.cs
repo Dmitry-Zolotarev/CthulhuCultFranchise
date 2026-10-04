@@ -304,10 +304,29 @@ public class GameManager : MonoBehaviour
         
     }
     public void NextDay()
-    {  
+    {
         MusicPlayer.Instance?.PlayDefaultMusic();
         SaveManager.Save();
-        OpenCanvas(0);
+
+        bool isMaxInfluence = true;
+
+        foreach (var district in Districts)
+        {
+            if(district.Influence < 5)
+            {
+                isMaxInfluence = false;
+                break;
+            }
+        }
+        if(EvidencesCount >= MaxSuspicion)
+        {
+            OpenCanvas(4);
+        }
+        else if(isMaxInfluence)
+        {
+            OpenCanvas(5);
+        }
+        else OpenCanvas(0);
     }
     public void OpenCanvas(int canvasID)
     {
