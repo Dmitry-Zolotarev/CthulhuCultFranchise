@@ -107,6 +107,33 @@ public class GameManager : MonoBehaviour
     }
     public void StartShift()
     {
+        try
+        {
+            if (spawnCoroutine != null)
+            {
+                StopCoroutine(spawnCoroutine);
+                spawnCoroutine = null;
+            }
+            foreach (var person in FindObjectsOfType<DragPerson>())
+            {
+                if (!person.wasDropped)
+                {
+                    ActiveWorkers.Remove(person.GetComponent<Person>());
+                    Destroy(person.gameObject);
+                }
+            }
+            foreach (var person in Reserve)
+            {
+                Destroy(person.gameObject);
+            }
+            foreach (var person in Escaping)
+            {
+                Destroy(person.gameObject);
+            }
+            Escaping.Clear();
+            Reserve.Clear();
+        }
+        catch { }
         TodayEarned = 0;
         TodayEvidences = 0;
         TodayInfluence = 0;
@@ -285,36 +312,13 @@ public class GameManager : MonoBehaviour
     }
     private void FinishShift()
     {
+        Phase = GamePhase.Map;
         OpenCanvas(2);
-
-        if (spawnCoroutine != null)
-        {
-            StopCoroutine(spawnCoroutine);
-            spawnCoroutine = null;
-        }           
-        foreach (var person in FindObjectsOfType<DragPerson>()) 
-        {
-            if(!person.wasDropped)
-            {
-                ActiveWorkers.Remove(person.GetComponent<Person>());
-                Destroy(person.gameObject);
-            }      
-        }
-        foreach (var person in Reserve)
-        {
-            Destroy(person.gameObject);
-        }
-        foreach (var person in Escaping) 
-        {
-            Destroy(person.gameObject);
-        } 
-        Escaping.Clear();
-        Reserve.Clear();        
+           
     }
     public void NextDay()
     {
-        Day++;
-        Phase = GamePhase.Map;
+        Day++;      
         MusicPlayer.Instance?.PlayDefaultMusic();
         SaveManager.Save();
 

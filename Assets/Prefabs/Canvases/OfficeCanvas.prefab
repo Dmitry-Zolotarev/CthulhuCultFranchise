@@ -297,7 +297,7 @@ MonoBehaviour:
   personOffsetY: -30
   Type: 0
   roomNameLabel: {fileID: 290158667337846341}
-  UpdateCost: 500
+  UpdateCost: 2000
   agitationSpeed: 0.2
   districtNameLabel: {fileID: 4707326228317316948}
   progressLabel: {fileID: 203678080793555985}
@@ -962,7 +962,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -71.5, y: -92.4}
+  m_AnchoredPosition: {x: 30.2, y: -92.4}
   m_SizeDelta: {x: 400, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1752421282089080949
