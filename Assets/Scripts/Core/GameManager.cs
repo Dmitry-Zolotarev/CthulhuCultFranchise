@@ -285,6 +285,8 @@ public class GameManager : MonoBehaviour
     }
     private void FinishShift()
     {
+        OpenCanvas(2);
+
         if (spawnCoroutine != null)
         {
             StopCoroutine(spawnCoroutine);
@@ -307,8 +309,7 @@ public class GameManager : MonoBehaviour
             Destroy(person.gameObject);
         } 
         Escaping.Clear();
-        Reserve.Clear();
-        OpenCanvas(2);   
+        Reserve.Clear();        
     }
     public void NextDay()
     {
