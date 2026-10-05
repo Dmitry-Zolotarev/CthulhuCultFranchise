@@ -2613,7 +2613,7 @@ MonoBehaviour:
   roomNameLabel: {fileID: 7652313498657937797}
   UpdateCost: 500
   MoneyPerEmployee: 50
-  payCooldown: 6
+  payCooldown: 20
 --- !u!114 &3898610434330494799
 MonoBehaviour:
   m_ObjectHideFlags: 0

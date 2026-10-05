@@ -286,13 +286,14 @@ public class GameManager : MonoBehaviour
         {
             StopCoroutine(spawnCoroutine);
             spawnCoroutine = null;
-        }    
-        Day++;
-        Phase = GamePhase.Map;
-
+        }           
         foreach (var person in FindObjectsOfType<DragPerson>()) 
         {
             person.ReturnToOriginalPosition();
+        }
+        foreach (var person in Reserve)
+        {
+            Destroy(person.gameObject);
         }
         foreach (var person in Escaping) 
         {
@@ -300,11 +301,12 @@ public class GameManager : MonoBehaviour
         } 
         Escaping.Clear();
         Reserve.Clear();
-        OpenCanvas(2);
-        
+        OpenCanvas(2);   
     }
     public void NextDay()
     {
+        Day++;
+        Phase = GamePhase.Map;
         MusicPlayer.Instance?.PlayDefaultMusic();
         SaveManager.Save();
 
