@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float endTime = 1080f;
     [SerializeField] private float timeSpeed = 6f;
     
-    public float hungerReduction = 50f;
+    public float hungerReduction = 35f;
     public float MaxSuspicion = 20f;
 
     [Header("Audio")]

@@ -19,5 +19,6 @@ public class DonationRoom : Room
             GameManager.Instance.AddMoney(MoneyPerEmployee * Level * GetCurrentPersonCount());
             lastPayTime = Time.time;
         }
+        base.Update();
     }
 }

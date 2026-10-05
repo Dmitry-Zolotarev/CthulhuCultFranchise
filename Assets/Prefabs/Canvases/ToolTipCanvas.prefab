@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ToolTip
   tooltipText: {fileID: 6628848876143323891}
   toolTipImage: {fileID: 5384869375842251179}
-  SecondsBeforeClose: 2
+  SecondsBeforeClose: 3
 --- !u!1 &5384869375842251179
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,9 +85,9 @@ RectTransform:
   - {fileID: 3289010185849945041}
   m_Father: {fileID: 5770850691961626120}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -40, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 180, y: -60}
   m_SizeDelta: {x: 200, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8456185595629189462

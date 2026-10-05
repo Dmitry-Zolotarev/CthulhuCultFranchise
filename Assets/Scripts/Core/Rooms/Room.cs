@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
-
+using TMPro;
 public enum RoomType
 {
     Reception,
@@ -23,10 +23,18 @@ public class Room : MonoBehaviour, IDropHandler
     [SerializeField] private float personSpacing = 100f;
     [SerializeField] private float personOffsetY = -30f;
     [HideInInspector] public RoomType Type = RoomType.Reception;
-    private Image roomImage;
+    [SerializeField] private TextMeshProUGUI roomNameLabel;
+    [SerializeField] private int UpdateCost = 500;
     
+    private TooltipTrigger toolTip;
+    private Button upgradeButton;
+    private Image roomImage;
+    private string roomName;
     private void Awake()
     {
+        roomName = roomNameLabel.text;
+        toolTip = GetComponent<TooltipTrigger>();
+        upgradeButton = GetComponent<Button>();
         if (this is DonationRoom)
         {
             Type = RoomType.Donations;
@@ -45,6 +53,19 @@ public class Room : MonoBehaviour, IDropHandler
         }
         roomImage = GetComponent<Image>();
         UpdateRoomSprite();
+    }
+    protected void Update()
+    {
+        if (upgradeButton == null) return;
+
+        if(Level < 3 && toolTip != null && GameManager.Instance.Money >= GetUpdateCost())
+        {
+            upgradeButton.enabled = true;
+            toolTip.Text = $"Улучшить за {GetUpdateCost()}$";
+        }
+        else upgradeButton.enabled = false;
+
+        roomNameLabel?.SetText(roomName + " ур. " + Level);
     }
     public void OnDrop(PointerEventData eventData)
     {
@@ -129,7 +150,14 @@ public class Room : MonoBehaviour, IDropHandler
     }
     public void LevelUP()
     {
-        SetLevel(Level + 1);
+        if (GameManager.Instance.TrySpendMoney(GetUpdateCost()))
+        {
+            SetLevel(Level + 1);
+        } 
+    }
+    private int GetUpdateCost()
+    {
+        return UpdateCost * (int)Mathf.Pow(2, Level);
     }
     private void UpdateRoomSprite()
     {

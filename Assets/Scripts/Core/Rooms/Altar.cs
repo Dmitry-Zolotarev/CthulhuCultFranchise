@@ -15,7 +15,7 @@ public class Altar : Room
         if(GameManager.Instance.GetTimeSpeed() > 0)
         {
             yield return new WaitForSeconds(eatingTime / GameManager.Instance.GetTimeSpeed());
-            person.Eat(GameManager.Instance.hungerReduction);
+            person.Eat(GameManager.Instance.hungerReduction * Level);
         }     
     }
 }

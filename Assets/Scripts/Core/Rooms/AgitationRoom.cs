@@ -41,6 +41,7 @@ public class AgitationRoom : Room
             agitationProgress = 0;
         }
         GameManager.Instance.AgitationProgress = agitationProgress;
+        base.Update();
     }
     private int GetProgressPercent()
     {
