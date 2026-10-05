@@ -1364,8 +1364,8 @@ MonoBehaviour:
   startTime: 540
   endTime: 1090
   timeSpeed: 6
-  hungerReduction: 35
-  MaxSuspicion: 50
+  hungerReduction: 30
+  MaxSuspicion: 30
   abyssMusic: {fileID: 8300000, guid: bd2805041f349d64a92226e0785d9075, type: 3}
   officeMusic: {fileID: 8300000, guid: e744c2d66ff25874e9e181c85d903d7c, type: 3}
   AgitationProgress: 0

@@ -8,9 +8,7 @@ using TMPro;
 public enum GamePhase
 {
     Map,
-    Preparation,
-    Office,
-    Final
+    Office
 }
 public class GameManager : MonoBehaviour
 {
@@ -107,33 +105,6 @@ public class GameManager : MonoBehaviour
     }
     public void StartShift()
     {
-        try
-        {
-            if (spawnCoroutine != null)
-            {
-                StopCoroutine(spawnCoroutine);
-                spawnCoroutine = null;
-            }
-            foreach (var person in FindObjectsOfType<DragPerson>())
-            {
-                if (!person.wasDropped)
-                {
-                    ActiveWorkers.Remove(person.GetComponent<Person>());
-                    Destroy(person.gameObject);
-                }
-            }
-            foreach (var person in Reserve)
-            {
-                Destroy(person.gameObject);
-            }
-            foreach (var person in Escaping)
-            {
-                Destroy(person.gameObject);
-            }
-            Escaping.Clear();
-            Reserve.Clear();
-        }
-        catch { }
         TodayEarned = 0;
         TodayEvidences = 0;
         TodayInfluence = 0;
@@ -313,15 +284,31 @@ public class GameManager : MonoBehaviour
     private void FinishShift()
     {
         Phase = GamePhase.Map;
-        OpenCanvas(2);
-           
+        foreach (var person in FindObjectsOfType<DragPerson>())
+        {
+            if (!person.wasDropped)
+            {
+                ActiveWorkers.Remove(person.GetComponent<Person>());
+                Destroy(person.gameObject);
+            }
+        }
+        foreach (var person in Reserve)
+        {
+            if (person != null) Destroy(person.gameObject);
+        }
+        foreach (var person in Escaping)
+        {
+            if (person != null) Destroy(person.gameObject);
+        }
+        Escaping.Clear();
+        Reserve.Clear();
+        OpenCanvas(2);       
     }
     public void NextDay()
     {
         Day++;      
         MusicPlayer.Instance?.PlayDefaultMusic();
         SaveManager.Save();
-
         bool isMaxInfluence = true;
 
         foreach (var district in Districts)

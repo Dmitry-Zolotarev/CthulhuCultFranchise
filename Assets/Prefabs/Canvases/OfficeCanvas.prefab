@@ -2008,7 +2008,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0471b471440f0a348b93eb12469d0fcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  capacity: 6
+  capacity: 4
   Level: 1
   Floor: 1
   maxLevel: 3
