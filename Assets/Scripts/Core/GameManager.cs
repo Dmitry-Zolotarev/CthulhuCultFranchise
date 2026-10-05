@@ -12,14 +12,6 @@ public enum GamePhase
     Office,
     Final
 }
-public enum CampaignType
-{
-    Reception,
-    Donations,
-    Propaganda,
-    Laundry,
-    Altar
-}
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance; 
@@ -123,19 +115,21 @@ public class GameManager : MonoBehaviour
         TodayEaten = 0;
 
         DayTime = startTime;
+        TimeSpeedModificator = 1;
         Phase = GamePhase.Office;
         StartWorkPanel.SetActive(false);
 
         if (TaxManager.Instance.TaxAmount > 99) AddEvidence(1);
         if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
         spawnCoroutine = StartCoroutine(SpawnVisitors());
-        
+        reception.ClearPeople();
+
         foreach (var person in ActiveWorkers)
         {
             if (person.Loyalty < person.MaxLoyalty * 0.2f) person.Loyalty += person.MaxLoyalty * 0.2f;
         }
     }
-    
+   
     private void Update()
     {
         if (Phase == GamePhase.Office) 
@@ -242,6 +236,15 @@ public class GameManager : MonoBehaviour
     {
         TimeSpeedModificator = speedModificator;
     }
+    public int GetTotalInfluence()
+    {
+        int totalInfluence = 0;
+        foreach(var district in Districts)
+        {
+            totalInfluence += district.Influence;
+        }
+        return totalInfluence;
+    }
     private IEnumerator SpawnVisitors()
     {
         for (int wave = 0; wave < visitorsCount; wave++)
@@ -289,7 +292,11 @@ public class GameManager : MonoBehaviour
         }           
         foreach (var person in FindObjectsOfType<DragPerson>()) 
         {
-            person.ReturnToOriginalPosition();
+            if(!person.wasDropped)
+            {
+                ActiveWorkers.Remove(person.GetComponent<Person>());
+                Destroy(person.gameObject);
+            }      
         }
         foreach (var person in Reserve)
         {

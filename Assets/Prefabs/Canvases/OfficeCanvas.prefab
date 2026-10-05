@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.4499855, y: -11.5}
+  m_AnchoredPosition: {x: 0.4499855, y: -25.349947}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7437175921550493439
@@ -232,8 +232,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 959, y: 147}
-  m_SizeDelta: {x: 621.9703, y: 197.0415}
+  m_AnchoredPosition: {x: 959.2987, y: 147}
+  m_SizeDelta: {x: 630.3276, y: 197.0415}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5767205805739381037
 CanvasRenderer:
@@ -297,8 +297,8 @@ MonoBehaviour:
   personOffsetY: -30
   Type: 0
   roomNameLabel: {fileID: 290158667337846341}
-  UpdateCost: 1000
-  agitationSpeed: 1
+  UpdateCost: 500
+  agitationSpeed: 0.2
   districtNameLabel: {fileID: 4707326228317316948}
   progressLabel: {fileID: 203678080793555985}
 --- !u!114 &6754581389993204392
@@ -406,7 +406,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -22, y: 107.600044}
+  m_AnchoredPosition: {x: -22, y: 114.6}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4287736400829912096
@@ -515,6 +515,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1713907064312684959}
+  - component: {fileID: 5517884690903610312}
+  - component: {fileID: 100958986987036425}
   m_Layer: 0
   m_Name: ProgressLabels
   m_TagString: Untagged
@@ -540,9 +542,47 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 88.4, y: -7.2}
-  m_SizeDelta: {x: 200.9, y: 79.5}
+  m_AnchoredPosition: {x: 88.7114, y: 4.5228}
+  m_SizeDelta: {x: 160.3211, y: 60.0423}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &5517884690903610312
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771906610787430983}
+  m_CullTransparentMesh: 1
+--- !u!114 &100958986987036425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771906610787430983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.3137255}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2212226802020798421
 GameObject:
   m_ObjectHideFlags: 0
@@ -1342,7 +1382,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.45001602, y: 14.749963}
+  m_AnchoredPosition: {x: -0.45001602, y: 0.9}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7837592639020453894
@@ -2088,7 +2128,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -34, y: 106.600044}
+  m_AnchoredPosition: {x: -34, y: 116.3}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7635862928036140426
@@ -2546,7 +2586,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 41.843, y: 146.2}
+  m_AnchoredPosition: {x: 41.843, y: 145}
   m_SizeDelta: {x: 600.28, y: 202.53}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1064021766557995094
@@ -2611,7 +2651,7 @@ MonoBehaviour:
   personOffsetY: -30
   Type: 0
   roomNameLabel: {fileID: 7652313498657937797}
-  UpdateCost: 500
+  UpdateCost: 1000
   MoneyPerEmployee: 50
   payCooldown: 20
 --- !u!114 &3898610434330494799

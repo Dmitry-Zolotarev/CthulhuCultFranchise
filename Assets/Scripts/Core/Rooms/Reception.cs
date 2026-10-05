@@ -5,6 +5,14 @@ public class Reception : Room
     {
         capacity += Level - 1;
     }
+    public void ClearPeople()
+    {
+        var people = GetComponentsInChildren<Person>();
+        foreach (var person in people)
+        {
+            Destroy(person.gameObject);
+        }
+    }
     public override void AssignPerson(Person person)
     {
         if(person.IsCultist && !(person.Room is Reception))

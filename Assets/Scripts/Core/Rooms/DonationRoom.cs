@@ -10,7 +10,8 @@ public class DonationRoom : Room
     {
         lastPayTime = Time.time;
     }
-    void Update()
+
+    private new void Update()
     {
         if (GameManager.Instance.Phase != GamePhase.Office) return;
 

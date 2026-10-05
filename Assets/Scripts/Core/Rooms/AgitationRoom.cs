@@ -4,8 +4,6 @@ using UnityEngine;
 public class AgitationRoom : Room
 {
     [SerializeField] private float agitationSpeed = 1;
-
-    
     private float agitationTargetValue = 100;
 
     [SerializeField] private TextMeshProUGUI districtNameLabel;
@@ -13,8 +11,9 @@ public class AgitationRoom : Room
     private District district;
 
 
-    private void Update()
+    private new void Update()
     {
+        base.Update();
         if (GameManager.Instance.Phase != GamePhase.Office) return;
 
         var agitationProgress = GameManager.Instance.AgitationProgress;
@@ -40,8 +39,7 @@ public class AgitationRoom : Room
             GameManager.Instance.AddInfluence(1);
             agitationProgress = 0;
         }
-        GameManager.Instance.AgitationProgress = agitationProgress;
-        base.Update();
+        GameManager.Instance.AgitationProgress = agitationProgress;       
     }
     private int GetProgressPercent()
     {

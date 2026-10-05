@@ -56,15 +56,12 @@ public class Room : MonoBehaviour, IDropHandler
     }
     protected void Update()
     {
-        if (upgradeButton == null) return;
+        if (upgradeButton == null || toolTip == null) return;
 
-        if(Level < 3 && toolTip != null && GameManager.Instance.Money >= GetUpdateCost())
-        {
-            upgradeButton.enabled = true;
-            toolTip.Text = $"Улучшить за {GetUpdateCost()}$";
-        }
-        else upgradeButton.enabled = false;
+        toolTip.enabled = Level < 3 && GameManager.Instance.Money >= GetUpdateCost();
+        upgradeButton.enabled = Level < 3 && GameManager.Instance.Money >= GetUpdateCost();
 
+        toolTip.Text = $"Улучшить за {GetUpdateCost()}$";
         roomNameLabel?.SetText(roomName + " ур. " + Level);
     }
     public void OnDrop(PointerEventData eventData)
