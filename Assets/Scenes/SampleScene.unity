@@ -4430,7 +4430,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2939161649469912618, guid: b0f679e38d7a4014b805a4d41b543f72, type: 3}
       propertyPath: m_SortingOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5384869375842251179, guid: b0f679e38d7a4014b805a4d41b543f72, type: 3}
       propertyPath: m_IsActive
@@ -7546,7 +7546,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!1 &7759981768025797331
 GameObject:
