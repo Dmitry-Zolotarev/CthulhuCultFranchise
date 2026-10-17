@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
+using System.Runtime.CompilerServices;
 
 public enum GamePhase
 {
@@ -121,11 +122,6 @@ public class GameManager : MonoBehaviour
         if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
         spawnCoroutine = StartCoroutine(SpawnVisitors());
         reception.ClearPeople();
-
-        foreach (var person in ActiveWorkers)
-        {
-            if (person.Loyalty < person.MaxLoyalty * 0.2f) person.Loyalty += person.MaxLoyalty * 0.2f;
-        }
     }
    
     private void Update()
@@ -224,8 +220,7 @@ public class GameManager : MonoBehaviour
         {
             if(!(person.Room is Laundry)) person.Loyalty -= amount;
         }
-    }
-    
+    }  
     public float GetTimeSpeed()
     {
         return TimeSpeedModificator * timeSpeed;
@@ -281,6 +276,14 @@ public class GameManager : MonoBehaviour
         if (people.Length == 0) return;
         people[Random.Range(0, people.Length)]?.Eat(hungerReduction);
     }
+    private void Clear(HashSet<Person> collection)
+    {
+        foreach (var person in collection)
+        {
+            if (person != null) Destroy(person.gameObject);
+        }
+        collection.Clear();
+    }
     private void FinishShift()
     {
         Phase = GamePhase.Map;
@@ -292,16 +295,9 @@ public class GameManager : MonoBehaviour
                 Destroy(person.gameObject);
             }
         }
-        foreach (var person in Reserve)
-        {
-            if (person != null) Destroy(person.gameObject);
-        }
-        foreach (var person in Escaping)
-        {
-            if (person != null) Destroy(person.gameObject);
-        }
-        Escaping.Clear();
-        Reserve.Clear();
+        Clear(Reserve);
+        Clear(ActiveWorkers);
+        Clear(Escaping);     
         OpenCanvas(2);       
     }
     public void NextDay()

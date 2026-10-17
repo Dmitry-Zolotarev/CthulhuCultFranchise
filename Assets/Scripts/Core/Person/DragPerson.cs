@@ -24,7 +24,7 @@ public class DragPerson : MonoBehaviour,
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (canvas == null) return;
+        if (GameManager.Instance.TimeSpeedModificator == 0) return;
 
         wasDropped = false;
         originalPosition = rectTransform.anchoredPosition;
@@ -32,56 +32,46 @@ public class DragPerson : MonoBehaviour,
         canvasGroup.blocksRaycasts = false;
         canvasGroup.alpha = 0.75f;
 
-        transform.SetParent(
-            canvas.transform,
-            true
-        );
+        transform.SetParent(canvas.transform, true);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        RectTransform canvasRect = canvas.transform as RectTransform;
+        if (GameManager.Instance.TimeSpeedModificator == 0) return;
+
+        var canvasRect = canvas.transform as RectTransform;
         Camera eventCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
         Vector2 localPoint;
 
-        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvasRect,
-                eventData.position,
-                eventCamera,
-                out localPoint))
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, eventData.position, eventCamera, out localPoint))
         {
-            rectTransform.localPosition =
-                localPoint;
+            rectTransform.localPosition = localPoint;
         }
     }
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (GameManager.Instance.TimeSpeedModificator == 0) return;
+
         canvasGroup.blocksRaycasts = true;
         canvasGroup.alpha = 1f;
         if (wasDropped) return;
         ReturnToOriginalPosition();
     }
-    public void SetDropped()
-    {
+    public void SetDropped() 
+    { 
         wasDropped = true;
     }
     public void ReturnToOriginalPosition()
     {
-        canvasGroup.blocksRaycasts = true;
         canvasGroup.alpha = 1f;
         var person = GetComponent<Person>();
         
-        if(person.IsCultist && person.Room is Reception)
+        if(person.IsCultist() && person.Room is Reception)
         {
             foreach(var room in GameManager.Instance.Rooms)
             {
                 if (room is Laundry) room.AssignPerson(person);
             }
         }
-        transform.SetParent(person.Room.transform, false);
-
-        rectTransform.anchoredPosition = originalPosition;
-        rectTransform.localRotation = Quaternion.identity; 
-        rectTransform.localScale = Vector3.one;
     }
 }

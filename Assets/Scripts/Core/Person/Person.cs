@@ -27,7 +27,6 @@ public class Person : MonoBehaviour
     [SerializeField] private GameObject loyaltyPanel;
     [SerializeField] private TextMeshProUGUI loyaltyLabel;
     [SerializeField] private Slider loyaltyBar;
-    [HideInInspector] public bool IsCultist = false;
     [HideInInspector] public bool IsEscaping = false;
     [HideInInspector] public bool HasElevated = false;
     [HideInInspector] public Image Image;
@@ -49,7 +48,7 @@ public class Person : MonoBehaviour
     {
         if (GameManager.Instance.Phase == GamePhase.Office)
         {
-            dragPerson.enabled = IsCultist && !IsEscaping;
+            dragPerson.enabled = IsCultist() && !IsEscaping;
             
             if (Room != null)
             {
@@ -57,7 +56,7 @@ public class Person : MonoBehaviour
             }
             else FindRoom();
 
-            if (Room is Laundry || !IsCultist)
+            if (Room is Laundry || !IsCultist())
             {
                 if (Loyalty < MaxLoyalty) Loyalty += Time.deltaTime * GameManager.Instance.GetTimeSpeed();
             }
@@ -79,11 +78,13 @@ public class Person : MonoBehaviour
             transform.position += Vector3.right * direction * escapeSpeed * Time.deltaTime * GameManager.Instance.GetTimeSpeed();
         }       
     }
+    public bool IsCultist()
+    {
+        return Image.sprite == GameManager.Instance.CultistSprite;
+    }
     private void UpdateUI()
     {
-        
-
-        loyaltyPanel?.SetActive(!IsEscaping && IsCultist);
+        loyaltyPanel?.SetActive(!IsEscaping && IsCultist());
         loyaltyLabel?.SetText($"ћракобесие: {GetLoyaltyPercent()}");
         loyaltyBar.value = Loyalty / MaxLoyalty;
     }
@@ -109,12 +110,11 @@ public class Person : MonoBehaviour
         GameManager.Instance.ActiveWorkers.Add(this);
         GameManager.Instance.Reserve.Remove(this);
         StartCoroutine(StartRecruitment());
-        IsCultist = true;
     }
     private IEnumerator StartRecruitment()
     {
         yield return new WaitForSeconds(becomeCultistTime / GameManager.Instance.GetTimeSpeed());
-        if (IsCultist) Image.sprite = GameManager.Instance.CultistSprite;
+        Image.sprite = GameManager.Instance.CultistSprite;
     }
 
     public void Eat(float hungerReduction)
@@ -129,7 +129,6 @@ public class Person : MonoBehaviour
         }
         Destroy(gameObject);
     }
-
     private int GetLoyaltyPercent()
     {
         return Mathf.RoundToInt(Loyalty / baseMaxLoyalty * 100f);
@@ -154,7 +153,6 @@ public class Person : MonoBehaviour
                 Room = FindAnyObjectByType<Altar>();
                 break;
         }
-
         Room?.AssignPerson(this);
     }
 }

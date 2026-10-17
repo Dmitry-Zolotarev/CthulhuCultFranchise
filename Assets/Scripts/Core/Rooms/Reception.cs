@@ -15,7 +15,7 @@ public class Reception : Room
     }
     public override void AssignPerson(Person person)
     {
-        if(person.IsCultist && !(person.Room is Reception))
+        if(person.IsCultist() && !(person.Room is Reception))
         {        
             if (person.Loyalty / person.MaxLoyalty > 0.3f)
             {

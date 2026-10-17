@@ -14,7 +14,7 @@ public class PersonData
         Loyalty = (int)person.Loyalty;
         RoomType = person.RoomType;
         MaxLoyalty = person.MaxLoyalty;
-        IsCultist = person.IsCultist && RoomType != RoomType.Reception;    
+        IsCultist = person.IsCultist();    
     }
     public void Load(Person person)
     {
@@ -25,8 +25,8 @@ public class PersonData
             person.RoomType = RoomType;
             person.MaxLoyalty = MaxLoyalty;
             person.LaunderingsCount = LaunderingsCount;
-            person.IsCultist = IsCultist;
-            if (person.IsCultist)
+
+            if (IsCultist)
             {
                 GameManager.Instance.ActiveWorkers.Add(person);
                 person.Image.sprite = GameManager.Instance.CultistSprite;
