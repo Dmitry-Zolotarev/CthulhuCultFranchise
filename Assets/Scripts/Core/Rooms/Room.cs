@@ -23,9 +23,12 @@ public class Room : MonoBehaviour, IDropHandler
     [SerializeField] private float personSpacing = 100f;
     [SerializeField] private float personOffsetY = -30f;
     [HideInInspector] public RoomType Type = RoomType.Reception;
-    [SerializeField] private TextMeshProUGUI roomNameLabel;
-    [SerializeField] private int UpdateCost = 500;
     
+    [SerializeField] private int UpdateCost = 500;
+    [SerializeField] private TextMeshProUGUI roomNameLabel;
+    public TextMeshProUGUI[] RoomTextLabels;
+    public string[] textLabels;
+
     private TooltipTrigger toolTip;
     private Button upgradeButton;
     private Image roomImage;
@@ -50,6 +53,10 @@ public class Room : MonoBehaviour, IDropHandler
         if (this is Altar)
         {
             Type = RoomType.Altar;
+        }
+        for(int i = 0; i < textLabels.Length; i++)
+        {
+            RoomTextLabels[i]?.SetText(textLabels[i]);
         }
         roomImage = GetComponent<Image>();
         UpdateRoomSprite();
