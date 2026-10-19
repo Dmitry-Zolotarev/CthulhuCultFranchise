@@ -19,6 +19,8 @@ public class UpgradeWindow : MonoBehaviour
     [SerializeField] private TextMeshProUGUI CurrentEffects;
 
     [SerializeField] private GameObject NextLevelData;
+    [SerializeField] private GameObject UpgradeButton;
+
     [SerializeField] private TextMeshProUGUI NextLevel;
     [SerializeField] private TextMeshProUGUI NextCapacity;
     [SerializeField] private TextMeshProUGUI NextEfficency;
@@ -27,6 +29,7 @@ public class UpgradeWindow : MonoBehaviour
     [SerializeField] private int TimeToClose = 5;
 
     public static UpgradeWindow Instance;
+    private Coroutine closeWindowCoroutine;
     public void Awake()
     {
         Instance = this;
@@ -39,10 +42,16 @@ public class UpgradeWindow : MonoBehaviour
     }
     public void OpenWindow(Room room)
     { 
+        
         gameObject.SetActive(true);
         Room = room;
         UpdateUI();
-        StartCoroutine(CloseWindowCoroutine());
+
+        if(closeWindowCoroutine != null) 
+        {
+            StopCoroutine(closeWindowCoroutine);
+        }
+        closeWindowCoroutine = StartCoroutine(CloseWindowCoroutine());
     }
     public void UpdateUI()
     {
@@ -56,14 +65,17 @@ public class UpgradeWindow : MonoBehaviour
         CurrentCapacity?.SetText($"{Room.Capacity}");
         CurrentEfficency?.SetText($"x{Room.Level}");
 
-        if(Room.Level < 3)
+        int upgradeCost = Room.UpgradeCost * (Room.Level + 1);
+
+        if (Room.Level < 3)
         {
-            NextLevel?.SetText($"Следующий уровень (Ур. {Room.Level})");
+            NextLevel?.SetText($"Следующий уровень (Ур. {Room.Level + 1})");
             NextCapacity?.SetText($"{Room.Capacity + 1}");
             NextEfficency?.SetText($"x{Room.Level + 1}");
-            CostLabel?.SetText($"{Room.UpgradeCost * (Room.Level + 1)}$");
+            CostLabel?.SetText($"{upgradeCost}$");
         }
         NextLevelData?.SetActive(Room.Level < 3);
+        UpgradeButton?.SetActive(GameManager.Instance.Money >= upgradeCost);
     }
     private string GetRoomName(RoomType type)
     {
