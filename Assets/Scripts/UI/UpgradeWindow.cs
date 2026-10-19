@@ -1,6 +1,8 @@
-using TMPro;
-using UnityEditor;
+using System.Collections;
+using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
+
 
 public class UpgradeWindow : MonoBehaviour
 {
@@ -9,16 +11,20 @@ public class UpgradeWindow : MonoBehaviour
     [SerializeField] private TextMeshProUGUI RoomNameLabel;
     [SerializeField] private TextMeshProUGUI DescriptionLabel;
     [SerializeField] private TextMeshProUGUI CostLabel;
+    [SerializeField] private Image RoomImage;
 
     [SerializeField] private TextMeshProUGUI CurrentLevel;
     [SerializeField] private TextMeshProUGUI CurrentCapacity;
     [SerializeField] private TextMeshProUGUI CurrentEfficency;
     [SerializeField] private TextMeshProUGUI CurrentEffects;
 
+    [SerializeField] private GameObject NextLevelData;
     [SerializeField] private TextMeshProUGUI NextLevel;
     [SerializeField] private TextMeshProUGUI NextCapacity;
     [SerializeField] private TextMeshProUGUI NextEfficency;
     [SerializeField] private TextMeshProUGUI NextEffects;
+
+    [SerializeField] private int TimeToClose = 5;
 
     public static UpgradeWindow Instance;
     public void Awake()
@@ -26,27 +32,38 @@ public class UpgradeWindow : MonoBehaviour
         Instance = this;
         gameObject.SetActive(false);
     }
+    private IEnumerator CloseWindowCoroutine()
+    {
+        yield return new WaitForSeconds(TimeToClose);
+        gameObject.SetActive(false);
+    }
     public void OpenWindow(Room room)
     { 
         gameObject.SetActive(true);
         Room = room;
-        UpdateLabels();
+        UpdateUI();
+        StartCoroutine(CloseWindowCoroutine());
     }
-    public void UpdateLabels()
+    public void UpdateUI()
     {
         if(Room == null) return;
 
-        RoomNameLabel?.SetText(GetRoomName(Room.Type));
+        RoomNameLabel?.SetText(GetRoomName(Room.Type));     
         DescriptionLabel?.SetText(Room.Description);
-        CostLabel?.SetText($"{Room.UpgradeCost * (Room.Level + 1)}$");
+        RoomImage.sprite = Room.Image.sprite;
 
         CurrentLevel?.SetText($"Уровень {Room.Level}");
         CurrentCapacity?.SetText($"{Room.Capacity}");
         CurrentEfficency?.SetText($"x{Room.Level}");
 
-        NextLevel?.SetText($"Следующий уровень (Ур. {Room.Level})");
-        NextCapacity?.SetText($"{Room.Capacity + 1}");
-        NextEfficency?.SetText($"x{Room.Level + 1}");
+        if(Room.Level < 3)
+        {
+            NextLevel?.SetText($"Следующий уровень (Ур. {Room.Level})");
+            NextCapacity?.SetText($"{Room.Capacity + 1}");
+            NextEfficency?.SetText($"x{Room.Level + 1}");
+            CostLabel?.SetText($"{Room.UpgradeCost * (Room.Level + 1)}$");
+        }
+        NextLevelData?.SetActive(Room.Level < 3);
     }
     private string GetRoomName(RoomType type)
     {

@@ -23,18 +23,16 @@ public class Room : MonoBehaviour, IDropHandler
     [SerializeField] private float personOffsetY = -30f;
     [HideInInspector] public RoomType Type = RoomType.Reception;
     [SerializeField] private TextMeshProUGUI roomNameLabel;
+    [SerializeField] private TextMeshProUGUI capacityLabel;
     public string Description = "";
     public int UpgradeCost = 500;
 
-    private TooltipTrigger toolTip;
-    private Button upgradeButton;
-    private Image roomImage;
     private string roomName;
+    [HideInInspector] public Image Image;
     private void Awake()
     {
         roomName = roomNameLabel.text;
-        toolTip = GetComponent<TooltipTrigger>();
-        upgradeButton = GetComponent<Button>();
+        Image = GetComponent<Image>();
         if (this is DonationRoom)
         {
             Type = RoomType.Donations;
@@ -50,19 +48,14 @@ public class Room : MonoBehaviour, IDropHandler
         if (this is Altar)
         {
             Type = RoomType.Altar;
-        }
-        roomImage = GetComponent<Image>();
+        }       
         UpdateRoomSprite();
     }
     protected void Update()
     {
-        if (upgradeButton == null || toolTip == null) return;
-
-        toolTip.enabled = Level < 3 && GameManager.Instance.Money >= GetUpdateCost();
-        upgradeButton.enabled = Level < 3 && GameManager.Instance.Money >= GetUpdateCost();
-
-        toolTip.Text = $"Улучшить за {GetUpdateCost()}$";
         roomNameLabel?.SetText(roomName + " ур. " + Level);
+
+        capacityLabel?.SetText($"{GetCurrentPersonCount()}/{Capacity}");
     }
     public void OnDrop(PointerEventData eventData)
     {
@@ -162,24 +155,21 @@ public class Room : MonoBehaviour, IDropHandler
     }
     private void UpdateRoomSprite()
     {
-        if (roomImage == null || LevelSprites == null || LevelSprites.Length == 0) return;
+        if (Image == null || LevelSprites == null || LevelSprites.Length == 0) return;
 
         int spriteIndex = Mathf.Clamp(Level - 1, 0, LevelSprites.Length - 1);
 
-        if (LevelSprites[spriteIndex] != null) roomImage.sprite = LevelSprites[spriteIndex];
+        if (LevelSprites[spriteIndex] != null) Image.sprite = LevelSprites[spriteIndex];
 
     }
 
     public int GetCurrentPersonCount()
     {
         int count = 0;
-
-        for (int i = 0; i < transform.childCount; i++)
-        {        
-            Person person = transform.GetChild(i).GetComponent<Person>();
-
-            if (person != null) count++;
-            if (this is Reception && count > Capacity) Destroy(person);
+        var people = FindObjectsOfType<Person>();
+        foreach (var person in people)
+        {
+            if (person.RoomType == Type) count++;
         }
         return count;
     }

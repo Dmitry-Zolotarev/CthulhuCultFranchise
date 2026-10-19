@@ -65,13 +65,6 @@ public class DragPerson : MonoBehaviour,
     {
         canvasGroup.alpha = 1f;
         var person = GetComponent<Person>();
-        
-        if(person.IsCultist() && person.Room is Reception)
-        {
-            foreach(var room in GameManager.Instance.Rooms)
-            {
-                if (room is Laundry) room.AssignPerson(person);
-            }
-        }
+        person.Room.AssignPerson(person);
     }
 }

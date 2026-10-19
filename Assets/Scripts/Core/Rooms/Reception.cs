@@ -1,10 +1,6 @@
 
 public class Reception : Room
 {
-    private void Start()
-    {
-        Capacity += Level - 1;
-    }
     public void ClearPeople()
     {
         var people = GetComponentsInChildren<Person>();
