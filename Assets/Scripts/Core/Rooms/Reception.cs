@@ -3,7 +3,7 @@ public class Reception : Room
 {
     private void Start()
     {
-        capacity += Level - 1;
+        Capacity += Level - 1;
     }
     public void ClearPeople()
     {

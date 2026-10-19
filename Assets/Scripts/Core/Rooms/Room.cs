@@ -14,8 +14,7 @@ public enum RoomType
 [RequireComponent(typeof(Image))]
 public class Room : MonoBehaviour, IDropHandler
 {
-    
-    public int capacity = 1;
+    public int Capacity = 1;
     [Range(1, 3)] public int Level = 1;
     [Range(1, 3)] public int Floor = 1;
     [SerializeField] private int maxLevel = 3;
@@ -23,11 +22,9 @@ public class Room : MonoBehaviour, IDropHandler
     [SerializeField] private float personSpacing = 100f;
     [SerializeField] private float personOffsetY = -30f;
     [HideInInspector] public RoomType Type = RoomType.Reception;
-    
-    [SerializeField] private int UpdateCost = 500;
     [SerializeField] private TextMeshProUGUI roomNameLabel;
-    public TextMeshProUGUI[] RoomTextLabels;
-    public string[] textLabels;
+    public string Description = "";
+    public int UpgradeCost = 500;
 
     private TooltipTrigger toolTip;
     private Button upgradeButton;
@@ -53,10 +50,6 @@ public class Room : MonoBehaviour, IDropHandler
         if (this is Altar)
         {
             Type = RoomType.Altar;
-        }
-        for(int i = 0; i < textLabels.Length; i++)
-        {
-            RoomTextLabels[i]?.SetText(textLabels[i]);
         }
         roomImage = GetComponent<Image>();
         UpdateRoomSprite();
@@ -84,7 +77,7 @@ public class Room : MonoBehaviour, IDropHandler
         if (person == null ||(!person.IsCultist() && this is Reception)) return false;
         int currentCount = GetCurrentPersonCount();
         if (person.transform.parent == transform) currentCount--;
-        return currentCount < capacity;
+        return currentCount < Capacity;
     }
     public virtual void AssignPerson(Person person)
     {
@@ -94,7 +87,7 @@ public class Room : MonoBehaviour, IDropHandler
         {
             if (!person.IsCultist()) return;       
         }
-        else if(GetCurrentPersonCount() >= capacity)
+        else if(GetCurrentPersonCount() >= Capacity)
         {
             Destroy(person.gameObject);
             return;
@@ -159,9 +152,13 @@ public class Room : MonoBehaviour, IDropHandler
             SetLevel(Level + 1);
         } 
     }
+    public void OpenUpgradeWindow()
+    {
+        UpgradeWindow.Instance.OpenWindow(this);
+    }
     private int GetUpdateCost()
     {
-        return UpdateCost * (int)Mathf.Pow(2, Level);
+        return UpgradeCost * (int)Mathf.Pow(2, Level);
     }
     private void UpdateRoomSprite()
     {
@@ -182,13 +179,13 @@ public class Room : MonoBehaviour, IDropHandler
             Person person = transform.GetChild(i).GetComponent<Person>();
 
             if (person != null) count++;
-            if (this is Reception && count > capacity) Destroy(person);
+            if (this is Reception && count > Capacity) Destroy(person);
         }
         return count;
     }
 
     public bool IsFull()
     {
-        return GetCurrentPersonCount() >= capacity;
+        return GetCurrentPersonCount() >= Capacity;
     }
 }
