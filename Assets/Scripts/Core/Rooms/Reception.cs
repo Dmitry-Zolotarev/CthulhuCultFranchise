@@ -1,6 +1,7 @@
 
 public class Reception : Room
 {
+
     public void ClearPeople()
     {
         var people = GetComponentsInChildren<Person>();

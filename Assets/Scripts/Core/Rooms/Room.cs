@@ -54,7 +54,6 @@ public class Room : MonoBehaviour, IDropHandler
     protected void Update()
     {
         roomNameLabel?.SetText(roomName + " ур. " + Level);
-
         capacityLabel?.SetText($"{GetCurrentPersonCount()}/{Capacity}");
     }
     public void OnDrop(PointerEventData eventData)
@@ -62,29 +61,11 @@ public class Room : MonoBehaviour, IDropHandler
         if (eventData.pointerDrag == null) return;
         Person person = eventData.pointerDrag.GetComponent<Person>();
         if (person == null) return;
-        if (!CanAcceptPerson(person)) return;
         AssignPerson(person);
-    }
-    private bool CanAcceptPerson(Person person)
-    {
-        if (person == null ||(!person.IsCultist() && this is Reception)) return false;
-        int currentCount = GetCurrentPersonCount();
-        if (person.transform.parent == transform) currentCount--;
-        return currentCount < Capacity;
     }
     public virtual void AssignPerson(Person person)
     {
-        if (IsFull()) return;
-        
-        if (!(this is Reception) && !(this is Altar))
-        {
-            if (!person.IsCultist()) return;       
-        }
-        else if(GetCurrentPersonCount() >= Capacity)
-        {
-            Destroy(person.gameObject);
-            return;
-        }
+        if (IsFull() && person.Room != this) return;
         person.Room = this;
         person.transform.SetParent(transform, false);
         RectTransform rect = person.GetComponent<RectTransform>();
