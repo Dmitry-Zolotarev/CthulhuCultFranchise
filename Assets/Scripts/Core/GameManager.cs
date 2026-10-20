@@ -58,9 +58,10 @@ public class GameManager : MonoBehaviour
 
     [Header("Prefabs")]
     public GameObject[] Canvases;
-    public Sprite CultistSprite;
+    public Sprite[] CultistSprites;
     public Sprite[] PersonSprites;
     public Transform OfficeCanvas;
+    public District[] Districts;
     public Room[] Rooms;
 
     [SerializeField] private Person personPrefab;
@@ -85,24 +86,14 @@ public class GameManager : MonoBehaviour
     
     [HideInInspector] public float AgitationProgress = 0;
     [HideInInspector] public int TimeSpeedModificator = 1;
-    [HideInInspector] public District[] Districts;
+    
     private Coroutine spawnCoroutine;
     private void Awake()
     {
-        OpenCanvas(0);
+        OpenCanvas(3);
+        MusicPlayer.Instance.PlayMusic(abyssMusic);
         Instance = this;
         StartWorkPanel.SetActive(false);
-        Districts = FindObjectsOfType<District>();
-
-        if (SaveManager.NeedLoad)
-        {
-            SaveManager.Load();
-        }
-        else 
-        {
-            OpenCanvas(3);
-            MusicPlayer.Instance.PlayMusic(abyssMusic);
-        } 
     }
     public void StartShift()
     {
@@ -121,7 +112,6 @@ public class GameManager : MonoBehaviour
         if (TaxManager.Instance.TaxAmount > 99) AddEvidence(1);
         if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
         spawnCoroutine = StartCoroutine(SpawnVisitors());
-        reception.ClearPeople();
     }
    
     private void Update()
@@ -286,6 +276,7 @@ public class GameManager : MonoBehaviour
     }
     private void FinishShift()
     {
+        UpgradeWindow.Instance.gameObject.SetActive(false);
         Phase = GamePhase.Map;
         foreach (var person in FindObjectsOfType<DragPerson>())
         {
@@ -295,14 +286,16 @@ public class GameManager : MonoBehaviour
                 Destroy(person.gameObject);
             }
         }
-        Clear(new HashSet<Person>(FindObjectsOfType<Person>()));
+        Clear(ActiveWorkers);
+        Clear(Reserve);
+        Clear(Escaping);
+        
         OpenCanvas(2);       
     }
     public void NextDay()
     {
         Day++;      
         MusicPlayer.Instance?.PlayDefaultMusic();
-        SaveManager.Save();
         bool isMaxInfluence = true;
 
         foreach (var district in Districts)

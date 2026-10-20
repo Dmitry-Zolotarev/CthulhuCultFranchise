@@ -144,9 +144,10 @@ public class Room : MonoBehaviour, IDropHandler
     }
     public void OpenUpgradeWindow()
     {
+        UpgradeWindow.Instance.gameObject.SetActive(true);
         UpgradeWindow.Instance.OpenWindow(this);
     }
-    private int GetUpdateCost()
+    public int GetUpdateCost()
     {
         return UpgradeCost * (int)Mathf.Pow(2, Level);
     }

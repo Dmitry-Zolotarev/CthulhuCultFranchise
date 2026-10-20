@@ -1,31 +1,4 @@
 
 public class Reception : Room
 {
-
-    public void ClearPeople()
-    {
-        var people = GetComponentsInChildren<Person>();
-        foreach (var person in people)
-        {
-            Destroy(person.gameObject);
-        }
-    }
-    public override void AssignPerson(Person person)
-    {
-        if(person.IsCultist() && !(person.Room is Reception))
-        {        
-            if (person.Loyalty / person.MaxLoyalty > 0.3f)
-            {
-                GameManager.Instance.TodayReleased++;
-                GameManager.Instance.ActiveWorkers.Remove(person);
-            }
-            else
-            {
-                GameManager.Instance.TodayEscaped++;
-            }        
-            Destroy(person.gameObject);
-            return;
-        }
-        base.AssignPerson(person);
-    }
 }

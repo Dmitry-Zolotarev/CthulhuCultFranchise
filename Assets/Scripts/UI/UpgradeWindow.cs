@@ -41,18 +41,17 @@ public class UpgradeWindow : MonoBehaviour
         gameObject.SetActive(false);
     }
     public void OpenWindow(Room room)
-    {        
-        gameObject.SetActive(true);
+    {
         Room = room;
-        UpdateUI();
+        Update();
 
-        if(closeWindowCoroutine != null) 
+        if (closeWindowCoroutine != null) 
         {
             StopCoroutine(closeWindowCoroutine);
         }
         closeWindowCoroutine = StartCoroutine(CloseWindowCoroutine());
     }
-    public void UpdateUI()
+    public void Update()
     {
         if(Room == null) return;
 
@@ -64,7 +63,7 @@ public class UpgradeWindow : MonoBehaviour
         CurrentCapacity?.SetText($"{Room.Capacity}");
         CurrentEfficency?.SetText($"x{Room.Level}");
         CurrentEffects?.SetText(Room.GetBonusEffectDescription(Room.Level));
-        int upgradeCost = Room.UpgradeCost * (Room.Level + 1);
+        CostLabel?.SetText($"{Room.GetUpdateCost()}$");
 
         if (Room.Level < 3)
         {
@@ -72,10 +71,9 @@ public class UpgradeWindow : MonoBehaviour
             NextCapacity?.SetText($"{Room.Capacity + 1}");
             NextEfficency?.SetText($"x{Room.Level + 1}");
             CurrentEffects?.SetText(Room.GetBonusEffectDescription(Room.Level + 1));
-            CostLabel?.SetText($"{upgradeCost}$");
         }
         NextLevelData?.SetActive(Room.Level < 3);
-        UpgradeButton?.SetActive(GameManager.Instance.Money >= upgradeCost);
+        UpgradeButton?.SetActive(GameManager.Instance.Money >= Room.GetUpdateCost());
     }
     private string GetRoomName(RoomType type)
     {
@@ -95,6 +93,5 @@ public class UpgradeWindow : MonoBehaviour
     public void UpgradeRoom()
     {
         Room?.LevelUP();
-        OpenWindow(Room);
     }
 }

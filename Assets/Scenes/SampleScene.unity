@@ -1344,11 +1344,16 @@ MonoBehaviour:
   - {fileID: 1018392366}
   - {fileID: 233260779}
   - {fileID: 2060930219}
-  CultistSprite: {fileID: 21300000, guid: b15c088527b399943adcbc64d6310de6, type: 3}
+  CultistSprites:
+  - {fileID: 21300000, guid: ded691fef1281324eb57a7dd5a9ab7c3, type: 3}
+  - {fileID: 21300000, guid: c873cdf08bd2c5f42904a12dee6f8c11, type: 3}
   PersonSprites:
   - {fileID: 21300000, guid: ec6a38352d6cc904bbb06010367528a1, type: 3}
   - {fileID: 21300000, guid: 28d49357c83fdd943aef3c09f1d8459d, type: 3}
   OfficeCanvas: {fileID: 8417823357121052070}
+  Districts:
+  - {fileID: 6412619393522066011}
+  - {fileID: 8376621461653948541}
   Rooms:
   - {fileID: 1712561598}
   - {fileID: 8892265832779191137}
@@ -1359,18 +1364,17 @@ MonoBehaviour:
   reception: {fileID: 1712561598}
   MaxHunger: 100
   visitorsCount: 10
-  visitInterval: 26
+  visitInterval: 25
   HungerIncreaseSpeed: 0.1
   startTime: 540
   endTime: 1090
-  timeSpeed: 6
+  timeSpeed: 8
   hungerReduction: 30
   MaxSuspicion: 30
   abyssMusic: {fileID: 8300000, guid: bd2805041f349d64a92226e0785d9075, type: 3}
   officeMusic: {fileID: 8300000, guid: e744c2d66ff25874e9e181c85d903d7c, type: 3}
   AgitationProgress: 0
   TimeSpeedModificator: 1
-  Districts: []
 --- !u!1001 &394217296
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5546,7 +5550,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 4
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -6198,7 +6202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1916942239}
   m_Layer: 5
-  m_Name: DistrictButtons
+  m_Name: Districts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7465,7 +7469,7 @@ GameObject:
   - component: {fileID: 2315011367115997268}
   - component: {fileID: 6412619393522066011}
   m_Layer: 5
-  m_Name: UniversityButton
+  m_Name: University
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7562,7 +7566,7 @@ GameObject:
   - component: {fileID: 272076343680141103}
   - component: {fileID: 8376621461653948541}
   m_Layer: 5
-  m_Name: CityCenterButton
+  m_Name: CityCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

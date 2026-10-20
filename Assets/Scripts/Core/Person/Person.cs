@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Linq;
 using TMPro;
 
 public enum PersonType
@@ -44,12 +45,16 @@ public class Person : MonoBehaviour
         Loyalty = baseMaxLoyalty;
         elevator = FindFirstObjectByType<Elevator>().transform;
     }
+    private void Start()
+    {
+        if (!GameManager.Instance.PersonSprites.Contains(Image.sprite)) Destroy(gameObject);
+    }
     private void Update()
     {
         if (GameManager.Instance.Phase == GamePhase.Office)
         {
             dragPerson.enabled = IsCultist() && !IsEscaping;
-            
+
             if (Room != null)
             {
                 RoomType = Room.Type;
@@ -80,7 +85,7 @@ public class Person : MonoBehaviour
     }
     public bool IsCultist()
     {
-        return Image.sprite == GameManager.Instance.CultistSprite;
+        return GameManager.Instance.CultistSprites.Contains(Image.sprite);
     }
     private void UpdateUI()
     {
@@ -90,6 +95,7 @@ public class Person : MonoBehaviour
     }
     public void Escape()
     {
+        dragPerson.ReturnToOriginalPosition();
         transform.SetParent(GameManager.Instance.OfficeCanvas);
         GameManager.Instance.ActiveWorkers.Remove(this);
         GameManager.Instance.Reserve.Remove(this);
@@ -129,7 +135,7 @@ public class Person : MonoBehaviour
     private IEnumerator StartRecruitment()
     {
         yield return new WaitForSeconds(becomeCultistTime / GameManager.Instance.GetTimeSpeed());
-        Image.sprite = GameManager.Instance.CultistSprite;
+        Image.sprite = GameManager.Instance.CultistSprites[(int)Type];
     }
 
     public void Eat(float hungerReduction)
