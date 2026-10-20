@@ -14,16 +14,17 @@ public enum RoomType
 [RequireComponent(typeof(Image))]
 public class Room : MonoBehaviour, IDropHandler
 {
-    public int Capacity = 1;
+    [SerializeField] private int BaseCapacity = 1;
+    [HideInInspector] public int Capacity = 1;
     [Range(1, 3)] public int Level = 1;
     [Range(1, 3)] public int Floor = 1;
-    [SerializeField] private int maxLevel = 3;
     [SerializeField] protected Sprite[] LevelSprites;
     [SerializeField] private float personSpacing = 100f;
     [SerializeField] private float personOffsetY = -30f;
     [HideInInspector] public RoomType Type = RoomType.Reception;
     [SerializeField] private TextMeshProUGUI roomNameLabel;
     [SerializeField] private TextMeshProUGUI capacityLabel;
+    [SerializeField] private string[] bonusEffectLabels;
     public string Description = "";
     public int UpgradeCost = 500;
 
@@ -31,6 +32,7 @@ public class Room : MonoBehaviour, IDropHandler
     [HideInInspector] public Image Image;
     private void Awake()
     {
+        Capacity = BaseCapacity;
         roomName = roomNameLabel.text;
         Image = GetComponent<Image>();
         if (this is DonationRoom)
@@ -63,9 +65,22 @@ public class Room : MonoBehaviour, IDropHandler
         if (person == null) return;
         AssignPerson(person);
     }
+    public string GetBonusEffectDescription(int level)
+    {
+        if(level <= 3 && bonusEffectLabels.Length >= 3 && !string.IsNullOrEmpty(bonusEffectLabels[level]))
+        {
+            return bonusEffectLabels[level];
+        }
+        return "Нет";
+    }
     public virtual void AssignPerson(Person person)
     {
-        if (IsFull() && person.Room != this) return;
+        if (person.IsCultist() && Type == RoomType.Reception && person.Room != this)
+        {
+            person.Quit();
+            return;
+        }
+        if (IsFull() && person.Room != this) return; 
         person.Room = this;
         person.transform.SetParent(transform, false);
         RectTransform rect = person.GetComponent<RectTransform>();
@@ -117,6 +132,7 @@ public class Room : MonoBehaviour, IDropHandler
     public void SetLevel(int lvl)
     {
         Level = lvl;
+        Capacity = BaseCapacity + lvl - 1;
         UpdateRoomSprite();
     }
     public void LevelUP()
@@ -149,8 +165,8 @@ public class Room : MonoBehaviour, IDropHandler
         int count = 0;
         var people = FindObjectsOfType<Person>();
         foreach (var person in people)
-        {
-            if (person.RoomType == Type) count++;
+        {      
+            if (person.RoomType == Type && !GameManager.Instance.Escaping.Contains(person)) count++;
         }
         return count;
     }

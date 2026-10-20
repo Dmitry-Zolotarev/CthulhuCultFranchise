@@ -10,6 +10,7 @@ public class ResultScreen : MonoBehaviour
     [SerializeField] private TextMeshProUGUI districtLabel;
     [SerializeField] private TextMeshProUGUI influenceLabel;
     [SerializeField] private TextMeshProUGUI totalInfluenceLabel;
+    [SerializeField] private TextMeshProUGUI releasedCultistsLabel;
     [SerializeField] private TextMeshProUGUI evidenceLabel;
     [SerializeField] private TextMeshProUGUI escapeLabel;
     [SerializeField] private TextMeshProUGUI victimLabel;
@@ -22,7 +23,8 @@ public class ResultScreen : MonoBehaviour
         taxLabel?.SetText($"Налог: {TaxManager.Instance.TaxAmount}$");
         districtLabel?.SetText(game.SelectedDistrict.Name);
         influenceLabel?.SetText($"Влияние: {game.SelectedDistrict.Influence} / 5 (+{game.TodayInfluence})");
-        totalInfluenceLabel?.SetText($"Влияние в городе:\n{game.GetTotalInfluence()} / 10");
+        totalInfluenceLabel?.SetText($"Влияние в городе: {game.GetTotalInfluence()} / 10");
+        releasedCultistsLabel?.SetText($"Отпущено культистов: {game.TodayReleased}");
         evidenceLabel?.SetText($"Найдено улик: {game.TodayEvidences}");
         escapeLabel?.SetText($"Сбежало культистов: {game.TodayEscaped}");
         victimLabel?.SetText($"Съедено культистов: {game.TodayEaten}");

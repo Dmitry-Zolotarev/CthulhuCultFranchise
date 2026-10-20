@@ -1306,7 +1306,7 @@ MonoBehaviour:
   Day: 1
   DayTime: 0
   Phase: 0
-  Money: 100
+  Money: 0
   TotalEarned: 0
   TodayEarned: 0
   TodayInfluence: 0
@@ -1358,7 +1358,7 @@ MonoBehaviour:
   personPrefab: {fileID: 2701407485879646528, guid: 73d04e9d03f796044b41157c6a96529e, type: 3}
   reception: {fileID: 1712561598}
   MaxHunger: 100
-  visitorsCount: 8
+  visitorsCount: 10
   visitInterval: 26
   HungerIncreaseSpeed: 0.1
   startTime: 540
@@ -3437,7 +3437,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 108.6, y: -11.7}
+  m_AnchoredPosition: {x: 108.7, y: -11.1}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &905907881
@@ -3460,7 +3460,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0$
+  m_text: 9999$
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5c38aaec6c6effe4289d59329aa27762, type: 2}
   m_sharedMaterial: {fileID: 3605028602388547657, guid: 5c38aaec6c6effe4289d59329aa27762, type: 2}
@@ -3487,8 +3487,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

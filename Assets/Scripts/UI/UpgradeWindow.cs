@@ -41,8 +41,7 @@ public class UpgradeWindow : MonoBehaviour
         gameObject.SetActive(false);
     }
     public void OpenWindow(Room room)
-    { 
-        
+    {        
         gameObject.SetActive(true);
         Room = room;
         UpdateUI();
@@ -64,7 +63,7 @@ public class UpgradeWindow : MonoBehaviour
         CurrentLevel?.SetText($"Уровень {Room.Level}");
         CurrentCapacity?.SetText($"{Room.Capacity}");
         CurrentEfficency?.SetText($"x{Room.Level}");
-
+        CurrentEffects?.SetText(Room.GetBonusEffectDescription(Room.Level));
         int upgradeCost = Room.UpgradeCost * (Room.Level + 1);
 
         if (Room.Level < 3)
@@ -72,6 +71,7 @@ public class UpgradeWindow : MonoBehaviour
             NextLevel?.SetText($"Следующий уровень (Ур. {Room.Level + 1})");
             NextCapacity?.SetText($"{Room.Capacity + 1}");
             NextEfficency?.SetText($"x{Room.Level + 1}");
+            CurrentEffects?.SetText(Room.GetBonusEffectDescription(Room.Level + 1));
             CostLabel?.SetText($"{upgradeCost}$");
         }
         NextLevelData?.SetActive(Room.Level < 3);
@@ -95,5 +95,6 @@ public class UpgradeWindow : MonoBehaviour
     public void UpgradeRoom()
     {
         Room?.LevelUP();
+        OpenWindow(Room);
     }
 }

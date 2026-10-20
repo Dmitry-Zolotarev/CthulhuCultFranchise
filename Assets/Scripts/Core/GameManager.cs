@@ -295,9 +295,7 @@ public class GameManager : MonoBehaviour
                 Destroy(person.gameObject);
             }
         }
-        Clear(Reserve);
-        Clear(ActiveWorkers);
-        Clear(Escaping);     
+        Clear(new HashSet<Person>(FindObjectsOfType<Person>()));
         OpenCanvas(2);       
     }
     public void NextDay()

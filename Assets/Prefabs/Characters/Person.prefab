@@ -640,16 +640,16 @@ MonoBehaviour:
   RoomType: 0
   MaxLoyalty: 0
   becomeCultistTime: 6
-  baseMaxLoyalty: 500
+  baseMaxLoyalty: 300
   escapeSpeed: 50
   loyaltyPanel: {fileID: 4128041962895632501}
   loyaltyLabel: {fileID: 6229773478266058314}
   loyaltyBar: {fileID: 8755891145370679448}
-  IsCultist: 0
   IsEscaping: 0
   HasElevated: 0
   Image: {fileID: 0}
   MaxLaunderings: 3
+  LaunderingsCount: 0
 --- !u!225 &6085688858380824478
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -677,6 +677,5 @@ MonoBehaviour:
   rectTransform: {fileID: 0}
   canvasGroup: {fileID: 0}
   canvas: {fileID: 0}
-  originalParent: {fileID: 0}
   originalPosition: {x: 0, y: 0}
   wasDropped: 0

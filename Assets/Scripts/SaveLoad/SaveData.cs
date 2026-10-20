@@ -53,12 +53,7 @@ public class SaveData
         {
             var person = GameManager.Instance.InstantiatePerson();
             personData.Load(person);
-
-            if(person.RoomType == RoomType.Reception)
-            {
-                Object.Destroy(person.gameObject);
-            }
-            else GameManager.Instance.Reserve.Add(person);
+            GameManager.Instance.Reserve.Add(person);
         }
         foreach (var personData in ActiveWorkers)
         {
