@@ -22,7 +22,6 @@ public class Room : MonoBehaviour, IDropHandler
     [SerializeField] private float personSpacing = 100f;
     [SerializeField] private float personOffsetY = -30f;
     [HideInInspector] public RoomType Type = RoomType.Reception;
-    [SerializeField] private TextMeshProUGUI roomNameLabel;
     [SerializeField] private TextMeshProUGUI capacityLabel;
     [SerializeField] private string[] bonusEffectLabels;
     public string Description = "";
@@ -33,7 +32,6 @@ public class Room : MonoBehaviour, IDropHandler
     private void Awake()
     {
         Capacity = BaseCapacity;
-        roomName = roomNameLabel.text;
         Image = GetComponent<Image>();
         if (this is DonationRoom)
         {
@@ -55,7 +53,6 @@ public class Room : MonoBehaviour, IDropHandler
     }
     protected void Update()
     {
-        roomNameLabel?.SetText(roomName + " ур. " + Level);
         capacityLabel?.SetText($"{GetCurrentPersonCount()}/{Capacity}");
     }
     public void OnDrop(PointerEventData eventData)

@@ -21,8 +21,6 @@ public class Person : MonoBehaviour
     [HideInInspector] public Room Room;
     [HideInInspector] public RoomType RoomType;
     [HideInInspector] public float MaxLoyalty;
-    
-    [SerializeField] private float becomeCultistTime = 6f;
     [SerializeField] private float baseMaxLoyalty = 500f;
     [SerializeField] private float escapeSpeed = 1f;
     [SerializeField] private GameObject loyaltyPanel;
@@ -130,11 +128,6 @@ public class Person : MonoBehaviour
     {
         GameManager.Instance.ActiveWorkers.Add(this);
         GameManager.Instance.Reserve.Remove(this);
-        StartCoroutine(StartRecruitment());
-    }
-    private IEnumerator StartRecruitment()
-    {
-        yield return new WaitForSeconds(becomeCultistTime / GameManager.Instance.GetTimeSpeed());
         Image.sprite = GameManager.Instance.CultistSprites[(int)Type];
     }
 

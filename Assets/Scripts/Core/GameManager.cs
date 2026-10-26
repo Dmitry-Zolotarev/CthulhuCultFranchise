@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Resources")]
     public int Money = 100;
+    
     [HideInInspector] public int TotalEarned = 0;
     [HideInInspector] public int TodayEarned = 0;
     [HideInInspector] public int TodayInfluence = 0;
@@ -48,12 +49,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI influenceLabel;
     [SerializeField] private TextMeshProUGUI todayEarnLabel;
     [SerializeField] private TextMeshProUGUI todayTaxLabel;
+    [SerializeField] private TextMeshProUGUI reduceSuspicionCostLabel;
     [SerializeField] private Image[] timeSpeedButtons;
     [SerializeField] private Color selectedButtonColor = new Color(150, 240, 100);
     [SerializeField] private TextMeshProUGUI hungerPercentLabel;
     [SerializeField] private GameObject TimeSpeedPanel;
     [SerializeField] private Slider hungerBar;
     [SerializeField] private Slider suspicionBar;
+    [SerializeField] private Button reduceSuspicionButton;
+    [SerializeField] private int reduceSuspicionCost = 1000;
     public GameObject StartWorkPanel;
 
     [Header("Prefabs")]
@@ -125,7 +129,8 @@ public class GameManager : MonoBehaviour
             if (DayTime >= endTime) FinishShift();
 
             Hunger += GetTimeSpeed() * Time.deltaTime * HungerIncreaseSpeed;
-            if (Hunger > MaxHunger) TriggerCthulhuEating();        
+            if (Hunger > MaxHunger) TriggerCthulhuEating();     
+            
         }  
         UpdateUI();
     }
@@ -155,7 +160,14 @@ public class GameManager : MonoBehaviour
                 timeSpeedButtons[2].color = selectedButtonColor;
                 break;
         }
+        try
+        {
+            reduceSuspicionButton.interactable = EvidencesCount > 0 && Money >= reduceSuspicionCost;
+            reduceSuspicionCostLabel?.SetText($"Снизить подозрение\n{reduceSuspicionCost}$");
+        }
+        catch { }
         moneyLabel?.SetText($"{Money}$");
+        
         evidencesCountLabel?.SetText($"Найдено улик: {EvidencesCount}");
         todayEarnLabel?.SetText($"Доход за прошлую смену: {TodayEarned}$");
         todayTaxLabel?.SetText($"{TaxManager.Instance.TaxAmount}$");
@@ -169,6 +181,7 @@ public class GameManager : MonoBehaviour
         if (Phase == GamePhase.Map)
         {
             timeLabel?.SetText("Утро");
+            
         }
         else timeLabel?.SetText($"{(int)DayTime / 60:D2}:{(int)DayTime % 60:D2}");
     }
@@ -181,6 +194,15 @@ public class GameManager : MonoBehaviour
             TotalEarned += amount;
             TaxManager.Instance.AddTax(amount);
         }         
+    }
+    public void ReduceSuspicion()
+    {
+        if(EvidencesCount > 0 && Money >= reduceSuspicionCost)
+        {
+            EvidencesCount--;
+            Money -= reduceSuspicionCost;
+            UpdateUI();
+        }
     }
     public void AddEvidence(int amount)
     {
@@ -249,7 +271,9 @@ public class GameManager : MonoBehaviour
 
     public Person InstantiatePerson()
     {
-        return Instantiate(personPrefab, Canvases[1].transform);
+        var person = Instantiate(personPrefab, Canvases[1].transform);
+        person.gameObject.SetActive(false);
+        return person;
     }
     private void SpawnVisitorInReception()
     {
@@ -258,6 +282,7 @@ public class GameManager : MonoBehaviour
         visitor.Type = Random.value < 0.5f ? SelectedDistrict.ResidentType : (PersonType)Random.Range(0, PersonSprites.Length);
         visitor.Image.sprite = PersonSprites[(int)visitor.Type];
         reception.AssignPerson(visitor);
+        visitor.gameObject.SetActive(true);
         Reserve.Add(visitor);
     }
     private void TriggerCthulhuEating()
@@ -318,7 +343,7 @@ public class GameManager : MonoBehaviour
     }
     public void OpenCanvas(int canvasID)
     {
-        if(canvasID == 0) MusicPlayer.Instance?.PlayDefaultMusic();
+        if (canvasID == 0) MusicPlayer.Instance?.PlayDefaultMusic();
         for (int i = 0; i < Canvases.Length; i++) Canvases[i]?.SetActive(i == canvasID);
     }
 }

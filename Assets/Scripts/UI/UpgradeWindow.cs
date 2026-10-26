@@ -19,7 +19,7 @@ public class UpgradeWindow : MonoBehaviour
     [SerializeField] private TextMeshProUGUI CurrentEffects;
 
     [SerializeField] private GameObject NextLevelData;
-    [SerializeField] private GameObject UpgradeButton;
+    [SerializeField] private Button UpgradeButton;
 
     [SerializeField] private TextMeshProUGUI NextLevel;
     [SerializeField] private TextMeshProUGUI NextCapacity;
@@ -44,6 +44,11 @@ public class UpgradeWindow : MonoBehaviour
     {
         Room = room;
         Update();
+        try
+        {
+            UpgradeButton.interactable = GameManager.Instance.Money >= Room.GetUpdateCost();
+        }
+        catch { }
 
         if (closeWindowCoroutine != null) 
         {
@@ -54,7 +59,11 @@ public class UpgradeWindow : MonoBehaviour
     public void Update()
     {
         if(Room == null) return;
-
+        try
+        {
+            UpgradeButton.interactable = GameManager.Instance.Money >= Room.GetUpdateCost();
+        }
+        catch { }
         RoomNameLabel?.SetText(GetRoomName(Room.Type));     
         DescriptionLabel?.SetText(Room.Description);
         RoomImage.sprite = Room.Image.sprite;
@@ -73,7 +82,7 @@ public class UpgradeWindow : MonoBehaviour
             CurrentEffects?.SetText(Room.GetBonusEffectDescription(Room.Level + 1));
         }
         NextLevelData?.SetActive(Room.Level < 3);
-        UpgradeButton?.SetActive(GameManager.Instance.Money >= Room.GetUpdateCost());
+        
     }
     private string GetRoomName(RoomType type)
     {
