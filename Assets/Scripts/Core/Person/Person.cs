@@ -59,12 +59,14 @@ public class Person : MonoBehaviour
             }
             else FindRoom();
 
-            if (Room is Laundry || !IsCultist())
+            if(dragPerson.wasDropped)
             {
-                if (Loyalty < MaxLoyalty) Loyalty += Time.deltaTime * GameManager.Instance.GetTimeSpeed();
+                if (Room is Laundry || !IsCultist())
+                {
+                    if (Loyalty < MaxLoyalty) Loyalty += Time.deltaTime * GameManager.Instance.GetTimeSpeed();
+                }
+                else Loyalty -= Time.deltaTime * GameManager.Instance.GetTimeSpeed();
             }
-            else Loyalty -= Time.deltaTime * GameManager.Instance.GetTimeSpeed();
-
             UpdateUI();
 
             if (Loyalty <= 0 && !IsEscaping) Escape();
