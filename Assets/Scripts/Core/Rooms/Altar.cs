@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Altar : Room
 {
-    [SerializeField] private float eatingTime = 6f;
+    [SerializeField] private float eatingTime = 1f;
 
     public override void AssignPerson(Person person)
     {
